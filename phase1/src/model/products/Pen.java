@@ -3,8 +3,8 @@ package model.products;
 public class Pen extends Stationery {
     private PenColor penColor;
 
-    public Pen(String productCategory, String productName, int productPrice, int numOfProduct, String madeIn, String penColor) {
-        super(productCategory, productName, productPrice, numOfProduct, madeIn);
+    public Pen( String productName, int productPrice, int numOfProduct, String manufactureCountry, String penColor) {
+        super( productName, productPrice, numOfProduct, manufactureCountry);
         this.penColor = PenColor.valueOf(penColor);
     }
 

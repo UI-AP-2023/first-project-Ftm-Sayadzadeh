@@ -3,11 +3,20 @@ package model.products;
 public class Edible extends Product {
     private String productionDate;
     private String expirationDate;
+    private static int edibleCounter = 1;
 
-    public Edible(String productCategory, String productName, int productPrice, int numOfProduct, String productionDate, String expirationDate) {
-        super(productCategory, productName, productPrice, numOfProduct);
+    public Edible(String productName, int productPrice, int numOfProduct, String productionDate, String expirationDate) {
+        super(ProductCategory.Edible, productName, productPrice, numOfProduct);
         this.productionDate = productionDate;
         this.expirationDate = expirationDate;
+    }
+
+    public static int getEdibleCounter() {
+        return edibleCounter;
+    }
+
+    public static void setEdibleCounter(int edibleCounter) {
+        Edible.edibleCounter = edibleCounter;
     }
 
     public String getProductionDate() {

@@ -1,24 +1,33 @@
 package model.products;
 
 abstract public class Vehicle extends Product {
-    private String manufactureCompanyName;
+    private String manufactureCompany;
+    private static int vehicleCounter = 1;
 
-    public Vehicle(String productCategory, String productName, int productPrice, int numOfProduct, String manufactureCompanyName) {
-        super(productCategory, productName, productPrice, numOfProduct);
-        this.manufactureCompanyName = manufactureCompanyName;
+    public Vehicle(String productName, int productPrice, int numOfProduct, String manufactureCompany) {
+        super(ProductCategory.Vehicle, productName, productPrice, numOfProduct);
+        this.manufactureCompany = manufactureCompany;
     }
 
-    public String getManufactureCompanyName() {
-        return manufactureCompanyName;
+    public static int getVehicleCounter() {
+        return vehicleCounter;
     }
 
-    public void setManufactureCompanyName(String manufactureCompanyName) {
-        this.manufactureCompanyName = manufactureCompanyName;
+    public static void setVehicleCounter(int vehicleCounter) {
+        Vehicle.vehicleCounter = vehicleCounter;
+    }
+
+    public String getManufactureCompany() {
+        return manufactureCompany;
+    }
+
+    public void setManufactureCompany(String manufactureCompany) {
+        this.manufactureCompany = manufactureCompany;
     }
 
     @Override
     public String toString() {
         return super.toString() +
-                "manufacture company : " + manufactureCompanyName + "\n";
+                "manufacture company : " + manufactureCompany + "\n";
     }
 }

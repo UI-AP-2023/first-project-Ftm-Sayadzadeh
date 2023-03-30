@@ -3,8 +3,8 @@ package model.products;
 public class Pencil extends Stationery {
     private PencilType pencilType;
 
-    public Pencil(String productCategory, String productName, int productPrice, int numOfProduct, String madeIn, String pencilType) {
-        super(productCategory, productName, productPrice, numOfProduct, madeIn);
+    public Pencil(String productName, int productPrice, int numOfProduct, String manufactureCountry, String pencilType) {
+        super(productName, productPrice, numOfProduct, manufactureCountry);
         this.pencilType = PencilType.valueOf(pencilType);
     }
 

@@ -1,9 +1,10 @@
 package model.products;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 abstract public class Product {
-    private final String productID;
+    private String productID;   //final
     private String productName;
     private int productPrice;
     private int numOfProduct;
@@ -12,8 +13,8 @@ abstract public class Product {
     private final ProductCategory productCategory;
     private final ArrayList<Comment> productCommentList = new ArrayList<>();
 
-    public Product(String productCategory, String productName, int productPrice, int numOfProduct) {
-        this.productCategory = ProductCategory.valueOf(productCategory);
+    public Product(ProductCategory productCategory, String productName, int productPrice, int numOfProduct) {
+        this.productCategory = productCategory;
         this.productName = productName;
         this.productPrice = productPrice;
         this.numOfProduct = numOfProduct;
@@ -23,8 +24,55 @@ abstract public class Product {
     }
 
     private String productIDMaker() {
-        //code
-        return "";
+        StringBuilder productID = new StringBuilder();
+        if (this.productCategory.toString().length() >= 4) {
+            for (int i = 0; i < 4; i++) {
+                productID.append(this.productCategory.toString().toUpperCase(Locale.ROOT).charAt(i));
+            }
+        }
+        else
+            productID.append(this.productCategory.toString().toUpperCase(Locale.ROOT));
+        productID.append(this.productCategory.getCategoryCode());
+        productID.append("-");
+        if (this.productName.length() >= 4) {
+            for (int i = 0; i < 4; i++) {
+                productID.append(this.productName.toUpperCase(Locale.ROOT).charAt(i));
+            }
+        }
+        else
+            productID.append(this.productName.toUpperCase(Locale.ROOT));
+        productID.append("-");
+        if(this.productCategory  == ProductCategory.Digital ){
+            productID.append(Digital.getDigitalCounter());
+            Digital.setDigitalCounter( Digital.getDigitalCounter() + 1);
+        }
+        else if(this.productCategory  == ProductCategory.Stationery ){
+            productID.append(Stationery.getStationeryCounter() );
+            Stationery.setStationeryCounter( Stationery.getStationeryCounter() + 1);
+        }
+        else if(this.productCategory  == ProductCategory.Vehicle ){
+            productID.append(Vehicle.getVehicleCounter() );
+            Vehicle.setVehicleCounter( Vehicle.getVehicleCounter() + 1);
+        }
+        else if(this.productCategory  == ProductCategory.Edible ){
+            productID.append(Edible.getEdibleCounter());
+            Edible.setEdibleCounter ( Edible.getEdibleCounter() + 1);
+        }
+        return productID.toString();
+    }
+    private void editIDWithNewName(){
+        String[] id = getProductID().split("-");
+        StringBuilder newID = new StringBuilder();
+        newID.append(id[0]).append("-");
+        if (this.productName.length() >= 4) {
+            for (int i = 0; i < 4; i++) {
+                newID.append(this.productName.toUpperCase(Locale.ROOT).charAt(i));
+            }
+        }
+        else
+            newID.append(this.productName.toUpperCase(Locale.ROOT));
+        newID.append("-").append(id[2]);
+        this.productID = newID.toString();
     }
 
     public String getProductID() {
@@ -37,6 +85,7 @@ abstract public class Product {
 
     public void setProductName(String productName) {
         this.productName = productName;
+        editIDWithNewName();
     }
 
     public int getProductPrice() {

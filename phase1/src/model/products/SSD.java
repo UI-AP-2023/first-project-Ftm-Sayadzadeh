@@ -1,28 +1,28 @@
 package model.products;
 
 public class SSD extends InformationStorageEquipment {
-    private double readSpeed;
-    private double writeSpeed;
+    private int readSpeed;
+    private int writeSpeed;
 
-    public SSD(String productCategory, String productName, int productPrice, int numOfProduct, double weight, String dimensions, int capacity, double readSpeed, double writeSpeed) {
-        super(productCategory, productName, productPrice, numOfProduct, weight, dimensions, capacity);
+    public SSD(String productName, int productPrice, int numOfProduct, double weight, String dimensions, int capacity, int readSpeed, int writeSpeed) {
+        super( productName, productPrice, numOfProduct, weight, dimensions, capacity);
         this.readSpeed = readSpeed;
         this.writeSpeed = writeSpeed;
     }
 
-    public double getReadSpeed() {
+    public int getReadSpeed() {
         return readSpeed;
     }
 
-    public void setReadSpeed(double readSpeed) {
+    public void setReadSpeed(int readSpeed) {
         this.readSpeed = readSpeed;
     }
 
-    public double getWriteSpeed() {
+    public int getWriteSpeed() {
         return writeSpeed;
     }
 
-    public void setWriteSpeed(double writeSpeed) {
+    public void setWriteSpeed(int writeSpeed) {
         this.writeSpeed = writeSpeed;
     }
 

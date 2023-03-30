@@ -3,8 +3,8 @@ package model.products;
 public class Bicycle extends Vehicle {
     private BicycleType bicycleType;
 
-    public Bicycle(String productCategory, String productName, int productPrice, int numOfProduct, String manufactureCompanyName, String bicycleType) {
-        super(productCategory, productName, productPrice, numOfProduct, manufactureCompanyName);
+    public Bicycle(String productName, int productPrice, int numOfProduct, String manufactureCompany, String bicycleType) {
+        super(productName, productPrice, numOfProduct, manufactureCompany);
         this.bicycleType = BicycleType.valueOf(bicycleType);
     }
 

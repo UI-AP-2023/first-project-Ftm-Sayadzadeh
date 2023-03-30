@@ -3,11 +3,20 @@ package model.products;
 abstract public class Digital extends Product {
     private double weight;
     private String dimensions;
+    private static int digitalCounter = 1;
 
-    public Digital(String productCategory, String productName, int productPrice, int numOfProduct, double weight, String dimensions) {
-        super(productCategory, productName, productPrice, numOfProduct);
+    public Digital(String productName, int productPrice, int numOfProduct, double weight, String dimensions) {
+        super( ProductCategory.Digital , productName, productPrice, numOfProduct);
         this.weight = weight;
         this.dimensions = dimensions;
+    }
+
+    public static int getDigitalCounter() {
+        return digitalCounter;
+    }
+
+    public static void setDigitalCounter(int digitalCounter) {
+        Digital.digitalCounter = digitalCounter;
     }
 
     public double getWeight() {
