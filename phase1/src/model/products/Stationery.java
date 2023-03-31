@@ -4,7 +4,7 @@ abstract public class Stationery extends Product {
     private String manufactureCountry;
     private static int stationeryCounter = 1 ;
 
-    public Stationery(String productName, int productPrice, int numOfProduct, String manufactureCountry) {
+    public Stationery(String productName, double productPrice, int numOfProduct, String manufactureCountry) {
         super(ProductCategory.Stationery , productName, productPrice, numOfProduct);
         this.manufactureCountry = manufactureCountry;
     }

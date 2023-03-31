@@ -4,7 +4,7 @@ abstract public class Vehicle extends Product {
     private String manufactureCompany;
     private static int vehicleCounter = 1;
 
-    public Vehicle(String productName, int productPrice, int numOfProduct, String manufactureCompany) {
+    public Vehicle(String productName, double productPrice, int numOfProduct, String manufactureCompany) {
         super(ProductCategory.Vehicle, productName, productPrice, numOfProduct);
         this.manufactureCompany = manufactureCompany;
     }

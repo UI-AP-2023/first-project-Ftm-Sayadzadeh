@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 abstract public class Product {
-    private String productID;   //final
+    private String productID;
     private String productName;
-    private int productPrice;
+    private double productPrice;
     private int numOfProduct;
     private String productStatus = "Unavailable";                          //string or boolean?
     private double averageScore = 0;
     private final ProductCategory productCategory;
     private final ArrayList<Comment> productCommentList = new ArrayList<>();
 
-    public Product(ProductCategory productCategory, String productName, int productPrice, int numOfProduct) {
+    public Product(ProductCategory productCategory, String productName, double productPrice, int numOfProduct) {
         this.productCategory = productCategory;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -88,11 +88,11 @@ abstract public class Product {
         editIDWithNewName();
     }
 
-    public int getProductPrice() {
+    public double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(int productPrice) {
+    public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
     }
 

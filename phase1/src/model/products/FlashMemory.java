@@ -3,7 +3,7 @@ package model.products;
 public class FlashMemory extends InformationStorageEquipment {
     private String USBType;
 
-    public FlashMemory(String productName, int productPrice, int numOfProduct, double weight, String dimensions, int capacity, String USBType) {
+    public FlashMemory(String productName, double productPrice, int numOfProduct, double weight, String dimensions, int capacity, String USBType) {
         super( productName, productPrice, numOfProduct, weight, dimensions, capacity);
         this.USBType = USBType;
     }
