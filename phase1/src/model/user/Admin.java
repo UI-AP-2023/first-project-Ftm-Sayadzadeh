@@ -1,5 +1,6 @@
 package model.user;
 
+import model.products.Comment;
 import model.products.Product;
 
 import java.util.ArrayList;
@@ -7,10 +8,11 @@ import java.util.ArrayList;
 public class Admin extends User {
     private static Admin admin;
     private final ArrayList<Product> productsList = new ArrayList<>();
-    private final ArrayList<Request> requestsList = new ArrayList<>();
-
+    private final ArrayList<Customer> registrationRequest = new ArrayList<>();
+    private final ArrayList<Comment> commentRequest = new ArrayList<>();
+    private final ArrayList<CreditIncreaseRequest> creditIncreaseRequests = new ArrayList<>();
     private Admin(String username, String email, String phoneNumber, String password) {
-        super(username, email, phoneNumber, password);
+        super("admin", "", "", "admin");
     }
 
     public static Admin getAdmin(String username, String email, String phoneNumber, String password) {
@@ -28,10 +30,15 @@ public class Admin extends User {
         return this.productsList;
     }
 
-    public ArrayList<Request> getRequestsList() {
-        return this.requestsList;
+    public ArrayList<Customer> getRegistrationRequest() {
+        return this.registrationRequest;
     }
-
+    public ArrayList<Comment> getCommentRequest() {
+        return this.commentRequest;
+    }
+    public ArrayList<CreditIncreaseRequest> getCreditIncreaseRequests() {
+        return this.creditIncreaseRequests;
+    }
     @Override
     public String toString() {
         return super.toString();
