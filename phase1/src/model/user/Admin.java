@@ -6,13 +6,13 @@ import model.products.Product;
 import java.util.ArrayList;
 
 public class Admin extends User {
-    private static Admin admin;
+    private static Admin admin = new Admin("admin" , " " , " " , "admin");
     private final ArrayList<Product> productsList = new ArrayList<>();
     private final ArrayList<Customer> registrationRequest = new ArrayList<>();
     private final ArrayList<Comment> commentRequest = new ArrayList<>();
     private final ArrayList<CreditIncreaseRequest> creditIncreaseRequests = new ArrayList<>();
     private Admin(String username, String email, String phoneNumber, String password) {
-        super("admin", "", "", "admin");
+        super(username, email, phoneNumber, password);
     }
 
     public static Admin getAdmin(String username, String email, String phoneNumber, String password) {

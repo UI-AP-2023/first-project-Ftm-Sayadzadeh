@@ -44,6 +44,6 @@ abstract public class User {
         return "Username : " + username + "\n" +
                 "Email : " + email + "\n" +
                 "phone number : " + phoneNumber + "\n" +
-                "password : " + phoneNumber + "\n" ;
+                "password : " + password + "\n" ;
     }
 }

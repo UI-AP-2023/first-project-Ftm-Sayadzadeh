@@ -1,12 +1,16 @@
 package view;
 
 import controller.AdminController;
+import model.products.Comment;
+import model.products.Product;
+import model.user.CreditIncreaseRequest;
+import model.user.Customer;
 
 import java.util.Scanner;
 
-public class AdminPanel {               //setter getter?
-    private AdminController adminController;
-    private Scanner input;
+public class AdminPanel {
+    private final AdminController adminController;
+    private final Scanner input;
 
     public AdminPanel() {
         this.adminController = new AdminController();
@@ -18,125 +22,200 @@ public class AdminPanel {               //setter getter?
         String commandLine = input.nextLine();
         String[] dividedCommend = commandLine.split(" ");
         switch (dividedCommend[0]) {
-            case "Add":
+            case "Add" -> {
                 this.addCommandType(dividedCommend);
                 this.adminCommandPage();
-                break;
-            case "Remove":
-                if (adminController.removeProduct(dividedCommend[2]))
+            }
+            case "Remove" -> {
+                if (adminController.removeProduct(dividedCommend[1]))
                     System.out.println("The operation was done successfully!");
                 else
                     System.out.println("There is no product with this ID !");
                 this.adminCommandPage();
-                break;
-            case "Edit":
+            }
+            case "Edit" -> {
                 this.editCommandType(dividedCommend);
                 this.adminCommandPage();
-                break;
-            case "ShowCustomers" :
-//                this.adminController.showCustomerInfo().toString(); //I need to check it and write for each loop
+            }
+            case "Show" -> {
+                this.showCommandType(dividedCommend);
                 this.adminCommandPage();
-                break;
-            case "help":
+            }
+            case "Accept" -> {
+                this.acceptCommandType(dividedCommend);
+                this.adminCommandPage();
+            }
+            case "Reject" -> {
+                this.rejectCommandType(dividedCommend);
+                this.adminCommandPage();
+            }
+            case "help" -> {
                 System.out.println(helpCommand());
                 this.adminCommandPage();
-                break;
-            case "MainPage" :
+            }
+            case "MainPage" -> {
                 MainPage mainPage = new MainPage();
                 mainPage.mainPage();
-                break;
-            case "EXIT" :
-                System.exit(0);
-            default:
+            }
+            case "EXIT" -> System.exit(0);
+            default -> {
                 System.out.println("WRONG COMMEND LINE!");
                 this.adminCommandPage();
-                break;
+            }
         }
     }
-    public String helpCommand(){
+
+    public String helpCommand() {
         return """
-                   - Add FlashMemory productName productPrice numOfProduct weight dimensions capacity USBType
-                   - Add SSD productName productPrice numOfProduct weight dimensions capacity reedSpeed writeSpeed
-                   - Add PC productName productPrice numOfProduct weight dimensions CPUModel RAMMemory
-                   - Add Pencil productName productPrice numOfProduct manufactureCountry pencilType
-                   - Add Pen productName productPrice numOfProduct manufactureCountry penColor
-                   - Add NoteBook productName productPrice numOfProduct manufactureCountry numOfSheets paperType
-                   - Add Car productName productPrice numOfProduct manufactureCompany engineCapacity isAutomatic
-                   - Add Bicycle productName productPrice numOfProduct manufactureCompany bicycleType
-                   - Add Edible productName productPrice numOfProduct productionDate expirationDate
-                   - Remove productID
-                   - Edit name productID newName
-                   - Edit price productID newPrice
-                   - Edit stock productID newStock
-                   - ShowCustomers
-                   - MainPage
-                   - EXIT
-                   """;
+                - Add FlashMemory productName productPrice numOfProduct weight dimensions capacity USBType
+                - Add SSD productName productPrice numOfProduct weight dimensions capacity reedSpeed writeSpeed
+                - Add PC productName productPrice numOfProduct weight dimensions CPUModel RAMMemory
+                - Add Pencil productName productPrice numOfProduct manufactureCountry pencilType
+                - Add Pen productName productPrice numOfProduct manufactureCountry penColor
+                - Add NoteBook productName productPrice numOfProduct manufactureCountry numOfSheets paperType
+                - Add Car productName productPrice numOfProduct manufactureCompany engineCapacity isAutomatic
+                - Add Bicycle productName productPrice numOfProduct manufactureCompany bicycleType
+                - Add Edible productName productPrice numOfProduct productionDate expirationDate
+                - Remove productID
+                - Edit (name || price || stock) productID (newName || newPrice || newStock)
+                - Show (Product || Customers || RegistrationRequests || CommentRequests || CreditRequests)
+                - Accept (Registration || Comment || CreditIncrease) customerUsername
+                - Reject (Registration || Comment || CreditIncrease) customerUsername
+                - MainPage
+                - EXIT
+                """;
     }
-    public void addCommandType(String[] dividedCommend){
+
+    public void addCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
-            case "FlashMemory":
-                if (adminController.addFlashMemory(dividedCommend[2], Integer.parseInt(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), Double.parseDouble(dividedCommend[5]), dividedCommend[6], Integer.parseInt(dividedCommend[7]), dividedCommend[8]))
+            case "FlashMemory" -> {
+                if (adminController.addFlashMemory(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), Double.parseDouble(dividedCommend[5]), dividedCommend[6], Integer.parseInt(dividedCommend[7]), dividedCommend[8]))
                     System.out.println("The operation was done successfully!");
-                break;
-            case "SSD":
-                if (adminController.addSSD(dividedCommend[2], Integer.parseInt(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), Double.parseDouble(dividedCommend[5]), dividedCommend[6], Integer.parseInt(dividedCommend[7]), Integer.parseInt(dividedCommend[8]), Integer.parseInt(dividedCommend[9])))
+            }
+            case "SSD" -> {
+                if (adminController.addSSD(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), Double.parseDouble(dividedCommend[5]), dividedCommend[6], Integer.parseInt(dividedCommend[7]), Integer.parseInt(dividedCommend[8]), Integer.parseInt(dividedCommend[9])))
                     System.out.println("The operation was done successfully!");
-                break;
-            case "PC":
-                if (adminController.addPersonalComputer(dividedCommend[2], Integer.parseInt(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), Double.parseDouble(dividedCommend[5]), dividedCommend[6], dividedCommend[7], Integer.parseInt(dividedCommend[8])))
+            }
+            case "PC" -> {
+                if (adminController.addPersonalComputer(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), Double.parseDouble(dividedCommend[5]), dividedCommend[6], dividedCommend[7], Integer.parseInt(dividedCommend[8])))
                     System.out.println("The operation was done successfully!");
-                break;
-            case "Pencil":
-                if (adminController.addPencil(dividedCommend[2], Integer.parseInt(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], dividedCommend[6]))
+            }
+            case "Pencil" -> {
+                if (adminController.addPencil(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], dividedCommend[6]))
                     System.out.println("The operation was done successfully!");
-                break;
-            case "Pen":
-                if (adminController.addPen(dividedCommend[2], Integer.parseInt(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], dividedCommend[6]))
+            }
+            case "Pen" -> {
+                if (adminController.addPen(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], dividedCommend[6]))
                     System.out.println("The operation was done successfully!");
-                break;
-            case "NoteBook":
-                if (adminController.addNoteBook(dividedCommend[2], Integer.parseInt(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], Integer.parseInt(dividedCommend[6]), dividedCommend[7]))
+            }
+            case "NoteBook" -> {
+                if (adminController.addNoteBook(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], Integer.parseInt(dividedCommend[6]), dividedCommend[7]))
                     System.out.println("The operation was done successfully!");
-                break;
-            case "Car":
-                if (adminController.addCar(dividedCommend[2], Integer.parseInt(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], Integer.parseInt(dividedCommend[6]), Boolean.parseBoolean(dividedCommend[7])))
+            }
+            case "Car" -> {
+                if (adminController.addCar(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], Integer.parseInt(dividedCommend[6]), Boolean.parseBoolean(dividedCommend[7])))
                     System.out.println("The operation was done successfully!");
-                break;
-            case "Bicycle":
-                if (adminController.addBicycle(dividedCommend[2], Integer.parseInt(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], dividedCommend[6]))
+            }
+            case "Bicycle" -> {
+                if (adminController.addBicycle(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], dividedCommend[6]))
                     System.out.println("The operation was done successfully!");
-                break;
-            case "Edible":
-                if (adminController.addEdible(dividedCommend[2], Integer.parseInt(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], dividedCommend[6]))
+            }
+            case "Edible" -> {
+                if (adminController.addEdible(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), dividedCommend[5], dividedCommend[6]))
                     System.out.println("The operation was done successfully!");
-                break;
-            default:
-                System.out.println("WRONG COMMEND LINE!");
-                break;
+            }
+            default -> System.out.println("WRONG COMMEND LINE!");
         }
     }
-    public void editCommandType(String[] dividedCommend ){
+
+    public void editCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
-            case "name":
+            case "name" -> {
                 if (adminController.editProductName(dividedCommend[2], dividedCommend[3]))
                     System.out.println("The operation was done successfully!");
                 else
                     System.out.println("There is no product with this ID !");
-            case "stock":
+            }
+            case "stock" -> {
                 if (adminController.editProductStock(dividedCommend[2], Integer.parseInt(dividedCommend[3])))
                     System.out.println("The operation was done successfully!");
                 else
                     System.out.println("There is no product with this ID !");
-            case "price":
+            }
+            case "price" -> {
                 if (adminController.editProductPrice(dividedCommend[2], Integer.parseInt(dividedCommend[3])))
                     System.out.println("The operation was done successfully!");
                 else
                     System.out.println("There is no product with this ID !");
-            default:
-                System.out.println("WRONG COMMEND LINE!");
-                break;
+            }
+            default -> System.out.println("WRONG COMMEND LINE!");
         }
     }
 
+    public void showCommandType(String[] dividedCommend) {
+        switch (dividedCommend[1]) {
+            case "Customers" -> {
+                for (Customer element : this.adminController.showCustomerInfo()) {
+                    System.out.println(element.toString());
+                }
+            }
+            case "RegistrationRequests" -> {
+                for (Customer element : this.adminController.showRegistrationRequest()) {
+                    System.out.println(element.toString());
+                }
+            }
+            case "CommentRequests" -> {
+                for (Comment element : this.adminController.showCommentRequest()) {
+                    System.out.println(element.toString());
+                }
+            }
+            case "CreditRequests" -> {
+                for (CreditIncreaseRequest element : this.adminController.showCreditIncreaseRequest()) {
+                    System.out.println(element.toString());
+                }
+            }
+            case "Products" -> {
+                for (Product element : this.adminController.showProductList()) {
+                    System.out.println(element.toString());
+                }
+            }
+            default -> System.out.println("WRONG COMMEND LINE!");
+        }
+    }
+
+    public void acceptCommandType(String[] dividedCommend) {
+        switch (dividedCommend[1]) {
+            case "Registration" -> {
+                if (this.adminController.acceptRegistrationRequest(dividedCommend[2]))
+                    System.out.println("The operation was done successfully!");
+            }
+            case "Comment" -> {
+                if (this.adminController.acceptCommentRequest(dividedCommend[2]))
+                    System.out.println("The operation was done successfully!");
+            }
+            case "CreditIncrease" -> {
+                if (this.adminController.acceptCreditIncreaseRequest(dividedCommend[2]))
+                    System.out.println("The operation was done successfully!");
+            }
+            default -> System.out.println("WRONG COMMEND LINE!");
+        }
+    }
+
+    public void rejectCommandType(String[] dividedCommend) {
+        switch (dividedCommend[1]) {
+            case "Registration" -> {
+                if (this.adminController.rejectRegistrationRequest(dividedCommend[2]))
+                    System.out.println("The operation was done successfully!");
+            }
+            case "Comment" -> {
+                if (this.adminController.rejectCommentRequest(dividedCommend[2]))
+                    System.out.println("The operation was done successfully!");
+            }
+            case "CreditIncrease" -> {
+                if (this.adminController.rejectCreditIncreaseRequest(dividedCommend[2]))
+                    System.out.println("The operation was done successfully!");
+            }
+            default -> System.out.println("WRONG COMMEND LINE!");
+        }
+    }
 }
