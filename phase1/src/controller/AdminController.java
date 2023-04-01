@@ -214,5 +214,14 @@ public class AdminController {
         }
         return false;
     }
+    //log in
+    public boolean logIn(String username , String password){
+        return Objects.equals(username, admin.getUsername()) && Objects.equals(password, admin.getPassword());
+    }
+    //registration page (add new customer to request list)
+    public boolean addRegisteredCustomerToRequestList(Customer newCustomer){
+        admin.getRegistrationRequest().add(newCustomer);
+        return true;
+    }
 }
 
