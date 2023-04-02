@@ -81,7 +81,6 @@ public class RegistrationPage {
         } while (!beCorrect);
         //password-------------------------------------
         System.out.println("Enter your password : (should contain 8 char without space!) ");
-        //we check it is new or not
         String password;
         Pattern passwordPattern = Pattern.compile("^\\S{8,}$");
         do {

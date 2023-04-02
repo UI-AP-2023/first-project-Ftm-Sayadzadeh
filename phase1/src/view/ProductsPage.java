@@ -1,5 +1,6 @@
 package view;
 
+import controller.CustomerController;
 import controller.ProductsPageController;
 import model.products.Product;
 import model.user.Admin;
@@ -11,6 +12,15 @@ import java.util.Scanner;
 public class ProductsPage {
     private final Scanner input = new Scanner(System.in);
     private final ProductsPageController productsPageController = new ProductsPageController();
+    private static int customerIndex = -1;
+
+    public static int getCustomerIndex() {
+        return customerIndex;
+    }
+
+    public static void setCustomerIndex(int index) {
+        customerIndex = index;
+    }
 
     public void productsPagePanel() {
         System.out.println("""
@@ -18,7 +28,7 @@ public class ProductsPage {
                 1) view all products \s
                 2) search product by name
                 3) filter products
-                4) Main page
+                4) Back (Main page or your panel)
                 5) EXIT
                 """);
         int choice = input.nextInt();
@@ -27,8 +37,15 @@ public class ProductsPage {
             case 2 -> searchProduct();
             case 3 -> filterPage();
             case 4 -> {
-                MainPage mainPage = new MainPage();
-                mainPage.mainPage();
+                if(customerIndex == -1) { //when you did not log in
+                    MainPage mainPage = new MainPage();
+                    mainPage.mainPage();
+                }
+                else {//when you log in
+                    customerIndex = -1;
+                    CustomerPanel customerPanel = new CustomerPanel();
+                    customerPanel.customerMenu();
+                }
             }
             case 5 -> System.exit(0);
         }
@@ -61,9 +78,14 @@ public class ProductsPage {
                             String productID = input.nextLine();
                             if (productsPageController.selectProductByID(productID) != null) {
                                 System.out.println(productsPageController.selectProductByID(productID).toString());
-                                System.out.println("1) Back to product page panel");
-                                if (input.nextInt() != 1)
-                                    System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                                if(customerIndex != -1){
+                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                }
+                                else { //if you are not logIn
+                                    System.out.println("1) Back to product page panel");
+                                    if (input.nextInt() != 1)
+                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                                }
                                 choice = 1;
                             } else
                                 System.out.println("This ID is wrong!");
@@ -84,9 +106,14 @@ public class ProductsPage {
                         String productID = input.nextLine();
                         if (productsPageController.selectProductByID(productID) != null) {
                             System.out.println(productsPageController.selectProductByID(productID).toString());
-                            System.out.println("1) Back to product page panel");
-                            if (input.nextInt() != 1)
-                                System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                            if(customerIndex != -1){
+                                this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                            }
+                            else { //if you are not logIn
+                                System.out.println("1) Back to product page panel");
+                                if (input.nextInt() != 1)
+                                    System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                            }
                             choice = 1;
                         } else
                             System.out.println("This ID is wrong!");
@@ -106,11 +133,20 @@ public class ProductsPage {
                         case 3 -> {
                             System.out.println("Enter the product ID :");
                             input.nextLine();
-                            System.out.println(productsPageController.selectProductByID(input.nextLine()).toString());
-                            System.out.println("1) Back to product page panel");
-                            if (input.nextInt() != 1)
-                                System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                            choice = 1;
+                            String productID = input.nextLine();
+                            if (productsPageController.selectProductByID(productID) != null) {
+                                System.out.println(productsPageController.selectProductByID(productID).toString());
+                                if(customerIndex != -1){
+                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                }
+                                else { //if you are not logIn
+                                    System.out.println("1) Back to product page panel");
+                                    if (input.nextInt() != 1)
+                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                                }
+                                choice = 1;
+                            } else
+                                System.out.println("This ID is wrong!");
                         }
                     }
                 }
@@ -130,11 +166,20 @@ public class ProductsPage {
                         case 4 -> {
                             System.out.println("Enter the product ID :");
                             input.nextLine();
-                            System.out.println(productsPageController.selectProductByID(input.nextLine()).toString());
-                            System.out.println("1) Back to product page panel");
-                            if (input.nextInt() != 1)
-                                System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                            choice = 1;
+                            String productID = input.nextLine();
+                            if (productsPageController.selectProductByID(productID) != null) {
+                                System.out.println(productsPageController.selectProductByID(productID).toString());
+                                if(customerIndex != -1){
+                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                }
+                                else { //if you are not logIn
+                                    System.out.println("1) Back to product page panel");
+                                    if (input.nextInt() != 1)
+                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                                }
+                                choice = 1;
+                            } else
+                                System.out.println("This ID is wrong!");
                         }
                     }
                 }
@@ -571,9 +616,14 @@ public class ProductsPage {
                             String productID = input.nextLine();
                             if (productsPageController.selectProductByID(productID) != null) {
                                 System.out.println(productsPageController.selectProductByID(productID).toString());
-                                System.out.println("1) Back to product page panel");
-                                if (input.nextInt() != 1)
-                                    System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                                if(customerIndex != -1){
+                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                }
+                                else { //if you are not logIn
+                                    System.out.println("1) Back to product page panel");
+                                    if (input.nextInt() != 1)
+                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                                }
                                 choice = 1;
                             } else
                                 System.out.println("This ID is wrong!");
@@ -596,9 +646,14 @@ public class ProductsPage {
                         String productID = input.nextLine();
                         if (productsPageController.selectProductByID(productID) != null) {
                             System.out.println(productsPageController.selectProductByID(productID).toString());
-                            System.out.println("1) Back to product page panel");
-                            if (input.nextInt() != 1)
-                                System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                            if(customerIndex != -1){
+                                this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                            }
+                            else { //if you are not logIn
+                                System.out.println("1) Back to product page panel");
+                                if (input.nextInt() != 1)
+                                    System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                            }
                             choice = 1;
                         } else
                             System.out.println("This ID is wrong!");
@@ -621,11 +676,20 @@ public class ProductsPage {
                         case 3 -> {
                             System.out.println("Enter the product ID :");
                             input.nextLine();
-                            System.out.println(productsPageController.selectProductByID(input.nextLine()).toString());
-                            System.out.println("1) Back to product page panel");
-                            if (input.nextInt() != 1)
-                                System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                            choice = 1;
+                            String productID = input.nextLine();
+                            if (productsPageController.selectProductByID(productID) != null) {
+                                System.out.println(productsPageController.selectProductByID(productID).toString());
+                                if(customerIndex != -1){
+                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                }
+                                else { //if you are not logIn
+                                    System.out.println("1) Back to product page panel");
+                                    if (input.nextInt() != 1)
+                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                                }
+                                choice = 1;
+                            } else
+                                System.out.println("This ID is wrong!");
                         }
                         case 4 -> backToFirstFilter(selectedCategory);
                     }
@@ -647,11 +711,20 @@ public class ProductsPage {
                         case 4 -> {
                             System.out.println("Enter the product ID :");
                             input.nextLine();
-                            System.out.println(productsPageController.selectProductByID(input.nextLine()).toString());
-                            System.out.println("1) Back to product page panel");
-                            if (input.nextInt() != 1)
-                                System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                            choice = 1;
+                            String productID = input.nextLine();
+                            if (productsPageController.selectProductByID(productID) != null) {
+                                System.out.println(productsPageController.selectProductByID(productID).toString());
+                                if(customerIndex != -1){
+                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                }
+                                else { //if you are not logIn
+                                    System.out.println("1) Back to product page panel");
+                                    if (input.nextInt() != 1)
+                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
+                                }
+                                choice = 1;
+                            } else
+                                System.out.println("This ID is wrong!");
                         }
                         case 5 -> backToFirstFilter(selectedCategory);
                     }
@@ -692,6 +765,28 @@ public class ProductsPage {
             }
         }
     }
+    //if customer is in panel and select product
+    public void customerProductChoice(Product product){
+        System.out.println("""
+                        1) leave a comment
+                        2) add this product to shopping cart
+                        3) BACK
+                        """);
+        int secondChoice = input.nextInt();
+        switch (secondChoice) {
+            case 1 -> {
+                CustomerPanel customerPanel = new CustomerPanel();
+                customerPanel.leaveComment(product.getProductID());
+            }
+            case 2 -> {
+                CustomerController customerController = new CustomerController();
+                if (customerController.buyProduct(product))
+                    System.out.println("DONE SUCCESSFULLY!");
+                else
+                    System.out.println("This product is unavailable now!");
+            }
+            default -> {
+            }
+        }
+    }
 }
-
-//need to change for customer menu

@@ -11,6 +11,7 @@ import java.util.Objects;
 public class ProductsPageController {
     private final Admin admin = Admin.getAdmin();
     private static int productNum = 0;  // I need it in do while part of productPage.viewProduct cuz need to check when we are at the end of the list
+    private static int customerIndex = -1;
 
     public static int getProductNum() {
         return productNum;
@@ -18,6 +19,14 @@ public class ProductsPageController {
 
     public static void setProductNumZero() {
         productNum = 0;
+    }
+
+    public static int getCustomerIndex() {
+        return customerIndex;
+    }
+
+    public static void setCustomerIndex(int customerIndex) {
+        ProductsPageController.customerIndex = customerIndex;
     }
 
     //show product list
@@ -49,7 +58,7 @@ public class ProductsPageController {
             productNum = productNum - 5;
             return pageProducts;
         }
-        else if(productNum >= 5 && productNum%5 != 0){
+        else if(productNum >= 5){ //productNum%5 != 0
             ArrayList<Product> pageProducts = new ArrayList<>();
             for (int i = productNum - (5+(productNum%5)) ; i < productNum - (productNum%5); i++) {
                 pageProducts.add(products.get(i));

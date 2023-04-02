@@ -23,7 +23,7 @@ public class LogInPage {
             boolean existCustomer = customerController.logIn(username, password);
             if (existCustomer) {
                 CustomerPanel customerPanel = new CustomerPanel();
-                //customerPanel.customerMenu();
+                customerPanel.customerMenu();
             } else {
                 System.out.println("We cant find you... TRY AGAIN !");
                 logInPage();
