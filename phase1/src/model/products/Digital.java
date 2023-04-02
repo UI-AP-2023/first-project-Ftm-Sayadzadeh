@@ -5,8 +5,8 @@ abstract public class Digital extends Product {
     private String dimensions;
     private static int digitalCounter = 1;
 
-    public Digital(String productName, double productPrice, int numOfProduct, double weight, String dimensions) {
-        super( ProductCategory.Digital , productName, productPrice, numOfProduct);
+    public Digital( String subcategory , String productName, double productPrice, int numOfProduct, double weight, String dimensions) {
+        super(subcategory, ProductCategory.Digital , productName, productPrice, numOfProduct);
         this.weight = weight;
         this.dimensions = dimensions;
     }

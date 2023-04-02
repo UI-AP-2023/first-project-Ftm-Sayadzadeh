@@ -4,7 +4,7 @@ public class Pencil extends Stationery {
     private PencilType pencilType;
 
     public Pencil(String productName, double productPrice, int numOfProduct, String manufactureCountry, String pencilType) {
-        super(productName, productPrice, numOfProduct, manufactureCountry);
+        super("Pencil", productName, productPrice, numOfProduct, manufactureCountry);
         this.pencilType = PencilType.valueOf(pencilType);
     }
 

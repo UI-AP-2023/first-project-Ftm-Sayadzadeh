@@ -6,7 +6,7 @@ public class Edible extends Product {
     private static int edibleCounter = 1;
 
     public Edible(String productName, double productPrice, int numOfProduct, String productionDate, String expirationDate) {
-        super(ProductCategory.Edible, productName, productPrice, numOfProduct);
+        super("" , ProductCategory.Edible, productName, productPrice, numOfProduct);
         this.productionDate = productionDate;
         this.expirationDate = expirationDate;
     }

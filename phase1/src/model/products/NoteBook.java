@@ -4,8 +4,8 @@ public class NoteBook extends Stationery {
     private int numOfSheets;
     private String paperType;
 
-    public NoteBook( String productName, double productPrice, int numOfProduct, String manufactureCountry, int numOfSheets, String paperType) {
-        super( productName, productPrice, numOfProduct, manufactureCountry);
+    public NoteBook(String productName, double productPrice, int numOfProduct, String manufactureCountry, int numOfSheets, String paperType) {
+        super("NoteBook", productName, productPrice, numOfProduct, manufactureCountry);
         this.numOfSheets = numOfSheets;
         this.paperType = paperType;
     }

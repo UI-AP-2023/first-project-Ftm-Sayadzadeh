@@ -5,7 +5,7 @@ public class SSD extends InformationStorageEquipment {
     private int writeSpeed;
 
     public SSD(String productName, double productPrice, int numOfProduct, double weight, String dimensions, int capacity, int readSpeed, int writeSpeed) {
-        super( productName, productPrice, numOfProduct, weight, dimensions, capacity);
+        super("SSD", productName, productPrice, numOfProduct, weight, dimensions, capacity);
         this.readSpeed = readSpeed;
         this.writeSpeed = writeSpeed;
     }

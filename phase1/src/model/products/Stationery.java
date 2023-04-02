@@ -2,10 +2,10 @@ package model.products;
 
 abstract public class Stationery extends Product {
     private String manufactureCountry;
-    private static int stationeryCounter = 1 ;
+    private static int stationeryCounter = 1;
 
-    public Stationery(String productName, double productPrice, int numOfProduct, String manufactureCountry) {
-        super(ProductCategory.Stationery , productName, productPrice, numOfProduct);
+    public Stationery(String subcategory, String productName, double productPrice, int numOfProduct, String manufactureCountry) {
+        super(subcategory, ProductCategory.Stationery, productName, productPrice, numOfProduct);
         this.manufactureCountry = manufactureCountry;
     }
 

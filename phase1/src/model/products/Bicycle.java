@@ -4,7 +4,7 @@ public class Bicycle extends Vehicle {
     private BicycleType bicycleType;
 
     public Bicycle(String productName, double productPrice, int numOfProduct, String manufactureCompany, String bicycleType) {
-        super(productName, productPrice, numOfProduct, manufactureCompany);
+        super("Bicycle", productName, productPrice, numOfProduct, manufactureCompany);
         this.bicycleType = BicycleType.valueOf(bicycleType);
     }
 

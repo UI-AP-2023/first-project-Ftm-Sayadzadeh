@@ -3,8 +3,8 @@ package model.products;
 abstract public class InformationStorageEquipment extends Digital {
     private int capacity;
 
-    public InformationStorageEquipment(String productName, double productPrice, int numOfProduct, double weight, String dimensions, int capacity) {
-        super(productName, productPrice, numOfProduct, weight, dimensions);
+    public InformationStorageEquipment(String subcategory, String productName, double productPrice, int numOfProduct, double weight, String dimensions, int capacity) {
+        super(subcategory, productName, productPrice, numOfProduct, weight, dimensions);
         this.capacity = capacity;
     }
 
