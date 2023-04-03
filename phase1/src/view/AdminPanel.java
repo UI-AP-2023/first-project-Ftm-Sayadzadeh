@@ -79,8 +79,8 @@ public class AdminPanel {
                 - Remove productID
                 - Edit (name || price || stock) productID (newName || newPrice || newStock)
                 - Show (Product || Customers || RegistrationRequests || CommentRequests || CreditRequests)
-                - Accept (Registration || Comment || CreditIncrease) customerUsername
-                - Reject (Registration || Comment || CreditIncrease) customerUsername
+                - Accept (Registration customerUsername || Comment indexOfComment || CreditIncrease customerUsername)
+                - Reject (Registration customerUsername || Comment indexOfComment || CreditIncrease customerUsername)\s
                 - MainPage
                 - EXIT
                 """;
@@ -188,14 +188,20 @@ public class AdminPanel {
             case "Registration" -> {
                 if (this.adminController.acceptRegistrationRequest(dividedCommend[2]))
                     System.out.println("The operation was done successfully!");
+                else
+                    System.out.println("NOT FOUND!");
             }
             case "Comment" -> {
-                if (this.adminController.acceptCommentRequest(dividedCommend[2]))
+                if (this.adminController.acceptCommentRequest(Integer.parseInt(dividedCommend[2])))
                     System.out.println("The operation was done successfully!");
+                else
+                    System.out.println("NOT FOUND!");
             }
             case "CreditIncrease" -> {
                 if (this.adminController.acceptCreditIncreaseRequest(dividedCommend[2]))
                     System.out.println("The operation was done successfully!");
+                else
+                    System.out.println("NOT FOUND!");
             }
             default -> System.out.println("WRONG COMMEND LINE!");
         }

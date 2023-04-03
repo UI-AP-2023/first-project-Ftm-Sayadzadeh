@@ -116,10 +116,6 @@ public class AdminController {
         int productIndex = searchProductByID(productID);
         if (productIndex != -1) {
             admin.getProductsList().get(productIndex).setNumOfProduct(newStock);
-            if (admin.getProductsList().get(productIndex).getNumOfProduct() > 0)
-                admin.getProductsList().get(productIndex).setProductStatus("Available");
-            else
-                admin.getProductsList().get(productIndex).setProductStatus("Unavailable");
             return true;
         } else
             return false;
@@ -148,24 +144,23 @@ public class AdminController {
         return false;
     }
     //accept comment request
-    public boolean acceptCommentRequest(String username){
-        for(Comment element : admin.getCommentRequest()){
-            if (Objects.equals(element.getCommentingUser().getUsername(), username)){
-                int productIndex = searchProductByID(element.getProductID());
-                element.setCommentStatus(CommentStatus.Accepted);
-                admin.getProductsList().get(productIndex).getProductCommentList().add(element);
-                admin.getCommentRequest().remove(element);
-                return true;
-            }
+    public boolean acceptCommentRequest(int indexOfComment){
+        if(admin.getCommentRequest().size()-1 >= indexOfComment) {
+            admin.getCommentRequest().get(indexOfComment).setCommentStatus(CommentStatus.Accepted);
+            int productIndex = searchProductByID(admin.getCommentRequest().get(indexOfComment).getProductID());
+            admin.getProductsList().get(productIndex).getProductCommentList().add(admin.getCommentRequest().get(indexOfComment));
+            admin.getCommentRequest().remove(admin.getCommentRequest().get(indexOfComment));
+            return true;
         }
-        return false;
+        else
+            return false;
     }
     //accept credit increase request
     public boolean acceptCreditIncreaseRequest(String username){
         for(CreditIncreaseRequest element : admin.getCreditIncreaseRequests()){
             if (Objects.equals(element.getUsername() , username)){
                 int indexCustomer = this.searchCustomerByUsername(username) ;
-                int currentCredit = CustomerController.getCustomersList().get(indexCustomer).getAccountCredit();
+                double currentCredit = CustomerController.getCustomersList().get(indexCustomer).getAccountCredit();
                 CustomerController.getCustomersList().get(indexCustomer).setAccountCredit(currentCredit + element.getCreditIncreaseAmount());
                 admin.getCreditIncreaseRequests().remove(element);
                 return true;

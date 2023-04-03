@@ -5,18 +5,18 @@ import model.products.Product;
 import java.util.ArrayList;
 
 public class Customer extends User {
-    private int accountCredit = 0 ;
+    private double accountCredit = 0 ;
     private final ArrayList<Product> shoppingCart = new ArrayList<>();
     private final ArrayList<Receipt> shoppingHistory = new ArrayList<>();
     public Customer (String username , String email ,String phoneNumber , String password ) {
         super(username, email, phoneNumber, password);
     }
 
-    public int getAccountCredit() {
+    public double getAccountCredit() {
         return accountCredit;
     }
 
-    public void setAccountCredit(int accountCredit) {
+    public void setAccountCredit(double accountCredit) {
         this.accountCredit = accountCredit;
     }
 
@@ -24,7 +24,7 @@ public class Customer extends User {
         return this.shoppingCart;
     }
 
-    public ArrayList<Receipt> getPurchaseHistory(){
+    public ArrayList<Receipt> getShoppingHistory(){
         return this.shoppingHistory;
     }
     @Override

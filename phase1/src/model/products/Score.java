@@ -4,10 +4,10 @@ import model.user.User;
 
 public class Score {
     private final User ratingUser;       //final or not?
-    private final int score;
+    private final double score;
     private final Product product;
 
-    public Score(User ratingUser, int score, Product product) {
+    public Score(User ratingUser, double score, Product product) {
         this.ratingUser = ratingUser;
         this.score = score;
         this.product = product;
@@ -17,7 +17,7 @@ public class Score {
         return ratingUser;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 

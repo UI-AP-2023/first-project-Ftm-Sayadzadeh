@@ -2,8 +2,8 @@ package model.user;
 
 public class CreditIncreaseRequest {
     private final String username;
-    private final int creditIncreaseAmount;
-    public CreditIncreaseRequest(String username , int creditIncreaseAmount ){
+    private final double creditIncreaseAmount;
+    public CreditIncreaseRequest(String username , double creditIncreaseAmount ){
         this.username = username;
         this.creditIncreaseAmount = creditIncreaseAmount;
     }
@@ -12,7 +12,7 @@ public class CreditIncreaseRequest {
         return username;
     }
 
-    public int getCreditIncreaseAmount() {
+    public double getCreditIncreaseAmount() {
         return creditIncreaseAmount;
     }
     @Override
