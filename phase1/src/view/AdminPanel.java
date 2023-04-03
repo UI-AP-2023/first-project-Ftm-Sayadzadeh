@@ -27,10 +27,7 @@ public class AdminPanel {
                 this.adminCommandPage();
             }
             case "Remove" -> {
-                if (adminController.removeProduct(dividedCommend[1]))
-                    System.out.println("The operation was done successfully!");
-                else
-                    System.out.println("There is no product with this ID !");
+                this.removeCommand(dividedCommend);
                 this.adminCommandPage();
             }
             case "Edit" -> {
@@ -65,7 +62,7 @@ public class AdminPanel {
         }
     }
 
-    public String helpCommand() {
+    private String helpCommand() {
         return """
                 - Add FlashMemory productName productPrice numOfProduct weight dimensions capacity USBType
                 - Add SSD productName productPrice numOfProduct weight dimensions capacity reedSpeed writeSpeed
@@ -79,14 +76,14 @@ public class AdminPanel {
                 - Remove productID
                 - Edit (name || price || stock) productID (newName || newPrice || newStock)
                 - Show (Product || Customers || RegistrationRequests || CommentRequests || CreditRequests)
-                - Accept (Registration customerUsername || Comment indexOfComment || CreditIncrease customerUsername)
-                - Reject (Registration customerUsername || Comment indexOfComment || CreditIncrease customerUsername)\s
+                - Accept (Registration || Comment || CreditIncrease ) index
+                - Reject (Registration || Comment || CreditIncrease ) index
                 - MainPage
                 - EXIT
                 """;
     }
 
-    public void addCommandType(String[] dividedCommend) {
+    private void addCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "FlashMemory" -> {
                 if (adminController.addFlashMemory(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), Double.parseDouble(dividedCommend[5]), dividedCommend[6], Integer.parseInt(dividedCommend[7]), dividedCommend[8]))
@@ -128,7 +125,14 @@ public class AdminPanel {
         }
     }
 
-    public void editCommandType(String[] dividedCommend) {
+    private void removeCommand(String[] dividedCommend) {
+        if (adminController.removeProduct(dividedCommend[1]))
+            System.out.println("The operation was done successfully!");
+        else
+            System.out.println("There is no product with this ID !");
+    }
+
+    private void editCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "name" -> {
                 if (adminController.editProductName(dividedCommend[2], dividedCommend[3]))
@@ -152,7 +156,7 @@ public class AdminPanel {
         }
     }
 
-    public void showCommandType(String[] dividedCommend) {
+    private void showCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "Customers" -> {
                 for (Customer element : this.adminController.showCustomerInfo()) {
@@ -183,43 +187,49 @@ public class AdminPanel {
         }
     }
 
-    public void acceptCommandType(String[] dividedCommend) {
+    private void acceptCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "Registration" -> {
-                if (this.adminController.acceptRegistrationRequest(dividedCommend[2]))
+                if (this.adminController.acceptRegistrationRequest(Integer.parseInt(dividedCommend[2])))
                     System.out.println("The operation was done successfully!");
                 else
-                    System.out.println("NOT FOUND!");
+                    System.out.println("WRONG INDEX!");
             }
             case "Comment" -> {
                 if (this.adminController.acceptCommentRequest(Integer.parseInt(dividedCommend[2])))
                     System.out.println("The operation was done successfully!");
                 else
-                    System.out.println("NOT FOUND!");
+                    System.out.println("WRONG INDEX!");
             }
             case "CreditIncrease" -> {
-                if (this.adminController.acceptCreditIncreaseRequest(dividedCommend[2]))
+                if (this.adminController.acceptCreditIncreaseRequest(Integer.parseInt(dividedCommend[2])))
                     System.out.println("The operation was done successfully!");
                 else
-                    System.out.println("NOT FOUND!");
+                    System.out.println("WRONG INDEX!");
             }
             default -> System.out.println("WRONG COMMEND LINE!");
         }
     }
 
-    public void rejectCommandType(String[] dividedCommend) {
+    private void rejectCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "Registration" -> {
-                if (this.adminController.rejectRegistrationRequest(dividedCommend[2]))
+                if (this.adminController.rejectRegistrationRequest(Integer.parseInt(dividedCommend[2])))
                     System.out.println("The operation was done successfully!");
+                else
+                    System.out.println("WRONG INDEX!");
             }
             case "Comment" -> {
-                if (this.adminController.rejectCommentRequest(dividedCommend[2]))
+                if (this.adminController.rejectCommentRequest(Integer.parseInt(dividedCommend[2])))
                     System.out.println("The operation was done successfully!");
+                else
+                    System.out.println("WRONG INDEX!");
             }
             case "CreditIncrease" -> {
-                if (this.adminController.rejectCreditIncreaseRequest(dividedCommend[2]))
+                if (this.adminController.rejectCreditIncreaseRequest(Integer.parseInt(dividedCommend[2])))
                     System.out.println("The operation was done successfully!");
+                else
+                    System.out.println("WRONG INDEX!");
             }
             default -> System.out.println("WRONG COMMEND LINE!");
         }

@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class AdminController {
     Admin admin = Admin.getAdmin();
+    public AdminController(){}
 
     //Digital type of products adding function
     public boolean addFlashMemory(String productName, double productPrice, int numOfProduct, double weight, String dimensions, int capacity, String USBType) {
@@ -120,54 +121,67 @@ public class AdminController {
         } else
             return false;
     }
+
     //show customers list
-    public AbstractList<Customer> showCustomerInfo(){    //arraylist?
+    public AbstractList<Customer> showCustomerInfo() {    //arraylist?
         return CustomerController.getCustomersList();
     }
+
     //show registration request
-    public AbstractList<Customer> showRegistrationRequest(){return admin.getRegistrationRequest();}
-    //show comment request
-    public AbstractList<Comment> showCommentRequest(){return admin.getCommentRequest();}
-    //show credit increase request
-    public AbstractList<CreditIncreaseRequest> showCreditIncreaseRequest(){return admin.getCreditIncreaseRequests();}
-    //show product list
-    public AbstractList<Product> showProductList(){return admin.getProductsList();}
-    //accept registration request
-    public boolean acceptRegistrationRequest(String username){
-        for(Customer element : admin.getRegistrationRequest()){
-            if (Objects.equals(element.getUsername(), username)){
-                CustomerController.getCustomersList().add(element);
-                admin.getRegistrationRequest().remove(element);
-                return true;
-            }
-        }
-        return false;
+    public AbstractList<Customer> showRegistrationRequest() {
+        return admin.getRegistrationRequest();
     }
+
+    //show comment request
+    public AbstractList<Comment> showCommentRequest() {
+        return admin.getCommentRequest();
+    }
+
+    //show credit increase request
+    public AbstractList<CreditIncreaseRequest> showCreditIncreaseRequest() {
+        return admin.getCreditIncreaseRequests();
+    }
+
+    //show product list
+    public AbstractList<Product> showProductList() {
+        return admin.getProductsList();
+    }
+
+    //accept registration request
+    public boolean acceptRegistrationRequest(int registrationRequestIndex) {
+        if (admin.getCreditIncreaseRequests().size() - 1 >= registrationRequestIndex) {
+            Customer newCustomer = admin.getRegistrationRequest().get(registrationRequestIndex);
+            CustomerController.getCustomersList().add(newCustomer);
+            admin.getRegistrationRequest().remove(newCustomer);
+            return true;
+        } else
+            return false;
+    }
+
     //accept comment request
-    public boolean acceptCommentRequest(int indexOfComment){
-        if(admin.getCommentRequest().size()-1 >= indexOfComment) {
+    public boolean acceptCommentRequest(int indexOfComment) {
+        if (admin.getCommentRequest().size() - 1 >= indexOfComment) {
             admin.getCommentRequest().get(indexOfComment).setCommentStatus(CommentStatus.Accepted);
             int productIndex = searchProductByID(admin.getCommentRequest().get(indexOfComment).getProductID());
             admin.getProductsList().get(productIndex).getProductCommentList().add(admin.getCommentRequest().get(indexOfComment));
             admin.getCommentRequest().remove(admin.getCommentRequest().get(indexOfComment));
             return true;
-        }
-        else
+        } else
             return false;
     }
+
     //accept credit increase request
-    public boolean acceptCreditIncreaseRequest(String username){
-        for(CreditIncreaseRequest element : admin.getCreditIncreaseRequests()){
-            if (Objects.equals(element.getUsername() , username)){
-                int indexCustomer = this.searchCustomerByUsername(username) ;
-                double currentCredit = CustomerController.getCustomersList().get(indexCustomer).getAccountCredit();
-                CustomerController.getCustomersList().get(indexCustomer).setAccountCredit(currentCredit + element.getCreditIncreaseAmount());
-                admin.getCreditIncreaseRequests().remove(element);
-                return true;
-            }
-        }
-        return false;
+    public boolean acceptCreditIncreaseRequest(int indexOfCreditRequest) {
+        if (admin.getCreditIncreaseRequests().size() - 1 >= indexOfCreditRequest) {
+            int indexCustomer = this.searchCustomerByUsername(admin.getCreditIncreaseRequests().get(indexOfCreditRequest).getUsername());
+            double currentCredit = CustomerController.getCustomersList().get(indexCustomer).getAccountCredit();
+            CustomerController.getCustomersList().get(indexCustomer).setAccountCredit(currentCredit + admin.getCreditIncreaseRequests().get(indexOfCreditRequest).getCreditIncreaseAmount());
+            admin.getCreditIncreaseRequests().remove(indexOfCreditRequest);
+            return true;
+        } else
+            return false;
     }
+
     //search customer by username
     private int searchCustomerByUsername(String username) {
         int customerIndex = -1;
@@ -179,44 +193,43 @@ public class AdminController {
         }
         return customerIndex;
     }
+
     //reject registration request
-    public boolean rejectRegistrationRequest(String username){
-        for(Customer element : admin.getRegistrationRequest()){
-            if (Objects.equals(element.getUsername(), username)){
-                admin.getRegistrationRequest().remove(element);
-                return true;
-            }
-        }
-        return false;
+    public boolean rejectRegistrationRequest(int registrationRequestIndex) {
+        if (admin.getCreditIncreaseRequests().size() - 1 >= registrationRequestIndex) {
+            Customer newCustomer = admin.getRegistrationRequest().get(registrationRequestIndex);
+            admin.getRegistrationRequest().remove(newCustomer);
+            return true;
+        } else
+            return false;
     }
+
     //reject comment request
-    public boolean rejectCommentRequest(String username){
-        for(Comment element : admin.getCommentRequest()){
-            if (Objects.equals(element.getCommentingUser().getUsername(), username)){
-                element.setCommentStatus(CommentStatus.Rejected);
-                return true;
-            }
-        }
-        return false;
+    public boolean rejectCommentRequest(int indexOfComment) {
+        if (admin.getCommentRequest().size() - 1 >= indexOfComment) {
+            admin.getCommentRequest().get(indexOfComment).setCommentStatus(CommentStatus.Rejected);
+            return true;
+        } else
+            return false;
     }
+
     //reject credit increase request
-    public boolean rejectCreditIncreaseRequest(String username){
-        for(CreditIncreaseRequest element : admin.getCreditIncreaseRequests()){
-            if (Objects.equals(element.getUsername() , username)){
-                admin.getCreditIncreaseRequests().remove(element);
-                return true;
-            }
-        }
-        return false;
+    public boolean rejectCreditIncreaseRequest(int indexOfCreditRequest) {
+        if (admin.getCreditIncreaseRequests().size() - 1 >= indexOfCreditRequest) {
+            admin.getCreditIncreaseRequests().remove(indexOfCreditRequest);
+            return true;
+        } else
+            return false;
     }
+
     //log in
-    public boolean logIn(String username , String password){
+    public boolean logIn(String username, String password) {
         return Objects.equals(username, admin.getUsername()) && Objects.equals(password, admin.getPassword());
     }
+
     //registration page (add new customer to request list)
-    public boolean addRegisteredCustomerToRequestList(Customer newCustomer){
+    public boolean addRegisteredCustomerToRequestList(Customer newCustomer) {
         admin.getRegistrationRequest().add(newCustomer);
         return true;
     }
 }
-
