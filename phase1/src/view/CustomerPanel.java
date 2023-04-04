@@ -32,8 +32,8 @@ public class CustomerPanel {
     public void customerMenu(){
         System.out.println("""
                 What do you want to do?
-                1) view your info
-                2) edit your info \s
+                1) view my info
+                2) edit my info \s
                 3) go to product page
                 4) shopping history
                 5) increase your credit
@@ -205,32 +205,35 @@ public class CustomerPanel {
         if(customerController.showShoppingCart().size() != 0) {
             int choice;
             do {
-                for(ProductInfoReceipt element : customerController.showShoppingCart())
-                    System.out.println(element.toString());
-                System.out.println("""
-                        Now you can :
-                        1) remove product\s
-                        2) FINALIZE
-                        3) back to panel
-                        """);
-                choice = input.nextInt();
-                if (choice == 1) {
-                    input.nextLine();
-                    System.out.println("Enter the product ID : ");
-                    String productID = input.nextLine();
-                    if(customerController.removeProductFromShoppingCart(productID))
-                        System.out.println("DONE SUCCESSFULLY!");
-                    else
-                        System.out.println("This product is not in your shopping cart!");
+                if(customerController.showShoppingCart().size() != 0) {
+                    for (ProductInfoReceipt element : customerController.showShoppingCart())
+                        System.out.println(element.toString());
+                    System.out.println("""
+                            Now you can :
+                            1) remove product\s
+                            2) FINALIZE
+                            3) back to panel
+                            """);
+                    choice = input.nextInt();
+                    if (choice == 1) {
+                        input.nextLine();
+                        System.out.println("Enter the product ID : ");
+                        String productID = input.nextLine();
+                        if (customerController.removeProductFromShoppingCart(productID))
+                            System.out.println("DONE SUCCESSFULLY!");
+                        else
+                            System.out.println("This product is not in your shopping cart!");
+                    } else if (choice == 2) {
+                        if (customerController.finalizeShoppingCart())
+                            System.out.println("DONE SUCCESSFULLY!");
+                        else
+                            System.out.println("Your credit isn't enough!");
+                        choice = 3; //back to panel
+                    } else
+                        System.out.println("WRONG NUM!");
                 }
-                else if(choice == 2) {
-                    if(customerController.finalizeShoppingCart())
-                        System.out.println("DONE SUCCESSFULLY!");
-                    else
-                        System.out.println("Your credit isn't enough!");
-                    choice = 3; //back to panel
-                }else
-                    System.out.println("WRONG NUM!");
+                else
+                    choice = 3;
             } while (choice != 3);
             this.customerMenu();
         }

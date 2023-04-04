@@ -13,8 +13,9 @@ public class ProductsPage {
     private final Scanner input = new Scanner(System.in);
     private final ProductsPageController productsPageController = new ProductsPageController();
     private static int customerIndex = -1;
+    public ProductsPage(){}
 
-    public static int getCustomerIndex() {
+    public static int getCustomerIndex() { //I don't use it in my program
         return customerIndex;
     }
 
@@ -35,13 +36,12 @@ public class ProductsPage {
         switch (choice) {
             case 1 -> this.viewProducts(Admin.getAdmin().getProductsList());
             case 2 -> searchProduct();
-            case 3 -> filterPage();
+            case 3 -> manageFilter();
             case 4 -> {
-                if(customerIndex == -1) { //when you did not log in
+                if (customerIndex == -1) { //when you did not log in
                     MainPage mainPage = new MainPage();
                     mainPage.mainPage();
-                }
-                else {//when you log in
+                } else {//when you log in
                     customerIndex = -1;
                     CustomerPanel customerPanel = new CustomerPanel();
                     customerPanel.customerMenu();
@@ -51,7 +51,7 @@ public class ProductsPage {
         }
     }
 
-    public void viewProducts(ArrayList<Product> products) {
+    private void viewProducts(ArrayList<Product> products) {
         ProductsPageController.setProductNumZero();
         if (productsPageController.showNextPageOfProduct(products) == null)
             System.out.println("No results found!");
@@ -78,14 +78,10 @@ public class ProductsPage {
                             String productID = input.nextLine();
                             if (productsPageController.selectProductByID(productID) != null) {
                                 System.out.println(productsPageController.selectProductByID(productID).toString());
-                                if(customerIndex != -1){
-                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
-                                }
-                                else { //if you are not logIn
-                                    System.out.println("1) Back to product page panel");
-                                    if (input.nextInt() != 1)
-                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                                }
+                                if (customerIndex != -1)
+                                    this.manageCustomerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                else //if you are not logIn
+                                    this.manageUnknownProductChoice();
                                 choice = 1;
                             } else
                                 System.out.println("This ID is wrong!");
@@ -106,14 +102,10 @@ public class ProductsPage {
                         String productID = input.nextLine();
                         if (productsPageController.selectProductByID(productID) != null) {
                             System.out.println(productsPageController.selectProductByID(productID).toString());
-                            if(customerIndex != -1){
-                                this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
-                            }
-                            else { //if you are not logIn
-                                System.out.println("1) Back to product page panel");
-                                if (input.nextInt() != 1)
-                                    System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                            }
+                            if (customerIndex != -1)
+                                this.manageCustomerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                            else //if you are not logIn
+                                this.manageUnknownProductChoice();
                             choice = 1;
                         } else
                             System.out.println("This ID is wrong!");
@@ -136,14 +128,10 @@ public class ProductsPage {
                             String productID = input.nextLine();
                             if (productsPageController.selectProductByID(productID) != null) {
                                 System.out.println(productsPageController.selectProductByID(productID).toString());
-                                if(customerIndex != -1){
-                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
-                                }
-                                else { //if you are not logIn
-                                    System.out.println("1) Back to product page panel");
-                                    if (input.nextInt() != 1)
-                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                                }
+                                if (customerIndex != -1)
+                                    this.manageCustomerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                else //if you are not logIn
+                                    this.manageUnknownProductChoice();
                                 choice = 1;
                             } else
                                 System.out.println("This ID is wrong!");
@@ -169,14 +157,10 @@ public class ProductsPage {
                             String productID = input.nextLine();
                             if (productsPageController.selectProductByID(productID) != null) {
                                 System.out.println(productsPageController.selectProductByID(productID).toString());
-                                if(customerIndex != -1){
-                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
-                                }
-                                else { //if you are not logIn
-                                    System.out.println("1) Back to product page panel");
-                                    if (input.nextInt() != 1)
-                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                                }
+                                if (customerIndex != -1)
+                                    this.manageCustomerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                else //if you are not logIn
+                                    this.manageUnknownProductChoice();
                                 choice = 1;
                             } else
                                 System.out.println("This ID is wrong!");
@@ -188,7 +172,8 @@ public class ProductsPage {
         productsPagePanel();
     }
 
-    public void printProductPage(AbstractList<Product> products) {
+    //for printing product in products page
+    private void printProductPage(AbstractList<Product> products) {
         for (Product element : products) {
             System.out.println("-----" + element.getProductName() + "-----\n");
             System.out.println("*ID: " + element.getProductID() + "\n");
@@ -197,14 +182,15 @@ public class ProductsPage {
         }
     }
 
-    public void searchProduct() {
+    //search product by name
+    private void searchProduct() {
         System.out.println("Enter the name of which product you want : ");
         input.nextLine();
         viewProducts(productsPageController.searchProductByName(input.nextLine()));
     }
 
     //filter products
-    public void filterPage() {
+    private void manageFilter() {
         System.out.println("""
                 Filter BY Category:
                 1) Digital
@@ -215,38 +201,38 @@ public class ProductsPage {
                 """);
         int selectedCategory = input.nextInt();
         switch (selectedCategory) {
-            case 1 -> filterDigitalSwitch(selectedCategory);
-            case 2 -> filterStationerySwitch(selectedCategory);
-            case 3 -> filterVehicleSwitch(selectedCategory);
-            case 4 -> filterEdibleSwitch(selectedCategory);
-            case 5 -> {
-                System.out.println("""
-                        Filter BY:
-                        1) price (enter two num for this filter)
-                        2) available status
-                        """);
-                int secondChoice = input.nextInt();
-                switch (secondChoice) {
-                    case 1 -> {
-                        System.out.println("Enter start and the end of price : ");
-                        viewFilterProducts(productsPageController.filterByPrice(Admin.getAdmin().getProductsList(), input.nextDouble(), input.nextDouble()) , selectedCategory );
-                    }
-                    case 2 -> viewFilterProducts(productsPageController.filterByStatus(Admin.getAdmin().getProductsList()) , selectedCategory );
-                    default -> {
-                        System.out.println("WRONG NUM");
-                        MainPage mainPage = new MainPage();
-                        mainPage.mainPage();
-                    }
-                }
+            case 1 -> manageDigitalFilterSwitch(selectedCategory);
+            case 2 -> manageStationeryFilterSwitch(selectedCategory);
+            case 3 -> manageVehicleFilterSwitch(selectedCategory);
+            case 4 -> manageEdibleFilterSwitch(selectedCategory);
+            case 5 -> manageFirstSkipFilterSwitch(selectedCategory);
+            default -> this.productsPagePanel();
+        }
+    }
+
+    private void manageFirstSkipFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY:
+                1) price (enter two num for this filter)
+                2) available status
+                """);
+        int secondChoice = input.nextInt();
+        switch (secondChoice) {
+            case 1 -> {
+                System.out.println("Enter start and the end of price : ");
+                viewFilterProducts(productsPageController.filterByPrice(Admin.getAdmin().getProductsList(), input.nextDouble(), input.nextDouble()), selectedCategory);
             }
+            case 2 ->
+                    viewFilterProducts(productsPageController.filterByStatus(Admin.getAdmin().getProductsList()), selectedCategory);
             default -> {
-                MainPage mainPage = new MainPage();
-                mainPage.mainPage();
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
             }
         }
     }
 
-    public void filterDigitalSwitch(int selectedCategory) {
+    //filter digital----------------------------------------------------------------------------------------------------
+    private void manageDigitalFilterSwitch(int selectedCategory) {
         System.out.println("""
                 Filter BY Subcategory:
                 1) Information storage
@@ -254,117 +240,10 @@ public class ProductsPage {
                 3) skip
                 """);
         int secondChoice = input.nextInt();
-        if (secondChoice == 1) {
-            System.out.println("""
-                    Filter BY Subcategory:
-                    1) SSD
-                    2) Flash Memory
-                    3) skip
-                    """);
-            int thirdChoice = input.nextInt();
-            int forthChoice;
-            switch (thirdChoice) {
-                case 1 -> {
-                    System.out.println("""
-                            Filter BY:
-                            1) price (enter two num for this filter)
-                            2) available status
-                            """);
-                    forthChoice = input.nextInt();
-                    switch (forthChoice) {
-                        case 1 -> {
-                            System.out.println("Enter start and the end of price : ");
-                            viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterSSDSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory);
-                        }
-                        case 2 ->
-                                viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterSSDSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))) , selectedCategory);
-
-                        default -> {
-                            System.out.println("WRONG NUM");
-                            MainPage mainPage = new MainPage();
-                            mainPage.mainPage();
-                        }
-                    }
-                }
-                case 2 -> {
-                    System.out.println("""
-                            Filter BY:
-                            1) price (enter two num for this filter)
-                            2) available status
-                            """);
-                    forthChoice = input.nextInt();
-                    switch (forthChoice) {
-                        case 1 -> {
-                            System.out.println("Enter start and the end of price : ");
-                            viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterFlashMemorySubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory );
-                        }
-                        case 2 ->
-                                viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterFlashMemorySubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
-                        default -> {
-                            System.out.println("WRONG NUM");
-                            MainPage mainPage = new MainPage();
-                            mainPage.mainPage();
-                        }
-                    }
-                }
-                case 3 -> {
-                    System.out.println("""
-                            Filter BY:
-                            1) price (enter two num for this filter)
-                            2) available status
-                            """);
-                    forthChoice = input.nextInt();
-                    switch (forthChoice) {
-                        case 1 -> {
-                            System.out.println("Enter start and the end of price : ");
-                            viewFilterProducts(productsPageController.filterByPrice((productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory );
-                        }
-                        case 2 ->
-                                viewFilterProducts(productsPageController.filterByStatus((productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))) , selectedCategory);
-                        default -> {
-                            System.out.println("WRONG NUM");
-                            MainPage mainPage = new MainPage();
-                            mainPage.mainPage();
-                        }
-                    }
-                }
-                default -> {
-                    System.out.println("WRONG NUM");
-                    MainPage mainPage = new MainPage();
-                    mainPage.mainPage();
-                }
-            }
-        } else if (secondChoice == 2) {
-            System.out.println("""
-                    Filter BY:
-                    1) price (enter two num for this filter)
-                    2) available status
-                    3) RAM Memory
-                    4) CPU Model
-                    """);
-            int thirdChoice = input.nextInt();
-            switch (thirdChoice) {
-                case 1 -> {
-                    System.out.println("Enter start and the end of price : ");
-                    viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterPCSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory );
-                }
-                case 2 ->
-                        viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterPCSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
-                case 3 -> {
-                    System.out.println("Enter min for RAM Memory : ");
-                    viewFilterProducts(productsPageController.filterByRAMMemory(productsPageController.filterPCSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextInt()) , selectedCategory);
-                }
-                case 4 -> {
-                    System.out.println("Enter the CPU model : ");
-                    input.nextLine();
-                    viewFilterProducts(productsPageController.filterByCPUModel(productsPageController.filterPCSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextLine()) , selectedCategory );
-                }
-                default -> {
-                    System.out.println("WRONG NUM");
-                    MainPage mainPage = new MainPage();
-                    mainPage.mainPage();
-                }
-            }
+        if (secondChoice == 1)
+            this.manageInformationStorageFilterSwitch(selectedCategory);
+        else if (secondChoice == 2) {
+            this.managePCFilterSwitch(selectedCategory);
         } else if (secondChoice == 3) {
             System.out.println("""
                     Filter BY:
@@ -375,24 +254,155 @@ public class ProductsPage {
             switch (thirdChoice) {
                 case 1 -> {
                     System.out.println("Enter start and the end of price : ");
-                    viewFilterProducts(productsPageController.filterByPrice((productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory );
+                    viewFilterProducts(productsPageController.filterByPrice((productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
                 }
                 case 2 ->
-                        viewFilterProducts(productsPageController.filterByStatus((productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
+                        viewFilterProducts(productsPageController.filterByStatus((productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
                 default -> {
                     System.out.println("WRONG NUM");
-                    MainPage mainPage = new MainPage();
-                    mainPage.mainPage();
+                    this.productsPagePanel();
                 }
             }
         } else {
             System.out.println("WRONG NUM");
-            MainPage mainPage = new MainPage();
-            mainPage.mainPage();
+            this.productsPagePanel();
         }
     }
 
-    public void filterStationerySwitch(int selectedCategory) {
+    //manage Information Storage Filter Switch
+    private void manageInformationStorageFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY Subcategory:
+                1) SSD
+                2) Flash Memory
+                3) skip
+                """);
+        int thirdChoice = input.nextInt();
+        switch (thirdChoice) {
+            case 1 -> this.manageSSDFilterSwitch(selectedCategory);
+            case 2 -> this.manageFlashMemoryFilterSwitch(selectedCategory);
+            case 3 -> {
+                System.out.println("""
+                        Filter BY:
+                        1) price (enter two num for this filter)
+                        2) available status
+                        """);
+                int forthChoice = input.nextInt();
+                switch (forthChoice) {
+                    case 1 -> {
+                        System.out.println("Enter start and the end of price : ");
+                        viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterInformationStorageSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
+                    }
+                    case 2 ->
+                            viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterInformationStorageSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
+                    default -> {
+                        System.out.println("WRONG NUM");
+                        this.productsPagePanel();
+                    }
+                }
+            }
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
+            }
+        }
+    }
+
+    //filter SSD switch
+    private void manageSSDFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY:
+                1) price (enter two num for this filter)
+                2) available status
+                3) read speed
+                4) write speed
+                """);
+        int forthChoice = input.nextInt();
+        switch (forthChoice) {
+            case 1 -> {
+                System.out.println("Enter the start and the end of price range : ");
+                viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterSSDSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
+            }
+            case 2 ->
+                    viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterSSDSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
+            case 3 -> {
+                System.out.println("Enter the start and the end of reed speed range : ");
+                viewFilterProducts(productsPageController.filterByReedSpeed(productsPageController.filterSSDSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextInt(), input.nextInt()), selectedCategory);
+            }
+            case 4 -> {
+                System.out.println("Enter the start and the end of write speed range : ");
+                viewFilterProducts(productsPageController.filterByWriteSpeed(productsPageController.filterSSDSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextInt(), input.nextInt()), selectedCategory);
+            }
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
+            }
+        }
+    }
+
+    // filter flash memory
+    private void manageFlashMemoryFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY:
+                1) price (enter two num for this filter)
+                2) available status
+                3) USB type
+                """);
+        int forthChoice = input.nextInt();
+        switch (forthChoice) {
+            case 1 -> {
+                System.out.println("Enter start and the end of price : ");
+                viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterFlashMemorySubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
+            }
+            case 2 ->
+                    viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterFlashMemorySubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
+            case 3 -> {
+                System.out.println("Enter USB type : ");
+                input.nextLine();
+                viewFilterProducts(productsPageController.filterByUSBType(productsPageController.filterFlashMemorySubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextLine()), selectedCategory);
+            }
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
+            }
+        }
+    }
+
+    //filter PC
+    private void managePCFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY:
+                1) price (enter two num for this filter)
+                2) available status
+                3) RAM Memory
+                4) CPU Model
+                """);
+        int thirdChoice = input.nextInt();
+        switch (thirdChoice) {
+            case 1 -> {
+                System.out.println("Enter start and the end of price : ");
+                viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterPCSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
+            }
+            case 2 ->
+                    viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterPCSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
+            case 3 -> {
+                System.out.println("Enter min for RAM Memory : ");
+                viewFilterProducts(productsPageController.filterByRAMMemory(productsPageController.filterPCSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextInt()), selectedCategory);
+            }
+            case 4 -> {
+                System.out.println("Enter the CPU model : ");
+                input.nextLine();
+                viewFilterProducts(productsPageController.filterByCPUModel(productsPageController.filterPCSubcategory(productsPageController.filterDigitalCategory(Admin.getAdmin().getProductsList())), input.nextLine()), selectedCategory);
+            }
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
+            }
+        }
+    }
+
+    //filter Stationery-------------------------------------------------------------------------------------------------
+    private void manageStationeryFilterSwitch(int selectedCategory) {
         System.out.println("""
                 Filter BY Subcategory:
                 1) Pencil
@@ -403,69 +413,9 @@ public class ProductsPage {
         int secondChoice = input.nextInt();
         int thirdChoice;
         switch (secondChoice) {
-            case 1 -> {
-                System.out.println("""
-                        Filter BY:
-                        1) price (enter two num for this filter)
-                        2) available status
-                        """);
-                thirdChoice = input.nextInt();
-                switch (thirdChoice) {
-                    case 1 -> {
-                        System.out.println("Enter start and the end of price : ");
-                        viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterPencilSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory);
-                    }
-                    case 2 ->
-                            viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterPencilSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList()))) , selectedCategory);
-                    default -> {
-                        System.out.println("WRONG NUM");
-                        MainPage mainPage = new MainPage();
-                        mainPage.mainPage();
-                    }
-                }
-            }
-            case 2 -> {
-                System.out.println("""
-                        Filter BY:
-                        1) price (enter two num for this filter)
-                        2) available status
-                        """);
-                thirdChoice = input.nextInt();
-                switch (thirdChoice) {
-                    case 1 -> {
-                        System.out.println("Enter start and the end of price : ");
-                        viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterPenSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory );
-                    }
-                    case 2 ->
-                            viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterPenSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
-                    default -> {
-                        System.out.println("WRONG NUM");
-                        MainPage mainPage = new MainPage();
-                        mainPage.mainPage();
-                    }
-                }
-            }
-            case 3 -> {
-                System.out.println("""
-                        Filter BY:
-                        1) price (enter two num for this filter)
-                        2) available status
-                        """);
-                thirdChoice = input.nextInt();
-                switch (thirdChoice) {
-                    case 1 -> {
-                        System.out.println("Enter start and the end of price : ");
-                        viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterNoteBookSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory );
-                    }
-                    case 2 ->
-                            viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterNoteBookSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
-                    default -> {
-                        System.out.println("WRONG NUM");
-                        MainPage mainPage = new MainPage();
-                        mainPage.mainPage();
-                    }
-                }
-            }
+            case 1 -> this.managePencilFilterSwitch(selectedCategory);
+            case 2 -> this.managePenFilterSwitch(selectedCategory);
+            case 3 -> this.manageNoteBookFilterSwitch(selectedCategory);
             case 4 -> {
                 System.out.println("""
                         Filter BY:
@@ -476,21 +426,87 @@ public class ProductsPage {
                 switch (thirdChoice) {
                     case 1 -> {
                         System.out.println("Enter start and the end of price : ");
-                        viewFilterProducts(productsPageController.filterByPrice((productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory );
+                        viewFilterProducts(productsPageController.filterByPrice((productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
                     }
                     case 2 ->
-                            viewFilterProducts(productsPageController.filterByStatus((productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
+                            viewFilterProducts(productsPageController.filterByStatus((productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
                     default -> {
                         System.out.println("WRONG NUM");
-                        MainPage mainPage = new MainPage();
-                        mainPage.mainPage();
+                        this.productsPagePanel();
                     }
                 }
             }
         }
     }
 
-    public void filterVehicleSwitch(int selectedCategory) {
+    //filter Pencil
+    private void managePencilFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY:
+                1) price (enter two num for this filter)
+                2) available status
+                """);
+        int thirdChoice = input.nextInt();
+        switch (thirdChoice) {
+            case 1 -> {
+                System.out.println("Enter start and the end of price : ");
+                viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterPencilSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
+            }
+            case 2 ->
+                    viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterPencilSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
+            }
+        }
+    }
+
+    //filter Pen
+    private void managePenFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY:
+                1) price (enter two num for this filter)
+                2) available status
+                """);
+        int thirdChoice = input.nextInt();
+        switch (thirdChoice) {
+            case 1 -> {
+                System.out.println("Enter start and the end of price : ");
+                viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterPenSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
+            }
+            case 2 ->
+                    viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterPenSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
+            }
+        }
+    }
+
+    //filter Note book
+    private void manageNoteBookFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY:
+                1) price (enter two num for this filter)
+                2) available status
+                """);
+        int thirdChoice = input.nextInt();
+        switch (thirdChoice) {
+            case 1 -> {
+                System.out.println("Enter start and the end of price : ");
+                viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterNoteBookSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
+            }
+            case 2 ->
+                    viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterNoteBookSubcategory(productsPageController.filterStationeryCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
+            }
+        }
+    }
+
+    //filter vehicle----------------------------------------------------------------------------------------------------
+    private void manageVehicleFilterSwitch(int selectedCategory) {
         System.out.println("""
                 Filter BY Subcategory:
                 1) Car
@@ -500,48 +516,8 @@ public class ProductsPage {
         int secondChoice = input.nextInt();
         int thirdChoice;
         switch (secondChoice) {
-            case 1 -> {
-                System.out.println("""
-                        Filter BY:
-                        1) price (enter two num for this filter)
-                        2) available status
-                        """);
-                thirdChoice = input.nextInt();
-                switch (thirdChoice) {
-                    case 1 -> {
-                        System.out.println("Enter start and the end of price : ");
-                        viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterCarSubcategory(productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory );
-                    }
-                    case 2 ->
-                            viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterCarSubcategory(productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
-                    default -> {
-                        System.out.println("WRONG NUM");
-                        MainPage mainPage = new MainPage();
-                        mainPage.mainPage();
-                    }
-                }
-            }
-            case 2 -> {
-                System.out.println("""
-                        Filter BY:
-                        1) price (enter two num for this filter)
-                        2) available status
-                        """);
-                thirdChoice = input.nextInt();
-                switch (thirdChoice) {
-                    case 1 -> {
-                        System.out.println("Enter start and the end of price : ");
-                        viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterBicycleSubcategory(productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory );
-                    }
-                    case 2 ->
-                            viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterBicycleSubcategory(productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
-                    default -> {
-                        System.out.println("WRONG NUM");
-                        MainPage mainPage = new MainPage();
-                        mainPage.mainPage();
-                    }
-                }
-            }
+            case 1 -> this.manageCarFilterSwitch(selectedCategory);
+            case 2 -> this.manageBicycleFilterSwitch(selectedCategory);
             case 3 -> {
                 System.out.println("""
                         Filter BY:
@@ -552,21 +528,69 @@ public class ProductsPage {
                 switch (thirdChoice) {
                     case 1 -> {
                         System.out.println("Enter start and the end of price : ");
-                        viewFilterProducts(productsPageController.filterByPrice((productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory );
+                        viewFilterProducts(productsPageController.filterByPrice((productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
                     }
                     case 2 ->
-                            viewFilterProducts(productsPageController.filterByStatus((productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
+                            viewFilterProducts(productsPageController.filterByStatus((productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
                     default -> {
                         System.out.println("WRONG NUM");
-                        MainPage mainPage = new MainPage();
-                        mainPage.mainPage();
+                        this.productsPagePanel();
                     }
                 }
+            }
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
             }
         }
     }
 
-    public void filterEdibleSwitch(int selectedCategory) {
+    //filter Car
+    private void manageCarFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY:
+                1) price (enter two num for this filter)
+                2) available status
+                """);
+        int thirdChoice = input.nextInt();
+        switch (thirdChoice) {
+            case 1 -> {
+                System.out.println("Enter start and the end of price : ");
+                viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterCarSubcategory(productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
+            }
+            case 2 ->
+                    viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterCarSubcategory(productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
+            }
+        }
+    }
+
+    //filter Bicycle
+    private void manageBicycleFilterSwitch(int selectedCategory) {
+        System.out.println("""
+                Filter BY:
+                1) price (enter two num for this filter)
+                2) available status
+                """);
+        int thirdChoice = input.nextInt();
+        switch (thirdChoice) {
+            case 1 -> {
+                System.out.println("Enter start and the end of price : ");
+                viewFilterProducts(productsPageController.filterByPrice(productsPageController.filterBicycleSubcategory(productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
+            }
+            case 2 ->
+                    viewFilterProducts(productsPageController.filterByStatus(productsPageController.filterBicycleSubcategory(productsPageController.filterVehicleCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
+            default -> {
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
+            }
+        }
+    }
+
+    //filter edible-----------------------------------------------------------------------------------------------------
+    private void manageEdibleFilterSwitch(int selectedCategory) {
         System.out.println("""
                 Filter BY:
                 1) price (enter two num for this filter)
@@ -576,19 +600,19 @@ public class ProductsPage {
         switch (secondChoice) {
             case 1 -> {
                 System.out.println("Enter start and the end of price : ");
-                viewFilterProducts(productsPageController.filterByPrice((productsPageController.filterEdibleCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()) , selectedCategory);
+                viewFilterProducts(productsPageController.filterByPrice((productsPageController.filterEdibleCategory(Admin.getAdmin().getProductsList())), input.nextDouble(), input.nextDouble()), selectedCategory);
             }
             case 2 ->
-                    viewFilterProducts(productsPageController.filterByStatus((productsPageController.filterEdibleCategory(Admin.getAdmin().getProductsList()))) , selectedCategory );
+                    viewFilterProducts(productsPageController.filterByStatus((productsPageController.filterEdibleCategory(Admin.getAdmin().getProductsList()))), selectedCategory);
             default -> {
                 System.out.println("WRONG NUM");
-                MainPage mainPage = new MainPage();
-                mainPage.mainPage();
+                this.productsPagePanel();
             }
         }
     }
-    //view function for filter page
-    public void viewFilterProducts(ArrayList<Product> products , int selectedCategory) {
+
+    //view function for filter page-------------------------------------------------------------------------------------
+    private void viewFilterProducts(ArrayList<Product> products, int selectedCategory) {
         ProductsPageController.setProductNumZero();
         if (productsPageController.showNextPageOfProduct(products) == null)
             System.out.println("No results found!");
@@ -616,14 +640,10 @@ public class ProductsPage {
                             String productID = input.nextLine();
                             if (productsPageController.selectProductByID(productID) != null) {
                                 System.out.println(productsPageController.selectProductByID(productID).toString());
-                                if(customerIndex != -1){
-                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
-                                }
-                                else { //if you are not logIn
-                                    System.out.println("1) Back to product page panel");
-                                    if (input.nextInt() != 1)
-                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                                }
+                                if (customerIndex != -1)
+                                    this.manageCustomerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                else //if you are not logIn
+                                    this.manageUnknownProductChoice();
                                 choice = 1;
                             } else
                                 System.out.println("This ID is wrong!");
@@ -646,19 +666,14 @@ public class ProductsPage {
                         String productID = input.nextLine();
                         if (productsPageController.selectProductByID(productID) != null) {
                             System.out.println(productsPageController.selectProductByID(productID).toString());
-                            if(customerIndex != -1){
-                                this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
-                            }
-                            else { //if you are not logIn
-                                System.out.println("1) Back to product page panel");
-                                if (input.nextInt() != 1)
-                                    System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                            }
+                            if (customerIndex != -1)
+                                this.manageCustomerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                            else //if you are not logIn
+                                this.manageUnknownProductChoice();
                             choice = 1;
                         } else
                             System.out.println("This ID is wrong!");
-                    }
-                    else if(choice == 3)
+                    } else if (choice == 3)
                         backToFirstFilter(selectedCategory);
                 }
                 //you are at the first page
@@ -679,14 +694,10 @@ public class ProductsPage {
                             String productID = input.nextLine();
                             if (productsPageController.selectProductByID(productID) != null) {
                                 System.out.println(productsPageController.selectProductByID(productID).toString());
-                                if(customerIndex != -1){
-                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
-                                }
-                                else { //if you are not logIn
-                                    System.out.println("1) Back to product page panel");
-                                    if (input.nextInt() != 1)
-                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                                }
+                                if (customerIndex != -1)
+                                    this.manageCustomerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                else //if you are not logIn
+                                    this.manageUnknownProductChoice();
                                 choice = 1;
                             } else
                                 System.out.println("This ID is wrong!");
@@ -714,14 +725,10 @@ public class ProductsPage {
                             String productID = input.nextLine();
                             if (productsPageController.selectProductByID(productID) != null) {
                                 System.out.println(productsPageController.selectProductByID(productID).toString());
-                                if(customerIndex != -1){
-                                    this.customerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
-                                }
-                                else { //if you are not logIn
-                                    System.out.println("1) Back to product page panel");
-                                    if (input.nextInt() != 1)
-                                        System.out.println("Although you did not enter the number one, I will return you to the main page :)");
-                                }
+                                if (customerIndex != -1)
+                                    this.manageCustomerProductChoice(productsPageController.selectProductByID(productID)); //when select by customer
+                                else //if you are not logIn
+                                    this.manageUnknownProductChoice();
                                 choice = 1;
                             } else
                                 System.out.println("This ID is wrong!");
@@ -733,12 +740,15 @@ public class ProductsPage {
         }
         productsPagePanel();
     }
-    public void backToFirstFilter(int selectedCategory){
-        switch (selectedCategory){
-            case 1 -> filterDigitalSwitch(selectedCategory);
-            case 2 -> filterStationerySwitch(selectedCategory);
-            case 3 -> filterVehicleSwitch(selectedCategory);
-            case 4 -> filterEdibleSwitch(selectedCategory);
+
+    //back to first filter choice
+
+    private void backToFirstFilter(int selectedCategory) {
+        switch (selectedCategory) {
+            case 1 -> manageDigitalFilterSwitch(selectedCategory);
+            case 2 -> manageStationeryFilterSwitch(selectedCategory);
+            case 3 -> manageVehicleFilterSwitch(selectedCategory);
+            case 4 -> manageEdibleFilterSwitch(selectedCategory);
             case 5 -> {
                 System.out.println("""
                         Filter BY:
@@ -754,24 +764,24 @@ public class ProductsPage {
                     case 2 -> viewProducts(productsPageController.filterByStatus(Admin.getAdmin().getProductsList()));
                     default -> {
                         System.out.println("WRONG NUM");
-                        MainPage mainPage = new MainPage();
-                        mainPage.mainPage();
+                        this.productsPagePanel();
                     }
                 }
             }
             default -> {
-                MainPage mainPage = new MainPage();
-                mainPage.mainPage();
+                System.out.println("WRONG NUM");
+                this.productsPagePanel();
             }
         }
     }
+
     //if customer is in panel and select product
-    public void customerProductChoice(Product product){
+    private void manageCustomerProductChoice(Product product) {
         System.out.println("""
-                        1) leave a comment
-                        2) add this product to shopping cart
-                        3) BACK
-                        """);
+                1) leave a comment
+                2) add this product to shopping cart
+                3) BACK
+                """);
         int secondChoice = input.nextInt();
         switch (secondChoice) {
             case 1 -> {
@@ -786,7 +796,14 @@ public class ProductsPage {
                     System.out.println("This product is unavailable now!");
             }
             default -> {
+                //return back
             }
         }
+    }
+    //if unknown user select product
+    private void manageUnknownProductChoice() {
+        System.out.println("1) Back to product page panel");
+        if (input.nextInt() != 1)
+            System.out.println("Although you did not enter the number one, I will return you to the main page :)");
     }
 }

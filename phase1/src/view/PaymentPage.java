@@ -37,6 +37,18 @@ public class PaymentPage {
             if (!beCorrect)
                 System.out.println("You have entered an invalid cvv2. It should contain 3 digits!");
         } while (!beCorrect);
+        //password code
+        System.out.println("Enter your password : ");
+        String password;
+        Pattern passwordPattern = Pattern.compile("^\\d{8}$");
+        do {
+            password = input.nextLine();
+            Matcher passwordMather = passwordPattern.matcher(password);
+            beCorrect = passwordMather.find();
+            if (!beCorrect)
+                System.out.println("You have entered an invalid password. It should contain 8 digits!");
+        } while (!beCorrect);
+        //--------------------------------------------------------------------------------------------------------------
         CreditIncreaseRequest newRequest = new CreditIncreaseRequest(CustomerPanel.getCustomer().getUsername() , creditAmount );
         CustomerController customerController = new CustomerController();
         if (customerController.addCreditIncreaseRequest(newRequest))

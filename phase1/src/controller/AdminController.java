@@ -149,7 +149,7 @@ public class AdminController {
 
     //accept registration request
     public boolean acceptRegistrationRequest(int registrationRequestIndex) {
-        if (admin.getCreditIncreaseRequests().size() - 1 >= registrationRequestIndex) {
+        if (admin.getRegistrationRequest().size() - 1 >= registrationRequestIndex) {
             Customer newCustomer = admin.getRegistrationRequest().get(registrationRequestIndex);
             CustomerController.getCustomersList().add(newCustomer);
             admin.getRegistrationRequest().remove(newCustomer);
@@ -171,7 +171,7 @@ public class AdminController {
     }
 
     //accept credit increase request
-    public boolean acceptCreditIncreaseRequest(int indexOfCreditRequest) {
+    public boolean acceptCreditIncreaseRequest(int indexOfCreditRequest) {  //can change
         if (admin.getCreditIncreaseRequests().size() - 1 >= indexOfCreditRequest) {
             int indexCustomer = this.searchCustomerByUsername(admin.getCreditIncreaseRequests().get(indexOfCreditRequest).getUsername());
             double currentCredit = CustomerController.getCustomersList().get(indexCustomer).getAccountCredit();
@@ -196,9 +196,8 @@ public class AdminController {
 
     //reject registration request
     public boolean rejectRegistrationRequest(int registrationRequestIndex) {
-        if (admin.getCreditIncreaseRequests().size() - 1 >= registrationRequestIndex) {
-            Customer newCustomer = admin.getRegistrationRequest().get(registrationRequestIndex);
-            admin.getRegistrationRequest().remove(newCustomer);
+        if (admin.getRegistrationRequest().size() - 1 >= registrationRequestIndex) {
+            admin.getRegistrationRequest().remove(registrationRequestIndex);
             return true;
         } else
             return false;
