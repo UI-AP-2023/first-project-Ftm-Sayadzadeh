@@ -3,7 +3,7 @@ package model.products;
 import model.user.User;
 
 public class Score {
-    private final User ratingUser;       //final or not?
+    private final User ratingUser;
     private final double score;
     private final Product product;
 

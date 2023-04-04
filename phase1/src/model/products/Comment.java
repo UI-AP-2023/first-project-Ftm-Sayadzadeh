@@ -4,10 +4,10 @@ import model.user.User;
 
 public class Comment {
     private final User commentingUser;
-    private String productID;
-    private String commentText;            //final?
+    private final String productID;
+    private final String commentText;
     private CommentStatus commentStatus;
-    private boolean isBought;                                     //if user buy it you need to change it!
+    private final boolean isBought;
 
     public Comment(User commentingUser, String productID, String productText, boolean isBought) {
         this.commentingUser = commentingUser;
@@ -25,16 +25,8 @@ public class Comment {
         return productID;
     }
 
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
-
     public String getCommentText() {
         return commentText;
-    }
-
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
     }
 
     public CommentStatus getCommentStatus() {
@@ -49,13 +41,9 @@ public class Comment {
         return isBought;
     }
 
-    public void setBought(boolean bought) {
-        isBought = bought;
-    }
-
     @Override
     public String toString() {
-        return "rating user name : " + commentingUser.getUsername() + "\n" +
+        return "commenter username : " + commentingUser.getUsername() + "\n" +
                 "product ID : " + productID + "\n" +
                 "comment text : " + commentText + "\n" +
                 "comment status : " + commentStatus.toString() + "\n" +

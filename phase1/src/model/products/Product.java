@@ -9,7 +9,7 @@ abstract public class Product {
     private double productPrice;
     private int numOfProduct;
     private String productStatus = "Unavailable";
-    private double averageScore = 0;
+    private double averageScore = 2.5;
     private final ProductCategory productCategory;
     private final String subcategory;
     private final ArrayList<Comment> productCommentList = new ArrayList<>();
@@ -75,6 +75,9 @@ abstract public class Product {
     public String getProductID() {
         return productID;
     }
+//    public void setProductID(String productID){   //we don't need it
+//        this.productID = productID;
+//    }
 
     public String getProductName() {
         return productName;
@@ -96,10 +99,10 @@ abstract public class Product {
     public String getProductStatus() {
         return productStatus;
     }
-
-    public void setProductStatus(String productStatus) {
-        this.productStatus = productStatus;
-    }
+//
+//    public void setProductStatus(String productStatus) {  //we don't need it
+//        this.productStatus = productStatus;
+//    }
 
     public double getAverageScore() {
         return averageScore;
@@ -123,6 +126,10 @@ abstract public class Product {
 
     public void setNumOfProduct(int numOfProduct) {
         this.numOfProduct = numOfProduct;
+        if (this.numOfProduct > 0)
+            this.productStatus = "Available";
+        else
+            this.productStatus = "Unavailable";
     }
 
     public ArrayList<Comment> getProductCommentList() {
@@ -137,7 +144,7 @@ abstract public class Product {
         sb.append("product ID : ").append(productID).append("\n");
         sb.append("price : ").append(productPrice).append("\n");
         sb.append("status : ").append(productStatus).append("\n");
-        sb.append("average score : ").append(averageScore).append("\n");
+        sb.append("average score : ").append(String.format("%.1f", averageScore)).append("\n");
         sb.append("---------------------Comments---------------------" + "\n");
         for (Comment element : productCommentList) {
             sb.append("*username: ").append(element.getCommentingUser().getUsername()).append("\n");
