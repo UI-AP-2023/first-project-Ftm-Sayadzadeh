@@ -11,11 +11,45 @@ import java.util.Objects;
 
 public class CustomerController {
     private static final ArrayList<Customer> customersList = new ArrayList<>();
+    public CustomerController(){}
 
     public static ArrayList<Customer> getCustomersList() {
         return customersList;
     }
 
+    //registration page checking username cuz it should be new
+    public boolean checkUsername(String username){
+        boolean find ;
+        for (Customer customer : CustomerController.getCustomersList()) {
+            find = customer.getUsername().equals(username);
+            if (find) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //registration page checking email cuz it should be new
+    public boolean checkEmail(String email){
+        boolean find;
+        for (Customer customer : CustomerController.getCustomersList()) {
+            find = customer.getEmail().equals(email);
+            if (find) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //registration page checking phone number cuz it should be new
+    public boolean checkPhoneNumber(String phoneNumber){
+        boolean find;
+        for (Customer customer : CustomerController.getCustomersList()) {
+            find = customer.getPhoneNumber().equals(phoneNumber);
+            if (find) {
+                return true;
+            }
+        }
+        return false;
+    }
     //log in
     public boolean logIn(String username, String password) {
         for (Customer element : customersList) {
@@ -110,7 +144,7 @@ public class CustomerController {
     }
 
     //rate to products
-    public boolean ratingManager(Score newScore) {
+    public boolean manageRating(Score newScore) {
         for (Product element : Admin.getAdmin().getProductsList()) {
             if (Objects.equals(element.getProductID(), newScore.getProduct().getProductID())) {
                 element.setAverageScore((element.getAverageScore() + newScore.getScore()) / 2);

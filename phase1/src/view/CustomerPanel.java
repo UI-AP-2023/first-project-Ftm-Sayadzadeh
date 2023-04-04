@@ -102,16 +102,13 @@ public class CustomerPanel {
         boolean beCorrect = false;
         input.nextLine();
         do {
-            boolean find = false;
             email = input.nextLine();
-            for (Customer customer : CustomerController.getCustomersList()) {
-                find = customer.getEmail().equals(email);
-                if (find) {
-                    System.out.println("Another member use this email so please enter another one :)");
-                    break;
-                }
-            }
-            if (!find) {
+            boolean find;
+            CustomerController customerController = new CustomerController();
+            find = customerController.checkEmail(email);
+            if (find)
+                System.out.println("Another member use this email so please enter another one :)");
+            else {
                 Matcher emailMatcher = emailPattern.matcher(email);
                 beCorrect = emailMatcher.find();
                 if (!beCorrect)
@@ -129,16 +126,13 @@ public class CustomerPanel {
         boolean beCorrect = false;
         input.nextLine();
         do {
-            boolean find = false;
+            boolean find;
             phoneNumber = input.nextLine();
-            for (Customer customer : CustomerController.getCustomersList()) {
-                find = customer.getPhoneNumber().equals(phoneNumber);
-                if (find) {
-                    System.out.println("Another member use this phone number so please enter another one :)");
-                    break;
-                }
-            }
-            if (!find) {
+            CustomerController customerController = new CustomerController();
+            find = customerController.checkPhoneNumber(phoneNumber);
+            if (find)
+                System.out.println("Another member use this phone number so please enter another one :)");
+            else {
                 Matcher phoneNumberMather = phoneNumberPattern.matcher(phoneNumber);
                 beCorrect = phoneNumberMather.find();
                 if (!beCorrect)
@@ -187,14 +181,14 @@ public class CustomerPanel {
             int choice = input.nextInt();
             if (choice == 1) {
                 System.out.println("Enter productID : ");
-                input.nextLine(); //
+                input.nextLine(); //?
                 String productID = input.nextLine();
                 if (customerController.checkBoughtForRating(productID)) {
                     System.out.println("Enter your score out of 5 : ");
                     double score = input.nextDouble();
                     ProductsPageController productsPageController = new ProductsPageController();
                     Score newScore = new Score(customer, score, productsPageController.selectProductByID(productID));
-                    if (customerController.ratingManager(newScore))
+                    if (customerController.manageRating(newScore))
                         System.out.println("DONE SUCCESSFULLY!");
                 } else {
                     System.out.println("ERROR ... Only buyer can rate!");

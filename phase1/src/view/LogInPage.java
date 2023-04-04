@@ -6,8 +6,10 @@ import controller.CustomerController;
 import java.util.Scanner;
 
 public class LogInPage {
-    private final Scanner input = new Scanner(System.in);
-
+    private final Scanner input ;
+    public LogInPage(){
+        input = new Scanner(System.in);
+    }
     public void logInPage() {
         System.out.println("Enter your username : ");
         String username = input.nextLine();

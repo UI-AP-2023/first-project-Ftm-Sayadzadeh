@@ -8,7 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PaymentPage {
-    private final Scanner input = new Scanner(System.in);
+    private final Scanner input;
+    public PaymentPage(){input = new Scanner(System.in);}
     public void paymentPage(){
         System.out.println("How much do you wanna increase your credit?");
         double creditAmount = input.nextDouble();

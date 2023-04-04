@@ -23,27 +23,27 @@ public class AdminPanel {
         String[] dividedCommend = commandLine.split(" ");
         switch (dividedCommend[0]) {
             case "Add" -> {
-                this.addCommandType(dividedCommend);
+                this.manageAddCommandType(dividedCommend);
                 this.adminCommandPage();
             }
             case "Remove" -> {
-                this.removeCommand(dividedCommend);
+                this.manageRemoveCommand(dividedCommend);
                 this.adminCommandPage();
             }
             case "Edit" -> {
-                this.editCommandType(dividedCommend);
+                this.manageEditCommandType(dividedCommend);
                 this.adminCommandPage();
             }
             case "Show" -> {
-                this.showCommandType(dividedCommend);
+                this.manageShowCommandType(dividedCommend);
                 this.adminCommandPage();
             }
             case "Accept" -> {
-                this.acceptCommandType(dividedCommend);
+                this.manageAcceptCommandType(dividedCommend);
                 this.adminCommandPage();
             }
             case "Reject" -> {
-                this.rejectCommandType(dividedCommend);
+                this.manageRejectCommandType(dividedCommend);
                 this.adminCommandPage();
             }
             case "help" -> {
@@ -83,7 +83,7 @@ public class AdminPanel {
                 """;
     }
 
-    private void addCommandType(String[] dividedCommend) {
+    private void manageAddCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "FlashMemory" -> {
                 if (adminController.addFlashMemory(dividedCommend[2], Double.parseDouble(dividedCommend[3]), Integer.parseInt(dividedCommend[4]), Double.parseDouble(dividedCommend[5]), dividedCommend[6], Integer.parseInt(dividedCommend[7]), dividedCommend[8]))
@@ -125,14 +125,14 @@ public class AdminPanel {
         }
     }
 
-    private void removeCommand(String[] dividedCommend) {
+    private void manageRemoveCommand(String[] dividedCommend) {
         if (adminController.removeProduct(dividedCommend[1]))
             System.out.println("The operation was done successfully!");
         else
             System.out.println("There is no product with this ID !");
     }
 
-    private void editCommandType(String[] dividedCommend) {
+    private void manageEditCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "name" -> {
                 if (adminController.editProductName(dividedCommend[2], dividedCommend[3]))
@@ -156,7 +156,7 @@ public class AdminPanel {
         }
     }
 
-    private void showCommandType(String[] dividedCommend) {
+    private void manageShowCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "Customers" -> {
                 for (Customer element : this.adminController.showCustomerInfo()) {
@@ -187,7 +187,7 @@ public class AdminPanel {
         }
     }
 
-    private void acceptCommandType(String[] dividedCommend) {
+    private void manageAcceptCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "Registration" -> {
                 if (this.adminController.acceptRegistrationRequest(Integer.parseInt(dividedCommend[2])))
@@ -211,7 +211,7 @@ public class AdminPanel {
         }
     }
 
-    private void rejectCommandType(String[] dividedCommend) {
+    private void manageRejectCommandType(String[] dividedCommend) {
         switch (dividedCommend[1]) {
             case "Registration" -> {
                 if (this.adminController.rejectRegistrationRequest(Integer.parseInt(dividedCommend[2])))

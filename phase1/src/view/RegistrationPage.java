@@ -22,14 +22,11 @@ public class RegistrationPage {
         String username;
         boolean find;
         do {
-            find = false;
             username = input.nextLine();
-            for (Customer customer : CustomerController.getCustomersList()) {
-                find = customer.getUsername().equals(username);
-                if (find) {
-                    System.out.println("Another member use this username so please enter another one :)");
-                    break;
-                }
+            CustomerController customerController = new CustomerController();
+            find = customerController.checkUsername(username);
+            if (find) {
+                System.out.println("Another member use this username so please enter another one :)");
             }
         } while (find);
 
@@ -40,16 +37,12 @@ public class RegistrationPage {
         Pattern emailPattern = Pattern.compile("^[\\w-._%+0-9]+@[\\w0-9.-]+\\.com$");
         boolean beCorrect = false;
         do {
-            find = false;
             email = input.nextLine();
-            for (Customer customer : CustomerController.getCustomersList()) {
-                find = customer.getEmail().equals(email);
-                if (find) {
-                    System.out.println("Another member use this email so please enter another one :)");
-                    break;
-                }
-            }
-            if (!find) {
+            CustomerController customerController = new CustomerController();
+            find = customerController.checkEmail(email);
+            if (find)
+                System.out.println("Another member use this email so please enter another one :)");
+            else { //if you enter a new email
                 Matcher emailMatcher = emailPattern.matcher(email);
                 beCorrect = emailMatcher.find();
                 if (!beCorrect)
@@ -63,16 +56,12 @@ public class RegistrationPage {
         Pattern phoneNumberPattern = Pattern.compile("^09\\d{9}$");
         beCorrect = false;
         do {
-            find = false;
             phoneNumber = input.nextLine();
-            for (Customer customer : CustomerController.getCustomersList()) {
-                find = customer.getPhoneNumber().equals(phoneNumber);
-                if (find) {
-                    System.out.println("Another member use this phone number so please enter another one :)");
-                    break;
-                }
-            }
-            if (!find) {
+            CustomerController customerController = new CustomerController();
+            find = customerController.checkPhoneNumber(phoneNumber);
+            if (find)
+                System.out.println("Another member use this phone number so please enter another one :)");
+            else {
                 Matcher phoneNumberMather = phoneNumberPattern.matcher(phoneNumber);
                 beCorrect = phoneNumberMather.find();
                 if (!beCorrect)
