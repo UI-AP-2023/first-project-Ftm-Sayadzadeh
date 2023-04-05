@@ -5,7 +5,7 @@ import model.user.Admin;
 import model.user.CreditIncreaseRequest;
 import model.user.Customer;
 
-import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class AdminController {
@@ -123,27 +123,27 @@ public class AdminController {
     }
 
     //show customers list
-    public AbstractList<Customer> showCustomerInfo() {    //arraylist?
+    public ArrayList<Customer> showCustomerInfo() {    //arraylist?
         return CustomerController.getCustomersList();
     }
 
     //show registration request
-    public AbstractList<Customer> showRegistrationRequest() {
+    public ArrayList<Customer> showRegistrationRequest() {
         return admin.getRegistrationRequest();
     }
 
     //show comment request
-    public AbstractList<Comment> showCommentRequest() {
+    public ArrayList<Comment> showCommentRequest() {
         return admin.getCommentRequest();
     }
 
     //show credit increase request
-    public AbstractList<CreditIncreaseRequest> showCreditIncreaseRequest() {
+    public ArrayList<CreditIncreaseRequest> showCreditIncreaseRequest() {
         return admin.getCreditIncreaseRequests();
     }
 
     //show product list
-    public AbstractList<Product> showProductList() {
+    public ArrayList<Product> showProductList() {
         return admin.getProductsList();
     }
 
