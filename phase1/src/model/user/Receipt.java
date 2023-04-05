@@ -49,6 +49,7 @@ public class Receipt {
     public int getTotalAmountPaid() {
         return totalAmountPaid;
     }
+    public int getReceiptCounter(){return receiptCounter;} //we don't need it
 
     private ArrayList<ProductInfoReceipt> findProductNumInReceipt(){
         ArrayList<ProductInfoReceipt> productInfoReceipts = new ArrayList<>();
