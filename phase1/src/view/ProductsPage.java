@@ -5,7 +5,6 @@ import controller.ProductsPageController;
 import model.products.Product;
 import model.user.Admin;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -173,7 +172,7 @@ public class ProductsPage {
     }
 
     //for printing product in products page
-    private void printProductPage(AbstractList<Product> products) {
+    private void printProductPage(ArrayList<Product> products) {
         for (Product element : products) {
             System.out.println("-----" + element.getProductName() + "-----\n");
             System.out.println("*ID: " + element.getProductID() + "\n");
