@@ -4,7 +4,6 @@ import model.products.*;
 import model.user.Admin;
 import model.user.CreditIncreaseRequest;
 import model.user.Customer;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -229,6 +228,71 @@ public class AdminController {
     //registration page (add new customer to request list)
     public boolean addRegisteredCustomerToRequestList(Customer newCustomer) {
         admin.getRegistrationRequest().add(newCustomer);
+        //welcome discount
+        Discount welcomeDiscount = new Discount(30 , "12/12/2029" , 1 , 1000 , "WELCOME" );
+        CustomerController.getCustomersList().get(CustomerController.getCustomersList().indexOf(newCustomer)).getDiscountsCode().add(welcomeDiscount);
         return true;
+    }
+    // add new discount code for above 5 purchase
+    public boolean addNewDiscountCodeAbove5Purchase(double discountPercent , String codeValidity , int capacity , int productCategoryCode ){
+        for(Customer element : CustomerController.getCustomersList()){
+            if(element.getShoppingHistory().size() > 5 ){
+                Discount newDiscount = new Discount(discountPercent , codeValidity , capacity , productCategoryCode , "PURCHASE");
+                element.getDiscountsCode().add(newDiscount);
+            }
+        }
+        return true;
+    }
+    // add new discount code for above 10000
+    public boolean addNewDiscountCodeAbove10000$(double discountPercent , String codeValidity , int capacity , int productCategoryCode){
+        for(Customer element : CustomerController.getCustomersList()){
+            Discount newDiscount = new Discount(discountPercent , codeValidity , capacity , productCategoryCode , "PRICE");
+            element.getDiscountsCode().add(newDiscount);
+        }
+        return true;
+    }
+    //add discount to product by product ID
+    public boolean addDiscountToProductByProductID(String productID , double discountPercent){
+        int index = this.searchProductByID(productID);
+        if(index != -1) {
+            if(admin.getProductsList().get(index) instanceof Digital tmp){
+                tmp.addDiscountToProduct(discountPercent);
+                return true;
+            }
+            if(admin.getProductsList().get(index) instanceof Pen tmp){
+                tmp.addDiscountToProduct(discountPercent);
+                return true;
+            }
+            if(admin.getProductsList().get(index) instanceof Pencil tmp){
+                tmp.addDiscountToProduct(discountPercent);
+                return true;
+            }
+            else
+                return false;  //this ID is not for digital , pen , pencil
+        }
+        else
+            return false; //invalid ID
+    }
+    //remove discount to product by product ID
+    public boolean removeDiscountFromProductByProductID(String productID){
+        int index = this.searchProductByID(productID);
+        if(index != -1) {
+            if(admin.getProductsList().get(index) instanceof Digital tmp){
+                tmp.removeDiscountFromProduct();
+                return true;
+            }
+            if(admin.getProductsList().get(index) instanceof Pen tmp){
+                tmp.removeDiscountFromProduct();
+                return true;
+            }
+            if(admin.getProductsList().get(index) instanceof Pencil tmp){
+                tmp.removeDiscountFromProduct();
+                return true;
+            }
+            else
+                return false;  //this ID is not for digital , pen , pencil
+        }
+        else
+            return false; //invalid ID
     }
 }

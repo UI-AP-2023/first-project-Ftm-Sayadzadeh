@@ -5,7 +5,6 @@ import model.products.Comment;
 import model.products.Product;
 import model.user.CreditIncreaseRequest;
 import model.user.Customer;
-
 import java.util.Scanner;
 
 public class AdminPanel {
@@ -46,6 +45,14 @@ public class AdminPanel {
                 this.manageRejectCommandType(dividedCommend);
                 this.adminCommandPage();
             }
+            case "CustomerDiscount" -> {
+                this.manageCustomerDiscountCommandType(dividedCommend);
+                this.adminCommandPage();
+            }
+            case "ProductDiscount" -> {
+                this.manageProductDiscountCommandType(dividedCommend);
+                this.adminCommandPage();
+            }
             case "help" -> {
                 System.out.println(helpCommand());
                 this.adminCommandPage();
@@ -78,6 +85,8 @@ public class AdminPanel {
                 - Show (Product || Customers || RegistrationRequests || CommentRequests || CreditRequests)
                 - Accept (Registration || Comment || CreditIncrease ) index
                 - Reject (Registration || Comment || CreditIncrease ) index
+                - CustomerDiscount discountPercent codeValidity capacity ( 1000 PRICE || (1001 || 1002 || 1003 || 1004) PURCHASE )
+                - ProductDiscount (add productID discountPercent|| remove productID discountPercent)
                 - MainPage
                 - EXIT
                 """;
@@ -232,6 +241,35 @@ public class AdminPanel {
                     System.out.println("WRONG INDEX!");
             }
             default -> System.out.println("WRONG COMMEND LINE!");
+        }
+    }
+    private void manageCustomerDiscountCommandType(String[] dividedCommend){
+        switch (dividedCommend[1]) {
+            case "PRICE" -> {
+                if (adminController.addNewDiscountCodeAbove10000$(Double.parseDouble(dividedCommend[2]), dividedCommend[3], Integer.parseInt(dividedCommend[4]), Integer.parseInt(dividedCommend[5])))
+                    System.out.println("The operation was done successfully!");
+            }
+            case "PURCHASE" -> {
+                if (adminController.addNewDiscountCodeAbove5Purchase(Double.parseDouble(dividedCommend[2]), dividedCommend[3], Integer.parseInt(dividedCommend[4]), Integer.parseInt(dividedCommend[5])))
+                    System.out.println("The operation was done successfully!");
+            }
+            default -> System.out.println("WRONG COMMEND LINE!");
+        }
+    }
+    private void manageProductDiscountCommandType(String[] dividedCommend){
+        switch(dividedCommend[1]){
+            case "add" ->{
+                if(adminController.addDiscountToProductByProductID(dividedCommend[2],Double.parseDouble(dividedCommend[3])))
+                    System.out.println("The operation was done successfully!");
+                else
+                    System.out.println("The product ID is incorrect or invalid!");
+            }
+            case "remove" ->{
+                if(adminController.removeDiscountFromProductByProductID(dividedCommend[2]))
+                    System.out.println("The operation was done successfully!");
+                else
+                    System.out.println("The product ID is incorrect or invalid!");
+            }
         }
     }
 }
