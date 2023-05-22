@@ -3,7 +3,7 @@ package model.products;
 import java.util.ArrayList;
 import java.util.Locale;
 
-abstract public class Product {
+abstract public class Product implements Comparable<Product> {
     private String productID;
     private String productName;
     private double productPrice;
@@ -153,5 +153,33 @@ abstract public class Product {
         }
         sb.append("--------------------------------------------------" + "\n");
         return sb.toString();
+    }
+    public int compareTo(Product o) {
+        int compareName = this.productName.compareTo(o.productName);
+        if(compareName > 0){
+            return -1;
+        }
+        else if(compareName < 0){
+            return 1;
+        }
+        else{
+            if(this.averageScore > o.averageScore){
+                return -1;
+            }
+            else if(this.averageScore < o.averageScore){
+                return 1;
+            }
+            else {
+                if(this.productPrice > o.productPrice){
+                    return -1;
+                }
+                else if(this.productPrice < o.productPrice){
+                    return 1;
+                }
+                else{
+                    return Integer.compare(this.numOfProduct, o.numOfProduct);
+                }
+            }
+        }
     }
 }
