@@ -230,7 +230,7 @@ public class AdminController {
         admin.getRegistrationRequest().add(newCustomer);
         //welcome discount
         Discount welcomeDiscount = new Discount(30 , "12/12/2029" , 1 , 1000 , "WELCOME" );
-        CustomerController.getCustomersList().get(CustomerController.getCustomersList().indexOf(newCustomer)).getDiscountsCode().add(welcomeDiscount);
+        newCustomer.getDiscountsCode().add(welcomeDiscount);
         return true;
     }
     // add new discount code for above 5 purchase

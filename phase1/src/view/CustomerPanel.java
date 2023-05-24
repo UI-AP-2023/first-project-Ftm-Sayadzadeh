@@ -213,6 +213,7 @@ public class CustomerPanel {
                             1) remove product\s
                             2) FINALIZE
                             3) back to panel
+                            4) apply discount code
                             """);
                     choice = input.nextInt();
                     if (choice == 1) {

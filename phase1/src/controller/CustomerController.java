@@ -1,11 +1,12 @@
 package controller;
 
-import model.products.Comment;
-import model.products.Product;
-import model.products.Score;
+import exceptions.EndOfCodeCapacity;
+import exceptions.UnavailableCode;
+import model.products.*;
 import model.user.*;
 import view.CustomerPanel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -226,6 +227,49 @@ public class CustomerController {
             int elementIndex = Admin.getAdmin().getProductsList().indexOf(element);
             Admin.getAdmin().getProductsList().get(elementIndex).setNumOfProduct(Admin.getAdmin().getProductsList().get(elementIndex).getNumOfProduct() - 1);
         }
+    }
+    //apply discount code
+//    public boolean applyDiscountCode(Discount discountCode) throws UnavailableCode, EndOfCodeCapacity {
+//        int index = this.checkDiscountCodeAvailability(discountCode.getDiscountCode());
+//        if( this.checkCodeCapacity(discountCode.getDiscountCode() , index)){
+//            if(discountCode.getDiscountType() == DiscountType.WELCOME){
+//            }
+//            else if(discountCode.getDiscountType() == DiscountType.PURCHASE ){
+//
+//            }
+//            else if(discountCode.getDiscountType() == DiscountType.PRICE){
+//
+//            }
+//        }
+//        return true;
+//    }
+    //check unavailable or available code
+    private int checkDiscountCodeAvailability(String discountCode) throws UnavailableCode {
+        int index = -1;
+        for(Discount element : CustomerPanel.getCustomer().getDiscountsCode()){
+            if(element.getDiscountCode().equals(discountCode)) {
+                index = CustomerPanel.getCustomer().getDiscountsCode().indexOf(element);
+                break;
+            }
+        }
+        if (index != -1)
+            return index;
+        else
+            throw new UnavailableCode();
+    }
+    //check code capacity
+    private boolean checkCodeCapacity(int indexOfCode) throws EndOfCodeCapacity {
+        if(CustomerPanel.getCustomer().getDiscountsCode().get(indexOfCode).getCapacity() == 0){
+            throw new EndOfCodeCapacity();
+        }
+        return true;
+    }
+    //check code expired time
+    private boolean checkCodeExpiredTime( int indexOfCode) throws EndOfCodeCapacity {
+        if(CustomerPanel.getCustomer().getDiscountsCode().get(indexOfCode).getCodeValidity().isBefore(LocalDate.now())){
+            throw new EndOfCodeCapacity();
+        }
+        return true;
     }
 
     //finalize shopping cart
