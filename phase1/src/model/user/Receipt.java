@@ -1,5 +1,8 @@
 package model.user;
 
+import model.products.Digital;
+import model.products.Pen;
+import model.products.Pencil;
 import model.products.Product;
 
 import java.time.LocalDate;
@@ -22,7 +25,17 @@ public class Receipt {
     private int totalAmountPaidCalculator(ArrayList<Product> receiptProductList){
         int totalAmountPaid = 0;
         for(Product product : receiptProductList){
-            totalAmountPaid += product.getProductPrice();
+            if(product instanceof Digital tmp){
+                totalAmountPaid += tmp.getProductPrice() - (tmp.getProductPrice()* tmp.getDiscountPercent() / 100);
+            }
+            else if(product instanceof Pen tmp){
+                totalAmountPaid += tmp.getProductPrice() - (tmp.getProductPrice()* tmp.getDiscountPercent() / 100 );
+            }
+            else if(product instanceof Pencil tmp){
+                totalAmountPaid += tmp.getProductPrice() - (tmp.getProductPrice()* tmp.getDiscountPercent() / 100);
+            }
+            else
+                totalAmountPaid += product.getProductPrice();
         }
         return totalAmountPaid;
     }
