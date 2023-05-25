@@ -10,7 +10,7 @@ public class SignUpFormPage extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(SignUpFormPage.class.getResource("signUpFormPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 500);
-        stage.setTitle("Main Page");
+        stage.setTitle("Sign up form Page");
         stage.setScene(scene);
         stage.show();
     }

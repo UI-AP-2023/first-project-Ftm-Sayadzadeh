@@ -24,10 +24,10 @@ public class SignUPAndLogInPageGraphicController {
     private Button logInBtn;
 
     @FXML
-    private TextField passwordField;
+    private TextField usernameField;
 
     @FXML
-    private TextField usernameField;
+    private TextField passwordField;
 
     @FXML
     void backHome(MouseEvent event) throws Exception {
