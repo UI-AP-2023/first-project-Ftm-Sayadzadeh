@@ -1,11 +1,12 @@
 package view;
 
 import controller.AdminController;
-import model.user.Customer;
 import controller.CustomerController;
+import model.user.Customer;
 
 import java.util.Scanner;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegistrationPage {
     private final Scanner input;

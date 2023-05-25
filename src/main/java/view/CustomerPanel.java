@@ -2,15 +2,15 @@ package view;
 
 import controller.CustomerController;
 import controller.ProductsPageController;
+import model.products.Comment;
 import model.products.Score;
 import model.user.Customer;
+import model.user.ProductInfoReceipt;
+import model.user.Receipt;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import model.products.Comment;
-import model.user.ProductInfoReceipt;
-import model.user.Receipt;
 
 public class CustomerPanel {
     private final CustomerController customerController;
