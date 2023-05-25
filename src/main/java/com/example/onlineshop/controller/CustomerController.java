@@ -1,8 +1,7 @@
 package com.example.onlineshop.controller;
 
 import com.example.onlineshop.MainPageGraphicController;
-import com.example.onlineshop.exceptions.EndOfCodeCapacity;
-import com.example.onlineshop.exceptions.UnavailableCode;
+import com.example.onlineshop.exceptions.*;
 import com.example.onlineshop.model.products.*;
 import com.example.onlineshop.model.processes.*;
 import com.example.onlineshop.model.user.*;
@@ -21,37 +20,34 @@ public class CustomerController {
     }
 
     //registration page checking username cuz it should be new
-    public boolean checkUsername(String username){
+    public void checkUsername(String username) throws DuplicateUsername {
         boolean find ;
         for (Customer customer : CustomerController.getCustomersList()) {
             find = customer.getUsername().equals(username);
             if (find) {
-                return true;
+                throw new DuplicateUsername();
             }
         }
-        return false;
     }
     //registration page checking email cuz it should be new
-    public boolean checkEmail(String email){
+    public void checkEmail(String email) throws DuplicateEmail {
         boolean find;
         for (Customer customer : CustomerController.getCustomersList()) {
             find = customer.getEmail().equals(email);
             if (find) {
-                return true;
+                throw new DuplicateEmail();
             }
         }
-        return false;
     }
     //registration page checking phone number cuz it should be new
-    public boolean checkPhoneNumber(String phoneNumber){
+    public void checkPhoneNumber(String phoneNumber) throws DuplicatePhone {
         boolean find;
         for (Customer customer : CustomerController.getCustomersList()) {
             find = customer.getPhoneNumber().equals(phoneNumber);
             if (find) {
-                return true;
+                throw new DuplicatePhone();
             }
         }
-        return false;
     }
     //log in
     public boolean logIn(String username, String password) {

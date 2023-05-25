@@ -3,7 +3,6 @@ package com.example.onlineshop;
 import com.example.onlineshop.controller.AdminController;
 import com.example.onlineshop.controller.CustomerController;
 import com.example.onlineshop.view.AdminPanel;
-import com.example.onlineshop.view.CustomerPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -36,8 +35,8 @@ public class SignUPAndLogInPageGraphicController {
     }
 
     @FXML
-    void goToSignUpPage(MouseEvent event) {
-
+    void goToSignUpPage(MouseEvent event) throws Exception {
+        new SignUpFormPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
     @FXML

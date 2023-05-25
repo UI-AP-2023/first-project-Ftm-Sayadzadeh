@@ -2,7 +2,7 @@ package com.example.onlineshop.model.user;
 
 import com.example.onlineshop.model.processes.*;
 import com.example.onlineshop.model.products.Product;
-
+import com.example.onlineshop.model.processes.*;
 import java.util.ArrayList;
 
 public class Customer extends User {
