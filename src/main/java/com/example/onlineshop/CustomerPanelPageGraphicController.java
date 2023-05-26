@@ -62,10 +62,10 @@ public class CustomerPanelPageGraphicController implements Initializable {
     }
 
     @FXML
-    void increaseCredit(MouseEvent event) {
+    void increaseCredit(MouseEvent event) throws Exception {
+        new PaymentPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
 
     }
-
     @FXML
     void logOut(MouseEvent event) throws Exception {
         MainPageGraphicController.customer = null;
