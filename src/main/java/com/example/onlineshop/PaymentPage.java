@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class PaymentPage extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(PaymentPageGraphicController.class.getResource("paymentPage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(PaymentPage.class.getResource("paymentPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 500);
         stage.setTitle("Payment Page");
         stage.setScene(scene);

@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #cacce3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.onlineshop.EditInfoPageGraphicController">
    <children>
-      <Text layoutX="340.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="⋆ Edit Info Form ⋆" textAlignment="CENTER">
+      <Text layoutX="340.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="⋆ Edit Info Form ⋆" textAlignment="CENTER">
          <font>
             <Font name="Elephant" size="24.0" />
          </font>

@@ -46,6 +46,8 @@ public class SignUPAndLogInPageGraphicController {
         if (isAdmin) {
             AdminPanel adminPanel = new AdminPanel();
             adminPanel.adminCommandPage();
+            usernameField.clear();
+            passwordField.clear();
         } else {
             CustomerController customerController = new CustomerController();
             boolean existCustomer = customerController.logIn(usernameField.getText(), passwordField.getText());
