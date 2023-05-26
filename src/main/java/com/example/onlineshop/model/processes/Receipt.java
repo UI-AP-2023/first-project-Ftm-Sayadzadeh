@@ -102,11 +102,11 @@ public class Receipt {
         StringBuilder sb = new StringBuilder();
         sb.append("receipt ID : ").append(receiptID).append("\n");
         sb.append("receipt Date : ").append(receiptDate).append("\n");
-        sb.append("-------------------------------------------" + "\n");
+        sb.append("-------------------------------------------------------------" + "\n");
         for(ProductInfoReceipt element : this.findProductNumInReceipt()){
             sb.append(element.toString());
         }
-        sb.append("-------------------------------------------" + "\n");
+        sb.append("-------------------------------------------------------------" + "\n");
         sb.append("total amount paid : ").append(totalAmountPaid).append("\n");
         return sb.toString();
     }
