@@ -22,9 +22,9 @@
             <Font name="Arial Black" size="12.0" />
          </font>
       </TextField>
-      <Text fill="#1b1b1b" layoutX="366.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="166.13674926757812">
+      <Text fill="#1b1b1b" layoutX="367.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="166.13674926757812">
          <font>
-            <Font name="Elephant" size="30.0" />
+            <Font name="Freestyle Script" size="48.0" />
          </font>
       </Text>
       <Line endX="147.60003662109375" endY="-7.62939453125E-6" layoutX="446.0" layoutY="118.0" startX="-140.39999389648438" startY="-7.62939453125E-6" />

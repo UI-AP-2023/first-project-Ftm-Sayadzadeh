@@ -74,21 +74,18 @@ public class CustomerController {
     }
 
     //edit email
-    public boolean editEmail(String email) {
+    public void editEmail(String email) {
         customersList.get(findCustomerIndex()).setEmail(email);
-        return true;
     }
 
     //edit phone number
-    public boolean editPhoneNumber(String phoneNumber) {
+    public void editPhoneNumber(String phoneNumber) {
         customersList.get(findCustomerIndex()).setPhoneNumber(phoneNumber);
-        return true;
     }
 
     //edit password
-    public boolean editPassword(String password) {
+    public void editPassword(String password) {
         customersList.get(findCustomerIndex()).setPassword(password);
-        return true;
     }
 
     //buy products

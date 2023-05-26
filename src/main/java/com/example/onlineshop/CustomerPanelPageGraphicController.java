@@ -94,7 +94,7 @@ public class CustomerPanelPageGraphicController implements Initializable {
         email_lbl.setText(MainPageGraphicController.customer.getEmail());
         phone_lbl.setText(MainPageGraphicController.customer.getPhoneNumber());
         String credit = Double.toString(MainPageGraphicController.customer.getAccountCredit());
-        credit_lbl.setText(credit);
+        credit_lbl.setText(credit + " $");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
