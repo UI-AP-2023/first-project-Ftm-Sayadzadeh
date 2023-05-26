@@ -35,15 +35,15 @@
          </font>
       </Label>
       <Label layoutX="548.0" layoutY="294.0" />
-      <Label layoutX="502.0" layoutY="281.0" text="Password  :">
+      <Label layoutX="506.0" layoutY="273.0" text="Password  :">
          <font>
             <Font name="Freestyle Script" size="30.0" />
          </font>
       </Label>
-      <TextField fx:id="username_txt" layoutX="249.0" layoutY="177.0" prefHeight="26.0" prefWidth="178.0" />
-      <TextField fx:id="email_txt" layoutX="249.0" layoutY="289.0" prefHeight="26.0" prefWidth="178.0" promptText="- ***@email.com" />
-      <TextField fx:id="phone_txt" layoutX="639.0" layoutY="177.0" prefHeight="26.0" prefWidth="178.0" promptText="- 09*********" />
-      <TextField fx:id="password_txt" layoutX="640.0" layoutY="289.0" prefHeight="26.0" prefWidth="177.0" promptText="- 8 character without space!" />
+      <TextField fx:id="username_txt" layoutX="235.0" layoutY="177.0" prefHeight="26.0" prefWidth="178.0" />
+      <TextField fx:id="email_txt" layoutX="235.0" layoutY="289.0" prefHeight="26.0" prefWidth="178.0" promptText="- ***@email.com" />
+      <TextField fx:id="phone_txt" layoutX="638.0" layoutY="177.0" prefHeight="26.0" prefWidth="178.0" promptText="- 09*********" />
+      <TextField fx:id="password_txt" layoutX="639.0" layoutY="289.0" prefHeight="26.0" prefWidth="177.0" promptText="- 8 character without space!" />
       <ImageView fx:id="backHome" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/icons8-home.png" />

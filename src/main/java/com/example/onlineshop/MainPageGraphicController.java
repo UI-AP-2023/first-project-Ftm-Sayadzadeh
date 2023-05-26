@@ -19,7 +19,7 @@ public class MainPageGraphicController {
             new SignUpAndLogInPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
         }
         else{
-
+            new CustomerPanelPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
         }
     }
 }

@@ -50,7 +50,7 @@ public class SignUPAndLogInPageGraphicController {
             CustomerController customerController = new CustomerController();
             boolean existCustomer = customerController.logIn(usernameField.getText(), passwordField.getText());
             if (existCustomer) {
-                new MainPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
+                new CustomerPanelPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("NOT FOUND!");
