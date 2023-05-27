@@ -2,6 +2,7 @@ package com.example.onlineshop;
 
 import com.example.onlineshop.controller.AdminController;
 import com.example.onlineshop.controller.CustomerController;
+import com.example.onlineshop.model.user.Customer;
 import com.example.onlineshop.view.AdminPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class SignUPAndLogInPageGraphicController {
+    public Customer customer;
+
     @FXML
     private ImageView backHome;
 
@@ -52,7 +55,7 @@ public class SignUPAndLogInPageGraphicController {
             CustomerController customerController = new CustomerController();
             boolean existCustomer = customerController.logIn(usernameField.getText(), passwordField.getText());
             if (existCustomer) {
-                new CustomerPanelPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
+                new CustomerPanelPage(customer).start((Stage) ((Node) event.getSource()).getScene().getWindow());
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("NOT FOUND!");

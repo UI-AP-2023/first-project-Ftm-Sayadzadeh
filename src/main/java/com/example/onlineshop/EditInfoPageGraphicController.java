@@ -60,7 +60,7 @@ public class EditInfoPageGraphicController implements Initializable {
 
     @FXML
     void backPanel(MouseEvent event) throws Exception {
-        new CustomerPanelPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
+        new CustomerPanelPage(MainPageGraphicController.customer).start((Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
     @FXML
@@ -138,7 +138,7 @@ public class EditInfoPageGraphicController implements Initializable {
             alert.setHeaderText("This operation was done successfully!");
             alert.setContentText("Your information edited successfully :) ");
             alert.showAndWait();
-            new CustomerPanelPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
+            new CustomerPanelPage(MainPageGraphicController.customer).start((Stage) ((Node) event.getSource()).getScene().getWindow());
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);

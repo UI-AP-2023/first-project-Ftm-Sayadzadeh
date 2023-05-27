@@ -4,7 +4,7 @@ import com.example.onlineshop.controller.CustomerController;
 import com.example.onlineshop.exceptions.InvalidCardCode;
 import com.example.onlineshop.exceptions.InvalidCardCVV2;
 import com.example.onlineshop.exceptions.InvalidCardPassword;
-import com.example.onlineshop.view.CustomerPanel;
+import com.example.onlineshop.model.user.Customer;
 import com.example.onlineshop.model.processes.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PaymentPageGraphicController {
+    public Customer customer;
     private boolean cardCodeChecker;
     private boolean cvv2Checker;
     private boolean passwordChecker;
@@ -62,7 +63,7 @@ public class PaymentPageGraphicController {
 
     @FXML
     void backPanel(MouseEvent event) throws Exception {
-        new CustomerPanelPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
+        new CustomerPanelPage(customer).start((Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
     @FXML
@@ -109,7 +110,7 @@ public class PaymentPageGraphicController {
     @FXML
     void increaseCredit(MouseEvent event) throws Exception {
         if(passwordChecker && cardCodeChecker && cvv2Checker ){
-            CreditIncreaseRequest newRequest = new CreditIncreaseRequest(CustomerPanel.getCustomer().getUsername() , Double.parseDouble(creditAmount.getText()));
+            CreditIncreaseRequest newRequest = new CreditIncreaseRequest(customer.getUsername() , Double.parseDouble(creditAmount.getText()));
             CustomerController customerController = new CustomerController();
             if (customerController.addCreditIncreaseRequest(newRequest)){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -117,7 +118,7 @@ public class PaymentPageGraphicController {
                 alert.setHeaderText("This operation was done successfully!");
                 alert.setContentText("Your increase credit request has been sent to the admin :) ");
                 alert.showAndWait();
-                new CustomerPanelPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
+                new CustomerPanelPage(customer).start((Stage) ((Node) event.getSource()).getScene().getWindow());
             }
         }
         else{

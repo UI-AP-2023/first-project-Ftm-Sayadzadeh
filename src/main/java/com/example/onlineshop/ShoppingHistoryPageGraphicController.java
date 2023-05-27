@@ -35,13 +35,14 @@ public class ShoppingHistoryPageGraphicController implements Initializable {
 
     @FXML
     void backPanel(MouseEvent event) throws Exception {
-        new CustomerPanelPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
+        new CustomerPanelPage(MainPageGraphicController.customer).start((Stage) ((Node) event.getSource()).getScene().getWindow());
     }
+
     private String[] receiptID = new String[MainPageGraphicController.customer.getShoppingHistory().size()];
     private String currentChoice;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        for(int i = 0 ; i < MainPageGraphicController.customer.getShoppingHistory().size() ; i++){
+        for (int i = 0; i < MainPageGraphicController.customer.getShoppingHistory().size(); i++) {
             receiptID[i] = MainPageGraphicController.customer.getShoppingHistory().get(i).getReceiptID();
         }
         receiptListView.getItems().addAll(receiptID);
@@ -50,8 +51,8 @@ public class ShoppingHistoryPageGraphicController implements Initializable {
             public void changed(ObservableValue<? extends String> observableValue, String receipt1, String receipt2) {
                 currentChoice = receiptListView.getSelectionModel().getSelectedItem();
                 int index = 0;
-                for(int i = 0 ; i< MainPageGraphicController.customer.getShoppingHistory().size() ; i++){
-                    if(MainPageGraphicController.customer.getShoppingHistory().get(i).getReceiptID().equals(currentChoice)) {
+                for (int i = 0; i < MainPageGraphicController.customer.getShoppingHistory().size(); i++) {
+                    if (MainPageGraphicController.customer.getShoppingHistory().get(i).getReceiptID().equals(currentChoice)) {
                         index = i;
                         break;
                     }
