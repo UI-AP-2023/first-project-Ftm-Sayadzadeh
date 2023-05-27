@@ -20,10 +20,11 @@ public class Discount {
         this.discountType = DiscountType.valueOf(discountType);
         this.discountCode = makeDiscountCode();
         discountCodeCounter++;
+
     }
     private String makeDiscountCode(){
         return this.productCategoryCode + "-" + this.discountType + "-" +
-                "lia@00" + discountCodeCounter;
+                "beh@00" + discountCodeCounter;
     }
     private void editDiscountCodeWithNewCategory(){
         String[] previousCode = getDiscountCode().split("-");
@@ -72,5 +73,14 @@ public class Discount {
 
     public DiscountType getDiscountType() {
         return discountType;
+    }
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("discount code : ").append(discountCode).append("\n");
+        sb.append("discount percent : ").append(discountPercent).append(" % ").append("\n");
+        sb.append("capacity : ").append(capacity).append("\n");
+        sb.append("code validity : ").append(codeValidity.toString()).append("\n");
+        return sb.toString();
     }
 }
