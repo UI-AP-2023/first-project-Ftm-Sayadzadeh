@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
@@ -12,7 +13,10 @@
 <AnchorPane prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: cacce3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.onlineshop.ShoppingHistoryPageGraphicController">
    <children>
       <ListView fx:id="receiptListView" editable="true" layoutX="44.0" layoutY="77.0" prefHeight="381.0" prefWidth="250.0" />
-      <Label fx:id="lbl_selected" layoutX="450.0" layoutY="103.0" prefHeight="334.0" prefWidth="342.0" style="-fx-background-color: ffffff; -fx-background-radius: 20;" textAlignment="CENTER">
+      <Label fx:id="lbl_selected" layoutX="464.0" layoutY="132.0" prefHeight="271.0" prefWidth="322.0" style="-fx-background-color: ffffff; -fx-background-radius: 20;" textAlignment="CENTER">
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
          <font>
             <Font size="14.0" />
          </font>

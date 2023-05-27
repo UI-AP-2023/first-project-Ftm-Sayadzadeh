@@ -38,7 +38,7 @@ public class ShoppingHistoryPageGraphicController implements Initializable {
         new CustomerPanelPage(MainPageGraphicController.customer).start((Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
-    private String[] receiptID = new String[MainPageGraphicController.customer.getShoppingHistory().size()];
+    private final String[] receiptID = new String[MainPageGraphicController.customer.getShoppingHistory().size()];
     private String currentChoice;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
