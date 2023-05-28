@@ -116,7 +116,7 @@
             </InnerShadow>
          </effect>
          <children>
-            <TextField layoutX="16.0" layoutY="13.0" prefHeight="25.0" prefWidth="207.0" promptText="search products..." style="-fx-background-radius: 20;" />
+            <TextField fx:id="searchText" layoutX="16.0" layoutY="13.0" prefHeight="25.0" prefWidth="207.0" promptText="search products..." style="-fx-background-radius: 20;" />
             <Pane layoutX="230.0" layoutY="8.0" prefHeight="35.0" prefWidth="40.0">
                <children>
                   <ImageView fx:id="searchByName" fitHeight="28.0" fitWidth="28.0" layoutX="6.0" layoutY="4.0" onMouseClicked="#searchByName" pickOnBounds="true" preserveRatio="true">
@@ -135,7 +135,7 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="37.0" layoutY="381.0" prefHeight="112.0" prefWidth="827.0" style="-fx-background-color: cacce3; -fx-background-radius: 30;">
+      <Pane layoutX="37.0" layoutY="388.0" prefHeight="105.0" prefWidth="827.0" style="-fx-background-color: cacce3; -fx-background-radius: 30;">
          <effect>
             <InnerShadow>
                <color>
@@ -144,7 +144,7 @@
             </InnerShadow>
          </effect>
       </Pane>
-      <RadioButton fx:id="car_btn" layoutX="170.0" layoutY="400.0" mnemonicParsing="false" text="Car">
+      <RadioButton fx:id="car_btn" layoutX="70.0" layoutY="400.0" mnemonicParsing="false" onAction="#applyFilter" text="Car">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
@@ -152,82 +152,72 @@
             <ToggleGroup fx:id="filters" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="SSD_btn" layoutX="420.0" layoutY="400.0" mnemonicParsing="false" text="SSD" toggleGroup="$filters">
+      <RadioButton fx:id="SSD_btn" layoutX="200.0" layoutY="400.0" mnemonicParsing="false" onAction="#applyFilter" text="SSD" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="bicycle_btn" layoutX="170.0" layoutY="430.0" mnemonicParsing="false" text="Bicycle" toggleGroup="$filters">
+      <RadioButton fx:id="bicycle_btn" layoutX="70.0" layoutY="430.0" mnemonicParsing="false" onAction="#applyFilter" text="Bicycle" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="USB_btn" layoutX="420.0" layoutY="460.0" mnemonicParsing="false" text="USB" toggleGroup="$filters">
+      <RadioButton fx:id="USB_btn" layoutX="200.0" layoutY="460.0" mnemonicParsing="false" onAction="#applyFilter" text="USB" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="PC_btn" layoutX="420.0" layoutY="430.0" mnemonicParsing="false" text="PC" toggleGroup="$filters">
+      <RadioButton fx:id="PC_btn" layoutX="200.0" layoutY="430.0" mnemonicParsing="false" onAction="#applyFilter" text="PC" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="SSD_read_btn" layoutX="650.0" layoutY="400.0" mnemonicParsing="false" text="SSD &gt; read speed" toggleGroup="$filters">
+      <RadioButton fx:id="SSD_read_btn" layoutX="500.0" layoutY="400.0" mnemonicParsing="false" onAction="#applyFilter" text="SSD &gt; read speed" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="SSD_write_btn" layoutX="650.0" layoutY="430.0" mnemonicParsing="false" text="SSD &gt; write speed" toggleGroup="$filters">
+      <RadioButton fx:id="SSD_write_btn" layoutX="500.0" layoutY="430.0" mnemonicParsing="false" onAction="#applyFilter" text="SSD &gt; write speed" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="USB_type_btn" layoutX="650.0" layoutY="460.0" mnemonicParsing="false" text="USB &gt; USB type" toggleGroup="$filters">
+      <RadioButton fx:id="USB_type_btn" layoutX="500.0" layoutY="460.0" mnemonicParsing="false" onAction="#applyFilter" text="USB &gt; USB type" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="PC_CPU_btn" layoutX="530.0" layoutY="430.0" mnemonicParsing="false" text="PC &gt; CPU" toggleGroup="$filters">
+      <RadioButton fx:id="PC_CPU_btn" layoutX="330.0" layoutY="430.0" mnemonicParsing="false" onAction="#applyFilter" text="PC &gt; CPU" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="PC_RAM_btn" layoutX="530.0" layoutY="400.0" mnemonicParsing="false" text="PC &gt; RAM" toggleGroup="$filters">
+      <RadioButton fx:id="PC_RAM_btn" layoutX="330.0" layoutY="400.0" mnemonicParsing="false" onAction="#applyFilter" text="PC &gt; RAM" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="pencil_btn" layoutX="270.0" layoutY="430.0" mnemonicParsing="false" text="Pencil" toggleGroup="$filters">
+      <RadioButton fx:id="pencil_btn" layoutX="720.0" layoutY="430.0" mnemonicParsing="false" onAction="#applyFilter" text="Pencil" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="pen_btn" layoutX="270.0" layoutY="400.0" mnemonicParsing="false" text="Pen" toggleGroup="$filters">
+      <RadioButton fx:id="pen_btn" layoutX="720.0" layoutY="400.0" mnemonicParsing="false" onAction="#applyFilter" text="Pen" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="notebook_btn" layoutX="270.0" layoutY="460.0" mnemonicParsing="false" text="Note Book" toggleGroup="$filters">
+      <RadioButton fx:id="notebook_btn" layoutX="720.0" layoutY="460.0" mnemonicParsing="false" onAction="#applyFilter" text="Note Book" toggleGroup="$filters">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton layoutX="60.0" layoutY="400.0" mnemonicParsing="false" text="Price">
-         <font>
-            <Font name="Comic Sans MS" size="14.0" />
-         </font>
-      </RadioButton>
-      <RadioButton layoutX="60.0" layoutY="430.0" mnemonicParsing="false" text="Availability">
-         <font>
-            <Font name="Comic Sans MS" size="14.0" />
-         </font>
-      </RadioButton>
-      <Text layoutX="51.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="✩ Filters ">
+      <Text layoutX="45.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="✩ Filters ">
          <font>
             <Font name="Elephant" size="20.0" />
          </font>
       </Text>
-      <Button layoutX="780.0" layoutY="348.0" mnemonicParsing="false" style="-fx-background-color: cacce3; -fx-background-radius: 30;" text="apply">
+      <Button layoutX="788.0" layoutY="351.0" mnemonicParsing="false" style="-fx-background-color: cacce3; -fx-background-radius: 30;" text="apply">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -239,5 +229,107 @@
             </InnerShadow>
          </effect>
       </Button>
+      <Pane fx:id="RAM_Pane" layoutX="591.0" layoutY="345.0" prefHeight="38.0" prefWidth="258.0" style="-fx-background-color: cacee3; -fx-background-radius: 30;" visible="false">
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.5176470875740051" green="0.5176470875740051" blue="0.5176470875740051" />
+               </color>
+            </InnerShadow>
+         </effect>
+         <children>
+            <Label layoutX="14.0" layoutY="12.0" text="RAM">
+               <font>
+                  <Font name="Comic Sans MS" size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="RAM_txt" layoutX="48.0" layoutY="7.0" prefHeight="25.0" prefWidth="130.0" style="-fx-background-radius: 20;" />
+            <Button fx:id="applyRAMFilter" layoutX="192.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#applyRAMFilter" prefHeight="15.0" prefWidth="45.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="apply" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane fx:id="CPU_pane" layoutX="591.0" layoutY="345.0" prefHeight="38.0" prefWidth="258.0" style="-fx-background-color: cacee3; -fx-background-radius: 30;" visible="false">
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.5176470875740051" green="0.5176470875740051" blue="0.5176470875740051" />
+               </color>
+            </InnerShadow>
+         </effect>
+         <children>
+            <Label layoutX="14.0" layoutY="12.0" text="CPU">
+               <font>
+                  <Font name="Comic Sans MS" size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="CPU_txt" layoutX="48.0" layoutY="7.0" prefHeight="25.0" prefWidth="130.0" style="-fx-background-radius: 20;" />
+            <Button fx:id="applyCPUFilter" layoutX="192.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#applyCPUFilter" prefHeight="15.0" prefWidth="45.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="apply" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane fx:id="reedSpeed_pane" layoutX="591.0" layoutY="345.0" prefHeight="38.0" prefWidth="258.0" style="-fx-background-color: cacee3; -fx-background-radius: 30;" visible="false">
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.5176470875740051" green="0.5176470875740051" blue="0.5176470875740051" />
+               </color>
+            </InnerShadow>
+         </effect>
+         <children>
+            <Label layoutX="14.0" layoutY="12.0" text="start">
+               <font>
+                  <Font name="Comic Sans MS" size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="start_read_txt" layoutX="48.0" layoutY="7.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-radius: 20;" />
+            <Button fx:id="applyReedSpeedFilter" layoutX="192.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#applyReedSpeedFilter" prefHeight="15.0" prefWidth="45.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="apply" textFill="WHITE" />
+            <Label layoutX="92.0" layoutY="12.0" text="end">
+               <font>
+                  <Font name="Comic Sans MS" size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="end_read_txt" layoutX="121.0" layoutY="7.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-radius: 20;" />
+         </children>
+      </Pane>
+      <Pane fx:id="writeSpeed_pane" layoutX="591.0" layoutY="345.0" prefHeight="38.0" prefWidth="258.0" style="-fx-background-color: cacee3; -fx-background-radius: 30;" visible="false">
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.5176470875740051" green="0.5176470875740051" blue="0.5176470875740051" />
+               </color>
+            </InnerShadow>
+         </effect>
+         <children>
+            <Label layoutX="14.0" layoutY="12.0" text="start">
+               <font>
+                  <Font name="Comic Sans MS" size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="start_write_txt" layoutX="48.0" layoutY="7.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-radius: 20;" />
+            <Button fx:id="applyWriteSpeedFilter" layoutX="192.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#applyWriteSpeedFilter" prefHeight="15.0" prefWidth="45.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="apply" textFill="WHITE" />
+            <Label layoutX="92.0" layoutY="12.0" text="end">
+               <font>
+                  <Font name="Comic Sans MS" size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="end_write_txt" layoutX="121.0" layoutY="7.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-radius: 20;" />
+         </children>
+      </Pane>
+      <Pane fx:id="USB_pane" layoutX="591.0" layoutY="345.0" prefHeight="38.0" prefWidth="258.0" style="-fx-background-color: cacee3; -fx-background-radius: 30;" visible="false">
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.5176470875740051" green="0.5176470875740051" blue="0.5176470875740051" />
+               </color>
+            </InnerShadow>
+         </effect>
+         <children>
+            <Label layoutX="14.0" layoutY="12.0" text="USB">
+               <font>
+                  <Font name="Comic Sans MS" size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="USB_type_txt" layoutX="48.0" layoutY="7.0" prefHeight="25.0" prefWidth="130.0" style="-fx-background-radius: 20;" />
+            <Button fx:id="applyUSBTypeFilter" layoutX="192.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#applyUSBTypeFilter" prefHeight="15.0" prefWidth="45.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="apply" textFill="WHITE" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
