@@ -1,8 +1,10 @@
 package com.example.onlineshop;
 
+import com.example.onlineshop.model.user.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -63,7 +65,7 @@ public class CustomerPanelPageGraphicController implements Initializable {
 
     @FXML
     void increaseCredit(MouseEvent event) throws Exception {
-        new PaymentPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
+        new PaymentPage(MainPageGraphicController.customer).start((Stage) ((Node) event.getSource()).getScene().getWindow());
 
     }
     @FXML
@@ -73,13 +75,22 @@ public class CustomerPanelPageGraphicController implements Initializable {
     }
 
     @FXML
-    void shoppingHistory(MouseEvent event) {
-
+    void shoppingHistory(MouseEvent event) throws Exception {
+        if(MainPageGraphicController.customer.getShoppingHistory().size() == 0){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("NOT Existed!");
+            alert.setHeaderText("NO RECEIPT!");
+            alert.setContentText("You have not made a purchase yet!");
+            alert.showAndWait();
+        }
+        else {
+            new ShoppingHistoryPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
+        }
     }
 
     @FXML
-    void showDiscountsList(MouseEvent event) {
-
+    void showDiscountsList(MouseEvent event) throws Exception {
+        new DiscountListPage().start((Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
     @FXML

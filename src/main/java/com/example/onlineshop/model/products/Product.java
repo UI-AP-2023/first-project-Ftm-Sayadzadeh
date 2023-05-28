@@ -1,5 +1,6 @@
 package com.example.onlineshop.model.products;
 import com.example.onlineshop.model.processes.*;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -145,13 +146,18 @@ abstract public class Product implements Comparable<Product> {
         sb.append("price : ").append(productPrice).append("\n");
         sb.append("status : ").append(productStatus).append("\n");
         sb.append("average score : ").append(String.format("%.1f", averageScore)).append("\n");
-        sb.append("---------------------Comments---------------------" + "\n");
-        for (Comment element : productCommentList) {
-            sb.append("*username: ").append(element.getCommentingUser().getUsername()).append("\n");
-            sb.append(element.getCommentText()).append("\n");
-            sb.append("*Has the commenter bought this product?").append(element.isBought()).append("\n");
+        sb.append("-------------------------Comments-------------------------" + "\n");
+        if(productCommentList.size() == 0){
+            sb.append("-There are no comments for this product! ").append("\n");
         }
-        sb.append("--------------------------------------------------" + "\n");
+        else {
+            for (Comment element : productCommentList) {
+                sb.append("*username: ").append(element.getCommentingUser().getUsername()).append("\n");
+                sb.append(element.getCommentText()).append("\n");
+                sb.append("*Has the commenter bought this product?").append(element.isBought()).append("\n");
+            }
+        }
+        sb.append("-------------------------------------------------------------" + "\n");
         return sb.toString();
     }
     public int compareTo(Product o) {
