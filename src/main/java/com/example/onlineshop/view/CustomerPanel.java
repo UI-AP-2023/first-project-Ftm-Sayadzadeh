@@ -77,85 +77,85 @@ public class CustomerPanel {
                 """);
         int choice = input.nextInt();
         if(choice == 1){
-            this.editEmail();
+//            this.editEmail();
             this.customerMenu();
         }
         else if(choice == 2){
-            this.editPhoneNumber();
+//            this.editPhoneNumber();
             this.customerMenu();
         }
         else if(choice == 3){
-            this.editPassword();
+//            this.editPassword();
             this.customerMenu();
         }
         else //choice=4 or other numbers
             this.customerMenu();
     }
-    private void editEmail(){
-        System.out.println("Enter your new email : ");
-        //we check it is new or not
-        String email;
-        Pattern emailPattern = Pattern.compile("^[\\w-._%+0-9]+@[\\w0-9.-]+\\.com$");
-        boolean beCorrect = false;
-        input.nextLine();
-        do {
-            email = input.nextLine();
-            boolean find;
-            CustomerController customerController = new CustomerController();
-            find = customerController.checkEmail(email);
-            if (find)
-                System.out.println("Another member use this email so please enter another one :)");
-            else {
-                Matcher emailMatcher = emailPattern.matcher(email);
-                beCorrect = emailMatcher.find();
-                if (!beCorrect)
-                    System.out.println("You have entered an invalid email address so please enter another one :)");
-            }
-        } while (!beCorrect);
-        if(customerController.editEmail(email))
-            System.out.println("DONE SUCCESSFULLY!");
-    }
-    private void editPhoneNumber(){
-        System.out.println("Enter your phone number : ");
-        //we check it is new or not
-        String phoneNumber;
-        Pattern phoneNumberPattern = Pattern.compile("^09\\d{9}$");
-        boolean beCorrect = false;
-        input.nextLine();
-        do {
-            boolean find;
-            phoneNumber = input.nextLine();
-            CustomerController customerController = new CustomerController();
-            find = customerController.checkPhoneNumber(phoneNumber);
-            if (find)
-                System.out.println("Another member use this phone number so please enter another one :)");
-            else {
-                Matcher phoneNumberMather = phoneNumberPattern.matcher(phoneNumber);
-                beCorrect = phoneNumberMather.find();
-                if (!beCorrect)
-                    System.out.println("You have entered an invalid phone number so please enter another one :)");
-            }
-        } while (!beCorrect);
-        if(customerController.editPhoneNumber(phoneNumber))
-            System.out.println("DONE SUCCESSFULLY!");
-    }
-    private void editPassword(){
-        boolean beCorrect;
-        System.out.println("Enter your password : (should contain 8 char without space!) ");
-        //we check it is new or not
-        String password;
-        Pattern passwordPattern = Pattern.compile("^\\S{8,}$");
-        input.nextLine();
-        do {
-            password = input.nextLine();
-            Matcher passwordMather = passwordPattern.matcher(password);
-            beCorrect = passwordMather.find();
-            if (!beCorrect)
-                System.out.println("You have entered an invalid password. It should contain 8 char without space!");
-        } while (!beCorrect);
-        if(customerController.editPassword(password))
-            System.out.println("DONE SUCCESSFULLY!");
-    }
+//    private void editEmail(){
+//        System.out.println("Enter your new email : ");
+//        //we check it is new or not
+//        String email;
+//        Pattern emailPattern = Pattern.compile("^[\\w-._%+0-9]+@[\\w0-9.-]+\\.com$");
+//        boolean beCorrect = false;
+//        input.nextLine();
+//        do {
+//            email = input.nextLine();
+//            boolean find;
+//            CustomerController customerController = new CustomerController();
+//            find = customerController.checkEmail(email);
+//            if (find)
+//                System.out.println("Another member use this email so please enter another one :)");
+//            else {
+//                Matcher emailMatcher = emailPattern.matcher(email);
+//                beCorrect = emailMatcher.find();
+//                if (!beCorrect)
+//                    System.out.println("You have entered an invalid email address so please enter another one :)");
+//            }
+//        } while (!beCorrect);
+//        if(customerController.editEmail(email))
+//            System.out.println("DONE SUCCESSFULLY!");
+//    }
+//    private void editPhoneNumber(){
+//        System.out.println("Enter your phone number : ");
+//        //we check it is new or not
+//        String phoneNumber;
+//        Pattern phoneNumberPattern = Pattern.compile("^09\\d{9}$");
+//        boolean beCorrect = false;
+//        input.nextLine();
+//        do {
+//            boolean find;
+//            phoneNumber = input.nextLine();
+//            CustomerController customerController = new CustomerController();
+//            find = customerController.checkPhoneNumber(phoneNumber);
+//            if (find)
+//                System.out.println("Another member use this phone number so please enter another one :)");
+//            else {
+//                Matcher phoneNumberMather = phoneNumberPattern.matcher(phoneNumber);
+//                beCorrect = phoneNumberMather.find();
+//                if (!beCorrect)
+//                    System.out.println("You have entered an invalid phone number so please enter another one :)");
+//            }
+//        } while (!beCorrect);
+//        if(customerController.editPhoneNumber(phoneNumber))
+//            System.out.println("DONE SUCCESSFULLY!");
+//    }
+//    private void editPassword(){
+//        boolean beCorrect;
+//        System.out.println("Enter your password : (should contain 8 char without space!) ");
+//        //we check it is new or not
+//        String password;
+//        Pattern passwordPattern = Pattern.compile("^\\S{8,}$");
+//        input.nextLine();
+//        do {
+//            password = input.nextLine();
+//            Matcher passwordMather = passwordPattern.matcher(password);
+//            beCorrect = passwordMather.find();
+//            if (!beCorrect)
+//                System.out.println("You have entered an invalid password. It should contain 8 char without space!");
+//        } while (!beCorrect);
+//        if(customerController.editPassword(password))
+//            System.out.println("DONE SUCCESSFULLY!");
+//    }
     public void leaveComment(String productID){
         System.out.println("Write your comment text!");
         //input.nextLine();
