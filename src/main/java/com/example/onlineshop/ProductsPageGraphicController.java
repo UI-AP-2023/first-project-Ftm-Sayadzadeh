@@ -6,6 +6,7 @@ import com.example.onlineshop.model.processes.Comment;
 import com.example.onlineshop.model.products.Product;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -82,13 +83,13 @@ public class ProductsPageGraphicController {
             alert.showAndWait();
         }
     }
-
     @FXML
-    void applyFilters(MouseEvent event) throws Exception {
+    void applyFilters(ActionEvent event) throws Exception {
         if(priceFilter.isSelected()){
             rangeGetterPane.setVisible(true);
         }
         else if(availabilityFilter.isSelected()){
+            rangeGetterPane.setVisible(false);
             ArrayList<Product> products = new ProductsPageController().filterByStatus(this.products);
             if(products.size() != 0) {
                 new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
