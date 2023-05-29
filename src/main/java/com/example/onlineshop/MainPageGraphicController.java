@@ -174,6 +174,11 @@ public class MainPageGraphicController {
 
     @FXML
     void searchByName(MouseEvent event) throws Exception {
+        RAM_Pane.setVisible(false);
+        CPU_pane.setVisible(false);
+        USB_pane.setVisible(false);
+        writeSpeed_pane.setVisible(false);
+        reedSpeed_pane.setVisible(false);
         ArrayList<Product> products = new ProductsPageController().searchProductByName(searchText.getText());
         if(products.size() != 0) {
             new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -188,6 +193,11 @@ public class MainPageGraphicController {
     }
     public void applyFilter(ActionEvent event) throws Exception {
         if(car_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             ArrayList<Product> products = new ProductsPageController().filterCarSubcategory(Admin.getAdmin().getProductsList());
             if(products.size() != 0) {
                 new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -201,6 +211,11 @@ public class MainPageGraphicController {
             }
         }
         else if(bicycle_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             ArrayList<Product> products = new ProductsPageController().filterBicycleSubcategory(Admin.getAdmin().getProductsList());
             if(products.size() != 0) {
                 new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -214,6 +229,11 @@ public class MainPageGraphicController {
             }
         }
         else if(pen_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             ArrayList<Product> products = new ProductsPageController().filterPenSubcategory(Admin.getAdmin().getProductsList());
             if(products.size() != 0) {
                 new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -227,6 +247,11 @@ public class MainPageGraphicController {
             }
         }
         else if(pencil_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             ArrayList<Product> products = new ProductsPageController().filterPencilSubcategory(Admin.getAdmin().getProductsList());
             if(products.size() != 0) {
                 new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -240,6 +265,11 @@ public class MainPageGraphicController {
             }
         }
         else if(notebook_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             ArrayList<Product> products = new ProductsPageController().filterNoteBookSubcategory(Admin.getAdmin().getProductsList());
             if(products.size() != 0) {
                 new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -253,6 +283,11 @@ public class MainPageGraphicController {
             }
         }
         else if(PC_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             ArrayList<Product> products = new ProductsPageController().filterPCSubcategory(Admin.getAdmin().getProductsList());
             if(products.size() != 0) {
                 new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -266,12 +301,25 @@ public class MainPageGraphicController {
             }
         }
         else if(PC_CPU_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             CPU_pane.setVisible(true);
         }
         else if(PC_RAM_btn.isSelected()){
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             RAM_Pane.setVisible(true);
         }
         else if(SSD_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             ArrayList<Product> products = new ProductsPageController().filterSSDSubcategory(Admin.getAdmin().getProductsList());
             if(products.size() != 0) {
                 new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -285,12 +333,25 @@ public class MainPageGraphicController {
             }
         }
         else if(SSD_read_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
             reedSpeed_pane.setVisible(true);
         }
         else if(SSD_write_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             writeSpeed_pane.setVisible(true);
         }
         else if(USB_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            USB_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             ArrayList<Product> products = new ProductsPageController().filterFlashMemorySubcategory(Admin.getAdmin().getProductsList());
             if(products.size() != 0) {
                 new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -304,6 +365,10 @@ public class MainPageGraphicController {
             }
         }
         else if(USB_type_btn.isSelected()){
+            RAM_Pane.setVisible(false);
+            CPU_pane.setVisible(false);
+            writeSpeed_pane.setVisible(false);
+            reedSpeed_pane.setVisible(false);
             USB_pane.setVisible(true);
         }
     }
@@ -375,6 +440,7 @@ public class MainPageGraphicController {
     }
     @FXML
     void applyUSBTypeFilter(MouseEvent event) throws Exception {
+
         ProductsPageController productsPageController = new ProductsPageController();
         ArrayList<Product> products = productsPageController.filterByUSBType(productsPageController.filterFlashMemorySubcategory(Admin.getAdmin().getProductsList()) ,USB_type_txt.getText());
         USB_pane.setVisible(false);
@@ -391,6 +457,11 @@ public class MainPageGraphicController {
     }
     @FXML
     void digitalCategory(MouseEvent event) throws Exception {
+        RAM_Pane.setVisible(false);
+        CPU_pane.setVisible(false);
+        USB_pane.setVisible(false);
+        writeSpeed_pane.setVisible(false);
+        reedSpeed_pane.setVisible(false);
         ArrayList<Product> products = new ProductsPageController().filterDigitalCategory(Admin.getAdmin().getProductsList());
         if(products.size() != 0) {
             new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -406,6 +477,11 @@ public class MainPageGraphicController {
 
     @FXML
     void edibleCategory(MouseEvent event) throws Exception {
+        RAM_Pane.setVisible(false);
+        CPU_pane.setVisible(false);
+        USB_pane.setVisible(false);
+        writeSpeed_pane.setVisible(false);
+        reedSpeed_pane.setVisible(false);
         ArrayList<Product> products = new ProductsPageController().filterEdibleCategory(Admin.getAdmin().getProductsList());
         if(products.size() != 0) {
             new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -420,6 +496,11 @@ public class MainPageGraphicController {
     }
     @FXML
     void stationeryCategory(MouseEvent event) throws Exception {
+        RAM_Pane.setVisible(false);
+        CPU_pane.setVisible(false);
+        USB_pane.setVisible(false);
+        writeSpeed_pane.setVisible(false);
+        reedSpeed_pane.setVisible(false);
         ArrayList<Product> products = new ProductsPageController().filterStationeryCategory(Admin.getAdmin().getProductsList());
         if(products.size() != 0) {
             new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -435,6 +516,11 @@ public class MainPageGraphicController {
 
     @FXML
     void vehicleCategory(MouseEvent event) throws Exception {
+        RAM_Pane.setVisible(false);
+        CPU_pane.setVisible(false);
+        USB_pane.setVisible(false);
+        writeSpeed_pane.setVisible(false);
+        reedSpeed_pane.setVisible(false);
         ArrayList<Product> products = new ProductsPageController().filterVehicleCategory(Admin.getAdmin().getProductsList());
         if(products.size() != 0) {
             new ProductsGraphicPage(products).start((Stage) ((Node) event.getSource()).getScene().getWindow());
