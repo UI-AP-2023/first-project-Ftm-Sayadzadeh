@@ -112,7 +112,7 @@ public class Receipt {
         sb.append("------------------------------------------------------" + "\n");
         sb.append("total amount paid : ").append(totalAmountPaid).append("\n");
         sb.append("discounts : ").append(discounts).append("\n");
-        sb.append("total price after discounts : ").append(totalAmountPaid).append("\n");
+        sb.append("total price after discounts : ").append(totalPriceAfterDiscount).append("\n");
         return sb.toString();
     }
 

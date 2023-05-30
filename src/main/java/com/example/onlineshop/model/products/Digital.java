@@ -47,7 +47,8 @@ abstract public class Digital extends Product implements Discountable {
     public String toString() {
         return super.toString() +
                 "weight : " + weight + "\n" +
-                "dimensions : " + dimensions + "\n";
+                "dimensions : " + dimensions + "\n" +
+                "discount percent : " + discountPercent  + " % " + "\n" ;
     }
 
     @Override

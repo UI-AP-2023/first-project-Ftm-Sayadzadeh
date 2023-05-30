@@ -27,7 +27,8 @@ public class Pencil extends Stationery implements Discountable{
 
     public String toString() {
         return super.toString() +
-                "pencil type : " + pencilType.toString() + "\n";
+                "pencil type : " + pencilType.toString() + "\n" +
+                "discount percent : " + discountPercent  + " % " + "\n" ;
     }
 
     @Override

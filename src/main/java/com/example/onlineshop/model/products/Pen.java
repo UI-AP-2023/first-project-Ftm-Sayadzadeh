@@ -22,7 +22,8 @@ public class Pen extends Stationery implements Discountable{
 
     public String toString() {
         return super.toString() +
-                "pen color : " + penColor.toString() + "\n";
+                "pen color : " + penColor.toString() + "\n" +
+                "discount percent : " + discountPercent + " % " + "\n" ;
     }
 
     @Override
