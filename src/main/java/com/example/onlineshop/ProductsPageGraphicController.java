@@ -56,6 +56,28 @@ public class ProductsPageGraphicController {
     private TextField startOfRange;
     @FXML
     private Pane rangeGetterPane;
+    @FXML
+    private Button addProductToShoppingCart;
+    @FXML
+    void addProductToShoppingCart(MouseEvent event) throws Exception {
+        if(MainPageGraphicController.customer == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Log in first!");
+            alert.setContentText("You can not buy products before log in :) ");
+            alert.showAndWait();
+        }
+        else{
+            ProductsPageController productsPageController = new ProductsPageController();
+            Product selectedProduct = productsPageController.selectProductByID(currentChoice);
+            MainPageGraphicController.customer.getShoppingCart().add(selectedProduct);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ADD SUCCESSFULLY!");
+            alert.setHeaderText("The operation was done successfully!");
+            alert.setContentText("The selected product was added to shopping cart :) ");
+            alert.showAndWait();
+        }
+    }
 
     @FXML
     void backHome(MouseEvent event) throws Exception {
@@ -74,6 +96,7 @@ public class ProductsPageGraphicController {
                 alert.setContentText("Your comment was added to comment requests :) ");
                 alert.showAndWait();
             }
+            commentBox.clear();
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -118,18 +141,18 @@ public class ProductsPageGraphicController {
             alert.showAndWait();
         }
     }
-    private String[] productsName;
+    private String[] productsID;
     private String currentChoice;
     int indexOfCurrentChoice = 0;
 
     // I can put product name in list view instead of ID
     public void setList(){
         products.sort(Product::compareTo);
-        productsName = new String[products.size()];
+        productsID = new String[products.size()];
         for (int i = 0; i < products.size(); i++) {
-            productsName[i] = products.get(i).getProductID();
+            productsID[i] = products.get(i).getProductID();
         }
-        productsListView.getItems().addAll(productsName);
+        productsListView.getItems().addAll(productsID);
         productsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String receipt1, String receipt2) {
