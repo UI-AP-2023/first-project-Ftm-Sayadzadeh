@@ -6,17 +6,13 @@ import com.example.onlineshop.model.processes.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class ShoppingHistoryPageGraphicController implements Initializable {
+public class ShoppingHistoryPageGraphicController {
     @FXML
     private ImageView backHome;
 
@@ -60,17 +56,17 @@ public class ShoppingHistoryPageGraphicController implements Initializable {
             }
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error!");
             alert.setHeaderText("You can not rate this product!");
             alert.setContentText("ERROR ... Only buyer can rate :) ");
             alert.showAndWait();
         }
     }
-    private final String[] receiptID = new String[MainPageGraphicController.customer.getShoppingHistory().size()];
+    private String[] receiptID;
     private String currentChoice;
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void setList(){
+        receiptID = new String[MainPageGraphicController.customer.getShoppingHistory().size()];
         for (int i = 0; i < MainPageGraphicController.customer.getShoppingHistory().size(); i++) {
             receiptID[i] = MainPageGraphicController.customer.getShoppingHistory().get(i).getReceiptID();
         }

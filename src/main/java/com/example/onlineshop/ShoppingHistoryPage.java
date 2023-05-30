@@ -10,6 +10,7 @@ public class ShoppingHistoryPage extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(ShoppingHistoryPage.class.getResource("shoppingHistoryPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 500);
+        ((ShoppingHistoryPageGraphicController)fxmlLoader.getController()).setList();
         stage.setTitle("shopping history Page");
         stage.setScene(scene);
         stage.show();
