@@ -12,12 +12,15 @@ public class Receipt {
     private final String receiptID;
     private final String receiptDate;
     private final ArrayList<Product> receiptProductList;
-    private final int totalAmountPaid;
+    private final double totalAmountPaid;
+    private double discounts = 0 ;
+    private double totalPriceAfterDiscount ;
     private static int receiptCounter = 1;
     public Receipt(ArrayList<Product> receiptProductList ){
         this.receiptDate = LocalDate.now().toString();
         this.receiptProductList = receiptProductList;
         this.totalAmountPaid = this.totalAmountPaidCalculator(receiptProductList);
+        this.totalPriceAfterDiscount = totalAmountPaid;
         this.receiptID = this.idMaker();
         receiptCounter ++;
     }
@@ -58,7 +61,7 @@ public class Receipt {
         return receiptProductList;
     }
 
-    public int getTotalAmountPaid() {
+    public double getTotalAmountPaid() {
         return totalAmountPaid;
     }
     public int getReceiptCounter(){return receiptCounter;} //we don't need it
@@ -102,12 +105,30 @@ public class Receipt {
         StringBuilder sb = new StringBuilder();
         sb.append("receipt ID : ").append(receiptID).append("\n");
         sb.append("receipt Date : ").append(receiptDate).append("\n");
-        sb.append("-------------------------------------------------------------" + "\n");
+        sb.append("------------------------------------------------------" + "\n");
         for(ProductInfoReceipt element : this.findProductNumInReceipt()){
             sb.append(element.toString());
         }
-        sb.append("-------------------------------------------------------------" + "\n");
+        sb.append("------------------------------------------------------" + "\n");
         sb.append("total amount paid : ").append(totalAmountPaid).append("\n");
+        sb.append("discounts : ").append(discounts).append("\n");
+        sb.append("total price after discounts : ").append(totalAmountPaid).append("\n");
         return sb.toString();
+    }
+
+    public double getTotalPriceAfterDiscount() {
+        return totalPriceAfterDiscount;
+    }
+
+    public void setTotalPriceAfterDiscount(double  totalPriceAfterDiscount) {
+        this.totalPriceAfterDiscount = totalPriceAfterDiscount;
+    }
+
+    public double getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(double  discounts) {
+        this.discounts = discounts;
     }
 }

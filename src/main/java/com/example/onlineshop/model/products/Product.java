@@ -163,10 +163,10 @@ abstract public class Product implements Comparable<Product> {
     public int compareTo(Product o) {
         int compareName = this.productName.compareTo(o.productName);
         if(compareName > 0){
-            return -1;
+            return 1;
         }
         else if(compareName < 0){
-            return 1;
+            return -1;
         }
         else{
             if(this.averageScore > o.averageScore){
@@ -176,14 +176,14 @@ abstract public class Product implements Comparable<Product> {
                 return 1;
             }
             else {
-                if(this.productPrice > o.productPrice){
+                if(this.productPrice < o.productPrice){
                     return -1;
                 }
-                else if(this.productPrice < o.productPrice){
+                else if(this.productPrice > o.productPrice){
                     return 1;
                 }
                 else{
-                    return Integer.compare(this.numOfProduct, o.numOfProduct);
+                    return -1*Integer.compare(this.numOfProduct, o.numOfProduct);
                 }
             }
         }
