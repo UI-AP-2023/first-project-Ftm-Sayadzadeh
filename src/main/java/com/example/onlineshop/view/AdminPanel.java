@@ -58,8 +58,8 @@ public class AdminPanel {
                 this.adminCommandPage();
             }
             case "MainPage" -> {
-                MainPage mainPage = new MainPage();
-                mainPage.mainPage();
+//                MainPage mainPage = new MainPage();
+//                mainPage.mainPage();
             }
             case "EXIT" -> System.exit(0);
             default -> {
@@ -82,10 +82,10 @@ public class AdminPanel {
                 - Add Edible productName productPrice numOfProduct productionDate expirationDate
                 - Remove productID
                 - Edit (name || price || stock) productID (newName || newPrice || newStock)
-                - Show (Product || Customers || RegistrationRequests || CommentRequests || CreditRequests)
+                - Show (Products || Customers || RegistrationRequests || CommentRequests || CreditRequests)
                 - Accept (Registration || Comment || CreditIncrease ) index
                 - Reject (Registration || Comment || CreditIncrease ) index
-                - CustomerDiscount discountPercent codeValidity capacity ( 1000 PRICE || (1001 || 1002 || 1003 || 1004) PURCHASE )
+                - CustomerDiscount ( PRICE || PURCHASE ) discountPercent codeValidity capacity ( 1000 || (1001 || 1002 || 1003 || 1004) )
                 - ProductDiscount (add productID discountPercent|| remove productID discountPercent)
                 - MainPage
                 - EXIT
@@ -250,7 +250,7 @@ public class AdminPanel {
                     System.out.println("The operation was done successfully!");
             }
             case "PURCHASE" -> {
-                if (adminController.addNewDiscountCodeAbove5Purchase(Double.parseDouble(dividedCommend[2]), dividedCommend[3], Integer.parseInt(dividedCommend[4]), Integer.parseInt(dividedCommend[5])))
+                if (adminController.addNewDiscountCodeAbove3Purchase(Double.parseDouble(dividedCommend[2]), dividedCommend[3], Integer.parseInt(dividedCommend[4]), Integer.parseInt(dividedCommend[5])))
                     System.out.println("The operation was done successfully!");
             }
             default -> System.out.println("WRONG COMMEND LINE!");

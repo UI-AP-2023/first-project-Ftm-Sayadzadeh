@@ -153,6 +153,9 @@ public class AdminController {
             Customer newCustomer = admin.getRegistrationRequest().get(registrationRequestIndex);
             CustomerController.getCustomersList().add(newCustomer);
             admin.getRegistrationRequest().remove(newCustomer);
+            //welcome discount
+            Discount welcomeDiscount = new Discount(30 , "12/12/2029" , 1 , 1000 , "WELCOME" );
+            newCustomer.getDiscountsCode().add(welcomeDiscount);
             return true;
         } else
             return false;
@@ -229,18 +232,13 @@ public class AdminController {
     //registration page (add new customer to request list)
     public boolean addRegisteredCustomerToRequestList(Customer newCustomer) {
         admin.getRegistrationRequest().add(newCustomer);
-        //welcome discount
-        Discount welcomeDiscount = new Discount(30 , "12/12/2029" , 1 , 1000 , "WELCOME" );
-        newCustomer.getDiscountsCode().add(welcomeDiscount);
         return true;
     }
     // add new discount code for above 5 purchase
-    public boolean addNewDiscountCodeAbove5Purchase(double discountPercent , String codeValidity , int capacity , int productCategoryCode ){
+    public boolean addNewDiscountCodeAbove3Purchase(double discountPercent , String codeValidity , int capacity , int productCategoryCode ){
         for(Customer element : CustomerController.getCustomersList()){
-            if(element.getShoppingHistory().size() > 5 ){
-                Discount newDiscount = new Discount(discountPercent , codeValidity , capacity , productCategoryCode , "PURCHASE");
-                element.getDiscountsCode().add(newDiscount);
-            }
+            Discount newDiscount = new Discount(discountPercent , codeValidity , capacity , productCategoryCode , "PURCHASE");
+            element.getDiscountsCode().add(newDiscount);
         }
         return true;
     }
