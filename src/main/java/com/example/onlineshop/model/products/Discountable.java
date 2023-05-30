@@ -1,4 +1,4 @@
-package model.products;
+package com.example.onlineshop.model.products;
 
 public interface Discountable {
     void addDiscountToProduct(double discountPercent);

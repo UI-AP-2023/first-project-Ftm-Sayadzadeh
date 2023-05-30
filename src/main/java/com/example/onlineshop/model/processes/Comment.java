@@ -1,6 +1,5 @@
 package com.example.onlineshop.model.processes;
-import com.example.onlineshop.model.user.User;
-
+import com.example.onlineshop.model.user.*;
 public class Comment {
     private final User commentingUser;
     private final String productID;
