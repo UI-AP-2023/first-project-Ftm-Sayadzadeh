@@ -1,6 +1,5 @@
 package com.example.onlineshop;
 
-import com.example.onlineshop.model.user.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
