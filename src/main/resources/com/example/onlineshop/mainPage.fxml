@@ -102,7 +102,7 @@
             <Image url="@img/icons8-user-30.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="goShoppingCartPage" fitHeight="30.0" fitWidth="30.0" layoutX="806.0" layoutY="63.0" onMouseClicked="#goShoppingCartPAage" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="goShoppingCartPage" fitHeight="30.0" fitWidth="30.0" layoutX="806.0" layoutY="63.0" onMouseClicked="#goShoppingCartPage" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/icons8-shopping-cart-30.png" />
          </image>

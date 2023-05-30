@@ -136,20 +136,6 @@ public class MainPageGraphicController {
 
     @FXML
     void goPanel(MouseEvent event) throws Exception {
-//        customer = new Customer("ala" , "a@email.com" , "09137900843" ,
-//                "12345678");
-//        Pen pen1 = new Pen("pen1",1000,1,"iran","Black");
-//        Pen pen2 = new Pen("pen2",2000,1,"iran","Black");
-//        ArrayList<Product> products = new ArrayList<>();
-//        products.add(pen1);
-//        products.add(pen2);
-//        Admin.getAdmin().getProductsList().add(pen1);
-//        Admin.getAdmin().getProductsList().add(pen2);
-//        Receipt receipt = new Receipt(products);
-//        Discount welcomeDiscount = new Discount(30 , "12/12/2029" , 1 , 1000 , "WELCOME" );
-//        customer.getDiscountsCode() .add(welcomeDiscount);
-//        customer.getShoppingHistory().add(receipt);
-
         if(customer == null){
             new SignUpAndLogInPage(customer).start((Stage) ((Node) event.getSource()).getScene().getWindow());
         }
@@ -159,7 +145,7 @@ public class MainPageGraphicController {
     }
 
     @FXML
-    void goShoppingCartPAage(MouseEvent event) {
+    void goShoppingCartPage(MouseEvent event) throws Exception {
         if(customer == null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("NOT FOUND");
@@ -168,7 +154,15 @@ public class MainPageGraphicController {
             alert.showAndWait();
         }
         else{
-            //go shopping cart page
+            if(customer.getShoppingCart().size() == 0){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("NOT FOUND");
+                alert.setHeaderText("Your shopping cart is empty!");
+                alert.setContentText("You have not added any items to your cart yet :) ");
+                alert.showAndWait();
+            }
+            else
+                new ShoppingCartPage(customer.getShoppingCart()).start((Stage) ((Node) event.getSource()).getScene().getWindow());
         }
     }
 
