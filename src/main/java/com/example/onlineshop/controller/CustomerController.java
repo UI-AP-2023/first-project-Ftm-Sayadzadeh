@@ -1,11 +1,11 @@
 package com.example.onlineshop.controller;
 
+import com.example.onlineshop.MainPage;
 import com.example.onlineshop.MainPageGraphicController;
 import com.example.onlineshop.exceptions.*;
 import com.example.onlineshop.model.products.*;
 import com.example.onlineshop.model.processes.*;
 import com.example.onlineshop.model.user.*;
-import com.example.onlineshop.view.CustomerPanel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -54,7 +54,6 @@ public class CustomerController {
         for (Customer element : customersList) {
             if (element.getUsername().equals(username)) {
                 if (element.getPassword().equals(password)) {
-                    CustomerPanel.setCustomer(element);    //comment it
                     MainPageGraphicController.customer = element;
                     return true;
                 }
@@ -66,7 +65,7 @@ public class CustomerController {
     //find customer index
     private int findCustomerIndex() {
         for (Customer element : customersList) {
-            if (element == CustomerPanel.getCustomer()) {
+            if (element == MainPageGraphicController.customer) {
                 return customersList.indexOf(element);
             }
         }
@@ -91,7 +90,7 @@ public class CustomerController {
     //buy products
     public boolean buyProduct(Product product) {
         if (Objects.equals(product.getProductStatus(), "Available")) {
-            customersList.get(customersList.indexOf(CustomerPanel.getCustomer())).getShoppingCart().add(product);
+            customersList.get(customersList.indexOf(MainPageGraphicController.customer)).getShoppingCart().add(product);
             return true;
         } else
             return false;
@@ -99,7 +98,7 @@ public class CustomerController {
 
     //check the commenting user buy the product or not
     public boolean isBoughtChecker(String productID) {
-        for (Receipt element : CustomerPanel.getCustomer().getShoppingHistory()) {
+        for (Receipt element : MainPageGraphicController.customer.getShoppingHistory()) {
             for (Product product : element.getReceiptProductList()) {
                 if (Objects.equals(product.getProductID(), productID))
                     return true;
@@ -127,13 +126,13 @@ public class CustomerController {
 
     // com.example.onlineshop.view shopping history
     public ArrayList<Receipt> shoppingHistory() {
-        return CustomerPanel.getCustomer().getShoppingHistory();
+        return MainPageGraphicController.customer.getShoppingHistory();
     }
 
     //check the customer bought it or not
     public boolean checkBoughtForRating(String productID) {
         ProductsPageController productsPageController = new ProductsPageController();
-        for (Receipt element : CustomerPanel.getCustomer().getShoppingHistory()) {
+        for (Receipt element : MainPageGraphicController.customer.getShoppingHistory()) {
             if (element.getReceiptProductList().contains(productsPageController.selectProductByID(productID)))
                 return true;
         }
@@ -154,13 +153,13 @@ public class CustomerController {
     //show shopping cart
     public ArrayList<ProductInfoReceipt> showShoppingCart() {
         ArrayList<ProductInfoReceipt> productInfoReceipts = new ArrayList<>();
-        if (CustomerPanel.getCustomer().getShoppingCart().size() != 0) {
-            String productName = CustomerPanel.getCustomer().getShoppingCart().get(0).getProductName();
-            String productID = CustomerPanel.getCustomer().getShoppingCart().get(0).getProductID();
-            double productPrice = CustomerPanel.getCustomer().getShoppingCart().get(0).getProductPrice();
+        if (MainPageGraphicController.customer.getShoppingCart().size() != 0) {
+            String productName = MainPageGraphicController.customer.getShoppingCart().get(0).getProductName();
+            String productID = MainPageGraphicController.customer.getShoppingCart().get(0).getProductID();
+            double productPrice = MainPageGraphicController.customer.getShoppingCart().get(0).getProductPrice();
             ProductInfoReceipt productInfoReceipt1 = new ProductInfoReceipt(productName, productID, productPrice, 0);
             productInfoReceipts.add(productInfoReceipt1);
-            for (Product element1 : CustomerPanel.getCustomer().getShoppingCart()) {
+            for (Product element1 : MainPageGraphicController.customer.getShoppingCart()) {
                 boolean find = false;
                 for (ProductInfoReceipt element2 : productInfoReceipts) {
                     if (Objects.equals(element2.getProductName(), element1.getProductName())) {
@@ -189,7 +188,7 @@ public class CustomerController {
 
     //find product in shopping cart by id
     private Product findInShoppingCartByID(String productID) {
-        for (Product element : CustomerPanel.getCustomer().getShoppingCart()) {
+        for (Product element : MainPageGraphicController.customer.getShoppingCart()) {
             if (Objects.equals(element.getProductID(), productID)) {
                 return element;
             }
@@ -200,21 +199,19 @@ public class CustomerController {
     //remove product from shopping cart
     public boolean removeProductFromShoppingCart(String productID) {
         if (this.findInShoppingCartByID(productID) != null) {
-            CustomerPanel.getCustomer().getShoppingCart().remove(this.findInShoppingCartByID(productID));
+            MainPageGraphicController.customer.getShoppingCart().remove(this.findInShoppingCartByID(productID));
             return true;
         }
         return false;
     }
 
     //find and add available product
-    private ArrayList<Product> findFinalProductList() {
-        ArrayList<Product> finalList = new ArrayList<>();
-        for (Product element : CustomerPanel.getCustomer().getShoppingCart()) {
-            if (Objects.equals(element.getProductStatus(), "Available")) {
-                finalList.add(element);
+    private void findFinalProductList() throws UnavailableProduct {
+        for (Product element : MainPageGraphicController.customer.getShoppingCart()) {
+            if(Objects.equals(element.getProductStatus(), "Unavailable")) {
+                throw new UnavailableProduct();
             }
         }
-        return finalList;
     }
 
     //update products stock
@@ -225,26 +222,78 @@ public class CustomerController {
         }
     }
     //apply discount code
-//    public boolean applyDiscountCode(Discount discountCode) throws UnavailableCode, EndOfCodeCapacity {
-//        int index = this.checkDiscountCodeAvailability(discountCode.getDiscountCode());
-//        if( this.checkCodeCapacity(discountCode.getDiscountCode() , index)){
-//            if(discountCode.getDiscountType() == DiscountType.WELCOME){
-//            }
-//            else if(discountCode.getDiscountType() == DiscountType.PURCHASE ){
-//
-//            }
-//            else if(discountCode.getDiscountType() == DiscountType.PRICE){
-//
-//            }
-//        }
-//        return true;
-//    }
+    public Discount applyDiscountCode(String discountCode , Receipt receipt) throws UnavailableCode, EndOfCodeCapacity, ExpiredDiscountCode {
+        int index = this.checkDiscountCodeAvailability(discountCode);
+        checkCodeExpiredTime(index);
+        if( this.checkCodeCapacity(index)){
+            if(MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountType() == DiscountType.WELCOME){
+                receipt.setDiscounts(receipt.getDiscounts() + ((0.3) * receipt.getTotalPriceAfterDiscount()));
+                receipt.setTotalPriceAfterDiscount((0.7) * receipt.getTotalPriceAfterDiscount());
+                return MainPageGraphicController.customer.getDiscountsCode().get(index);
+            }
+            else if(MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountType() == DiscountType.PURCHASE ){
+                applyPurchaseTypeCode(index , discountCode , receipt);
+                return MainPageGraphicController.customer.getDiscountsCode().get(index);
+            }
+            else if(MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountType() ==  DiscountType.PRICE){
+                if(receipt.getTotalAmountPaid() >= 10000){
+                    double percent = MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountPercent();
+                    receipt.setDiscounts(receipt.getDiscounts() + (percent/100 * receipt.getTotalPriceAfterDiscount()));
+                    receipt.setTotalPriceAfterDiscount((100 - (percent/100)) * receipt.getTotalPriceAfterDiscount());
+                    return MainPageGraphicController.customer.getDiscountsCode().get(index);                }
+            }
+        }
+        return null;
+    }
+    private void applyPurchaseTypeCode(int index , String discountCode , Receipt receipt){
+        String[] divided = discountCode.split("-");
+        if(Objects.equals(divided[0], "1001")){
+            double priceOfDigital = 0;
+            for(Product element : MainPageGraphicController.customer.getShoppingCart()){
+                if(element instanceof Digital )
+                    priceOfDigital = priceOfDigital + element.getProductPrice();
+            }
+            double discountPrice = (MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountPercent()*priceOfDigital / 100 );
+            receipt.setDiscounts(receipt.getDiscounts() + discountPrice );
+            receipt.setTotalPriceAfterDiscount(receipt.getTotalPriceAfterDiscount() - discountPrice );
+        }
+        if(Objects.equals(divided[0], "1002")){
+            double priceOfStationery = 0;
+            for(Product element : MainPageGraphicController.customer.getShoppingCart()){
+                if(element instanceof Stationery )
+                    priceOfStationery = priceOfStationery + element.getProductPrice();
+            }
+            double discountPrice = (MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountPercent()*priceOfStationery / 100 );
+            receipt.setDiscounts(receipt.getDiscounts() + discountPrice );
+            receipt.setTotalPriceAfterDiscount(receipt.getTotalPriceAfterDiscount() - discountPrice );
+        }
+        if(Objects.equals(divided[0], "1003")){
+            double priceOfVehicle = 0;
+            for(Product element : MainPageGraphicController.customer.getShoppingCart()){
+                if(element instanceof Vehicle )
+                    priceOfVehicle = priceOfVehicle + element.getProductPrice();
+            }
+            double discountPrice = (MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountPercent()*priceOfVehicle / 100 );
+            receipt.setDiscounts(receipt.getDiscounts() + discountPrice );
+            receipt.setTotalPriceAfterDiscount(receipt.getTotalPriceAfterDiscount() - discountPrice );
+        }
+        if(Objects.equals(divided[0], "1004")){
+            double priceOfEdible = 0;
+            for(Product element : MainPageGraphicController.customer.getShoppingCart()){
+                if(element instanceof Edible )
+                    priceOfEdible = priceOfEdible + element.getProductPrice();
+            }
+            double discountPrice = (MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountPercent()*priceOfEdible / 100 );
+            receipt.setDiscounts(receipt.getDiscounts() + discountPrice );
+            receipt.setTotalPriceAfterDiscount(receipt.getTotalPriceAfterDiscount() - discountPrice );
+        }
+    }
     //check unavailable or available code
     private int checkDiscountCodeAvailability(String discountCode) throws UnavailableCode {
         int index = -1;
-        for(Discount element : CustomerPanel.getCustomer().getDiscountsCode()){
+        for(Discount element : MainPageGraphicController.customer.getDiscountsCode()){
             if(element.getDiscountCode().equals(discountCode)) {
-                index = CustomerPanel.getCustomer().getDiscountsCode().indexOf(element);
+                index = MainPageGraphicController.customer.getDiscountsCode().indexOf(element);
                 break;
             }
         }
@@ -255,30 +304,39 @@ public class CustomerController {
     }
     //check code capacity
     private boolean checkCodeCapacity(int indexOfCode) throws EndOfCodeCapacity {
-        if(CustomerPanel.getCustomer().getDiscountsCode().get(indexOfCode).getCapacity() == 0){
+        if(MainPageGraphicController.customer.getDiscountsCode().get(indexOfCode).getCapacity() == 0){
             throw new EndOfCodeCapacity();
         }
         return true;
     }
     //check code expired time
-    private boolean checkCodeExpiredTime( int indexOfCode) throws EndOfCodeCapacity {
-        if(CustomerPanel.getCustomer().getDiscountsCode().get(indexOfCode).getCodeValidity().isBefore(LocalDate.now())){
-            throw new EndOfCodeCapacity();
+    private void checkCodeExpiredTime( int indexOfCode) throws ExpiredDiscountCode {
+        if(MainPageGraphicController.customer.getDiscountsCode().get(indexOfCode).getCodeValidity().isBefore(LocalDate.now())){
+            throw new ExpiredDiscountCode();
         }
-        return true;
     }
 
     //finalize shopping cart
-    public boolean finalizeShoppingCart() {
-        ArrayList<Product> finalList = this.findFinalProductList();
-        Receipt newReceipt = new Receipt(finalList);
-        if (newReceipt.getTotalAmountPaid() <= CustomerPanel.getCustomer().getAccountCredit()) {
-            this.updateProductsStock(finalList);
-            CustomerPanel.getCustomer().setAccountCredit(CustomerPanel.getCustomer().getAccountCredit() - newReceipt.getTotalAmountPaid());
-            CustomerPanel.getCustomer().getShoppingHistory().add(newReceipt);
-            CustomerPanel.getCustomer().getShoppingCart().clear();
+    public boolean finalizeShoppingCart(String discounts) throws UnavailableProduct, InsufficientCredit, EndOfCodeCapacity, UnavailableCode, ExpiredDiscountCode {
+        this.findFinalProductList();
+        Receipt newReceipt = new Receipt(MainPageGraphicController.customer.getShoppingCart());
+        String[] dividedDiscount = discounts.split(" ");
+        ArrayList<Discount> applyDiscount = new ArrayList<>();
+        for(String element : dividedDiscount){
+            Discount discount = applyDiscountCode(element  , newReceipt);
+            if(discount != null)
+                applyDiscount.add(discount);
+        }
+        if (newReceipt.getTotalAmountPaid() <= MainPageGraphicController.customer.getAccountCredit()) {
+            this.updateProductsStock(MainPageGraphicController.customer.getShoppingCart());
+            MainPageGraphicController.customer.setAccountCredit(MainPageGraphicController.customer.getAccountCredit() - newReceipt.getTotalPriceAfterDiscount());
+            MainPageGraphicController.customer.getShoppingHistory().add(newReceipt);
+            for(Discount element : applyDiscount){
+                element.setCapacity(element.getCapacity() - 1);
+            }
+            MainPageGraphicController.customer.getShoppingCart().clear();
             return true;
         } else
-            return false;
+            throw new InsufficientCredit();
     }
 }
