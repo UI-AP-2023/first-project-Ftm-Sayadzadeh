@@ -206,12 +206,22 @@ public class CustomerController {
     }
 
     //find and add available product
-    private void findFinalProductList() throws UnavailableProduct {
+    private void checkFinalProductList() throws UnavailableProduct {
         for (Product element : MainPageGraphicController.customer.getShoppingCart()) {
             if(Objects.equals(element.getProductStatus(), "Unavailable")) {
                 throw new UnavailableProduct();
             }
         }
+    }
+
+    private ArrayList<Product> findFinalProductList() throws UnavailableProduct {
+        ArrayList<Product> finalProductList = new ArrayList<>();
+        for (Product element : MainPageGraphicController.customer.getShoppingCart()) {
+            if(Objects.equals(element.getProductStatus(), "Available")) {
+                finalProductList.add(element);
+            }
+        }
+        return finalProductList;
     }
 
     //update products stock
@@ -232,15 +242,18 @@ public class CustomerController {
                 return MainPageGraphicController.customer.getDiscountsCode().get(index);
             }
             else if(MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountType() == DiscountType.PURCHASE ){
-                applyPurchaseTypeCode(index , discountCode , receipt);
-                return MainPageGraphicController.customer.getDiscountsCode().get(index);
+                if(MainPageGraphicController.customer.getShoppingCart().size() >= 3) {
+                    applyPurchaseTypeCode(index, discountCode, receipt);
+                    return MainPageGraphicController.customer.getDiscountsCode().get(index);
+                }
             }
             else if(MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountType() ==  DiscountType.PRICE){
                 if(receipt.getTotalAmountPaid() >= 10000){
                     double percent = MainPageGraphicController.customer.getDiscountsCode().get(index).getDiscountPercent();
                     receipt.setDiscounts(receipt.getDiscounts() + (percent/100 * receipt.getTotalPriceAfterDiscount()));
                     receipt.setTotalPriceAfterDiscount((100 - (percent/100)) * receipt.getTotalPriceAfterDiscount());
-                    return MainPageGraphicController.customer.getDiscountsCode().get(index);                }
+                    return MainPageGraphicController.customer.getDiscountsCode().get(index);
+                }
             }
         }
         return null;
@@ -318,21 +331,25 @@ public class CustomerController {
 
     //finalize shopping cart
     public boolean finalizeShoppingCart(String discounts) throws UnavailableProduct, InsufficientCredit, EndOfCodeCapacity, UnavailableCode, ExpiredDiscountCode {
-        this.findFinalProductList();
-        Receipt newReceipt = new Receipt(MainPageGraphicController.customer.getShoppingCart());
+        this.checkFinalProductList();
+        Receipt newReceipt = new Receipt(this.findFinalProductList());
         String[] dividedDiscount = discounts.split(" ");
         ArrayList<Discount> applyDiscount = new ArrayList<>();
-        for(String element : dividedDiscount){
-            Discount discount = applyDiscountCode(element  , newReceipt);
-            if(discount != null)
-                applyDiscount.add(discount);
+        if(!discounts.equals("")) {
+            for (String element : dividedDiscount) {
+                Discount discount = applyDiscountCode(element, newReceipt);
+                if (discount != null)
+                    applyDiscount.add(discount);
+            }
         }
-        if (newReceipt.getTotalAmountPaid() <= MainPageGraphicController.customer.getAccountCredit()) {
+        if (newReceipt.getTotalPriceAfterDiscount() <= MainPageGraphicController.customer.getAccountCredit()) {
             this.updateProductsStock(MainPageGraphicController.customer.getShoppingCart());
             MainPageGraphicController.customer.setAccountCredit(MainPageGraphicController.customer.getAccountCredit() - newReceipt.getTotalPriceAfterDiscount());
             MainPageGraphicController.customer.getShoppingHistory().add(newReceipt);
-            for(Discount element : applyDiscount){
-                element.setCapacity(element.getCapacity() - 1);
+            if(!discounts.equals("")) {
+                for (Discount element : applyDiscount) {
+                    element.setCapacity(element.getCapacity() - 1);
+                }
             }
             MainPageGraphicController.customer.getShoppingCart().clear();
             return true;
