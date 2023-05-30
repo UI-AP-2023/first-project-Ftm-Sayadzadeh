@@ -94,7 +94,16 @@ public class CustomerPanelPageGraphicController implements Initializable {
     }
 
     @FXML
-    void showShoppingCart(MouseEvent event) {
+    void showShoppingCart(MouseEvent event) throws Exception {
+        if(MainPageGraphicController.customer.getShoppingCart().size() == 0){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("NOT FOUND");
+            alert.setHeaderText("Your shopping cart is empty!");
+            alert.setContentText("You have not added any items to your cart yet :) ");
+            alert.showAndWait();
+        }
+        else
+            new ShoppingCartPage(MainPageGraphicController.customer.getShoppingCart()).start((Stage) ((Node) event.getSource()).getScene().getWindow());
 
     }
 
