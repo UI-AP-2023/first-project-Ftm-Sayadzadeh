@@ -32,21 +32,21 @@
          </font>
       </Text>
       <ListView fx:id="productListView" layoutX="44.0" layoutY="77.0" prefHeight="333.0" prefWidth="250.0" />
-      <Line endX="-100.00003051757812" endY="-220.79998779296875" layoutX="453.0" layoutY="324.0" startX="-100.00003051757812" startY="-5.600006103515625" />
-      <TextField fx:id="discountsCode" layoutX="403.0" layoutY="382.0" prefHeight="41.0" prefWidth="250.0" promptText="Enter discount codes..." style="-fx-background-radius: 20;" />
-      <Button fx:id="finalizeShoppingCart" layoutX="677.0" layoutY="387.0" mnemonicParsing="false" onMouseClicked="#finalizeShoppingCart" prefHeight="31.0" prefWidth="121.0" style="-fx-background-color: #000000; -fx-background-radius: 30;" text="finalize" textFill="#cacce3">
+      <Line endX="-100.00003051757812" endY="-220.79998779296875" layoutX="476.0" layoutY="323.0" startX="-100.00003051757812" startY="-5.600006103515625" />
+      <TextField fx:id="discountsCode" layoutX="448.0" layoutY="382.0" prefHeight="41.0" prefWidth="250.0" promptText="Enter discount codes..." style="-fx-background-radius: 20;" />
+      <Button fx:id="finalizeShoppingCart" layoutX="729.0" layoutY="387.0" mnemonicParsing="false" onMouseClicked="#finalizeShoppingCart" prefHeight="31.0" prefWidth="70.0" style="-fx-background-color: #000000; -fx-background-radius: 30;" text="finalize" textFill="#cacce3">
          <font>
             <Font name="Elephant" size="12.0" />
          </font>
       </Button>
-      <Text layoutX="410.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter all discount codes you want to use!">
+      <Text layoutX="450.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter all discount codes you want to use!">
          <font>
             <Font name="Elephant" size="13.0" />
          </font>
       </Text>
-      <ScrollPane layoutX="403.0" layoutY="94.0" prefHeight="233.0" prefWidth="431.0">
+      <ScrollPane layoutX="448.0" layoutY="93.0" prefHeight="234.0" prefWidth="350.0">
          <content>
-            <Label fx:id="selectedProduct" prefHeight="221.0" prefWidth="431.0" style="-fx-background-color: ffffff;">
+            <Label fx:id="selectedProduct" prefHeight="222.0" prefWidth="350.0" style="-fx-background-color: ffffff;">
                <font>
                   <Font name="Comic Sans MS" size="12.0" />
                </font>
